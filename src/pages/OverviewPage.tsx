@@ -9,7 +9,7 @@ interface Props {
 const OverviewComponent = (props: Props) => {
     return (
         <div className='h-full'>
-            <div className='flex flex-col m-6'>
+            <div className='flex flex-col'>
                 <h1 className='font-bold text-3xl'>Analytics</h1>
                 <input type="text" className="inputSearch h-10 mt-7" placeholder='Search pairs and tokens ...'/>
                 <div className='flex mt-5 mb-5'>
@@ -45,7 +45,7 @@ const OverviewComponent = (props: Props) => {
 
 
             </div>
-
+            <div className='h-20'></div>
         </div>
     )
 }

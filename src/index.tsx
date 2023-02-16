@@ -5,11 +5,11 @@ import { spy } from 'mobx';
 import './index.css';
 
 
-spy((event)=>{
-  if(event.type === 'action'){
-    console.log(event);
-  }
-})
+// spy((event)=>{
+//   if(event.type === 'action'){
+//     console.log(event);
+//   }
+// })
 
 
 const root = ReactDOM.createRoot(

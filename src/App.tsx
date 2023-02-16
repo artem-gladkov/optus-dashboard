@@ -7,9 +7,9 @@ import './App.css';
 function AppComponent() {
 
   return (
-   <div >
+ 
         <RoutesPath/>
-    </div> 
+ 
 
   );
 }

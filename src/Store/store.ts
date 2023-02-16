@@ -1,11 +1,13 @@
 import { makeAutoObservable, runInAction } from "mobx"
-
+import { toJS } from "mobx"
 
 
 class StoreApp {
    private tokens = []
    private pairs = []
-   private singleToken = [] 
+   private _singleToken: any = {}
+   public address = ''
+   public period = ''
 
     constructor(){
         makeAutoObservable(this)
@@ -20,22 +22,34 @@ class StoreApp {
     }
 
     pairsApi = async ()  => {
-        const getPairs = await fetch('http://217.61.62.159:8001/api/v1/dashboard/top_pairs?limit=20')
-        const respPairs = await getPairs.json()
+        const reqPairs = await fetch('http://217.61.62.159:8001/api/v1/dashboard/top_pairs?limit=20')
+        const respPairs = await reqPairs.json()
         runInAction(()=>{
             this.pairs =  respPairs
         })
     }
 
-    singleTokenApi = async(address: string, period: string)=> {
-        const getToken = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/token?address=${address}&period=${period}&dex=STON.fi`)
-        const respGetToken = await getToken.json()
+     getTokenApi = async (address:any, period:any) => {
+        const reqToken = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/token?address=${address}&period=${period}&dex=STON.fi`)
+        const resToken = await reqToken.json()
         runInAction(()=>{
-            this.singleToken = respGetToken
+            this._singleToken =  resToken
         })
     }
 
-    get getTokens (): any {
+    setSingleToken=(data: any) : any => {
+        this._singleToken = data
+    }
+
+    addAddress = (address: string) => {
+        this.address = address
+    }
+
+    addPeriod = (period: string) => {
+
+    }
+
+    get getTokens () {
         return this.tokens
     }
 
@@ -44,7 +58,7 @@ class StoreApp {
     }
 
     get getSingleToken (): any {
-        return this.singleToken
+        return this._singleToken
     }
  
 }

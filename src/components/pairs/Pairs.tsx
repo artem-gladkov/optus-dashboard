@@ -43,7 +43,7 @@ const PairsComponent = (props: Props) => {
    }))
 
     return (
-        <div className="w-full h-full border rounded-2xl mt-4">
+        <div className="w-full border rounded-2xl mt-4">
             <div className="flex  w-full  p-2">
                 <div  className="w-1/3"> 
                     <div>Name</div>

@@ -9,14 +9,20 @@ interface Props {}
 const LayoutComponent = (props: Props) => {
 
   return (
-    <div className='flex  h-full '>
-      <RoutesNavigation/>
-
-      <div className='w-4/5'>
-      <Outlet />
+    <div className='flex w-full h-full justify-start'>
+      <div className='w-1/12'>
+        <RoutesNavigation/>
       </div>
 
-      <Footer />
+
+      <div className='w-5/6 h-full p-6'>
+          <Outlet />
+      </div>
+
+      <div className='w-1/12'>
+        <Footer />
+      </div>
+
     </div>
   )
 }

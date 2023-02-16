@@ -12,7 +12,7 @@ html,body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background: linear-gradient(-45deg, #d0a5d3, #e1c3ed, #86bdd1, #84d4c2);
 	background-size: 400% 400%;
 	animation: gradient 15s ease infinite;
 	height: 100vh;
