@@ -5,9 +5,10 @@ import { toJS } from "mobx"
 class StoreApp {
    private tokens = []
    private pairs = []
-   private _singleToken: any = {}
-   public address = ''
-   public period = ''
+   private overview: any = {}
+   private singleToken: any = {}
+   private singlePair: any = {}
+
 
     constructor(){
         makeAutoObservable(this)
@@ -29,27 +30,32 @@ class StoreApp {
         })
     }
 
-     getTokenApi = async (address:any, period:any) => {
-        const reqToken = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/token?address=${address}&period=${period}&dex=STON.fi`)
-        const resToken = await reqToken.json()
+    overviewApi = async(period: string) => {
+        const reqOverview = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/overview?period=${period}&dex=STON.fi`)
+        const respOverview = await reqOverview.json()
         runInAction(()=>{
-            this._singleToken =  resToken
+            this.overview =  respOverview
         })
     }
 
-    setSingleToken=(data: any) : any => {
-        this._singleToken = data
+    getTokenSingleApi = async (address:any, period:any) => {
+        const reqToken = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/token?address=${address}&period=${period}&dex=STON.fi`)
+        const resToken = await reqToken.json()
+        runInAction(()=>{
+            this.singleToken =  resToken
+        })
     }
 
-    addAddress = (address: string) => {
-        this.address = address
+    getPairSingleApi = async (address:any, period:any) => {
+        const reqPair = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/pair?address=${address}&period=${period}&dex=STON.fi`)
+        const resPair = await reqPair.json()
+        runInAction(()=>{
+            this.singlePair =  resPair
+        })
     }
 
-    addPeriod = (period: string) => {
 
-    }
-
-    get getTokens () {
+    get getTokens (): any {
         return this.tokens
     }
 
@@ -57,10 +63,17 @@ class StoreApp {
         return this.pairs
     }
 
-    get getSingleToken (): any {
-        return this._singleToken
+    get getOverview (): any {
+        return this.overview
     }
- 
+
+    get getSingleToken (): any {
+        return this.singleToken
+    }
+    
+    get getSinglePair (): any {
+        return this.singlePair
+    }
 }
 
 

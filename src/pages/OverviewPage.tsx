@@ -1,12 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Tokens } from '../components/tokens/Tokens'
 import { observer } from "mobx-react-lite"
 import { Pairs } from '../components/pairs/Pairs'
+import { store } from '../Store/store'
+import { useEffect } from "react"
+import {toJS} from "mobx"
+import { Transactions } from '../components/transactions/Transactions'
+
 
 interface Props {
     
 }
 
 const OverviewComponent = (props: Props) => {
+
+    const {overviewApi, getOverview} = store
+
+    useEffect(()=>{
+        overviewApi('day')
+    }, [])
+
+    console.log(toJS(getOverview))
+    
     return (
         <div className='h-full'>
             <div className='flex flex-col'>
@@ -41,6 +56,13 @@ const OverviewComponent = (props: Props) => {
                 <div className='flex  flex-col mt-10'>
                     <h1 className='font-medium text-2xl '>Top Pairs</h1>
                     <Pairs/>
+                </div>
+
+                 {/* Транзакции */}
+
+                <div className='flex  flex-col mt-10'>
+                    <h1 className='font-medium text-2xl '>Transactions</h1>
+                    <Transactions data = {getOverview.transactions}/>
                 </div>
 
 
