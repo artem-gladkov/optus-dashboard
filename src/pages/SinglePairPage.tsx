@@ -5,6 +5,8 @@ import { observer } from "mobx-react-lite"
 import { store } from "../Store/store"
 import { toJS } from "mobx"
 import { TokenForm } from "../components/tokenForm/TokenForm"
+import { Transactions } from "../components/transactions/Transactions"
+import { PairInformation } from "../components/PairInformation/PairInformation"
 
 interface Props {
     
@@ -108,11 +110,27 @@ const SinglePairPageComponent = (props: Props) => {
                         </div>
                     </div>
 
-                        {/* Top PAIRS */}
+                        {/* Транзакции */}
 
                     <div className="flex flex-col mt-5">
-                        <h2 className="text-2xl font-normal">Top Pairs</h2>   
+                        <h2 className="text-2xl font-normal">Transaction</h2>   
+                        <Transactions data={getSinglePair.transactions}/>
                     </div>  
+
+                         {/* Pair Information */}
+
+                    <div className="flex flex-col mt-5">
+                        <h2 className="text-2xl font-normal">Pair Information</h2>
+                        <PairInformation pairname={`${getSinglePair.symbol_one.symbol} - ${getSinglePair.symbol_two.symbol}`}
+                                            pairAddress='123123'
+                                            DAIaddress='1223123'
+                                            USDCAddress="123123"/>    
+                    </div>  
+
+                    <div className="flex w-full h-10 m-10">
+                            
+                    </div>
+
                 </div>
 
             )}

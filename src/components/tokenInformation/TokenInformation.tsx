@@ -13,15 +13,15 @@ const TokenInformationComponent = ({name, symbol, address}: Props) => {
             <div className='flex w-1/2' >
                 <div className='w-1/3'>
                     <p className='mb-2'>Symbol</p>   
-                    <div className='text-lg'>{symbol}</div>
+                    <div className='font-medium'>{symbol}</div>
                 </div>
                 <div className='w-1/3'>
                     <p className='mb-2'> Name</p>
-                    <div className='text-lg'>{name}</div>
+                    <div className='font-medium'>{name}</div>
                 </div>
                 <div className='w-1/3'>
                     <p className='mb-2'>Address</p> 
-                    <div className='text-lg'>{address}</div>
+                    <div className='font-medium'>{address}</div>
                 </div>
             </div>
         </div>
