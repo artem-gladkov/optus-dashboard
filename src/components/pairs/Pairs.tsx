@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite"
 import { useEffect } from "react"
 import {toJS} from "mobx"
 import { Link } from "react-router-dom"
+import uniqid from 'uniqid'
 
 
 interface Props {
@@ -19,7 +20,7 @@ const PairsComponent = (props: Props) => {
 
    const pairs =store.getPairs.map((pair: any, index:number)=>{
     return (
-        <div key={index } className="flex w-full justify-between p-4 border-b border-gray-50 border-opacity-20">
+        <div key={uniqid()} className="flex w-full justify-between p-4 border-b border-gray-50 border-opacity-20">
                 <div className="w-1/3">
                     <div className="flex items-center ">
                         <span className="mr-3"> {index+1}</span>

@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite"
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import {toJS} from "mobx"
+import uniqid from 'uniqid'
 
 
 
@@ -20,7 +21,7 @@ const TokensComponent = (props: Props) => {
 
    const tokens =store.getTokens.map((token: any, index:number)=>{
     return (
-        <div key={token.symbol.name.trim()} className="flex w-full justify-between p-4 border-b border-gray-50 border-opacity-20">
+        <div key={uniqid()} className="flex w-full justify-between p-4 border-b border-gray-50 border-opacity-20">
                 <div className="w-1/3">
                     <div className="flex items-center">
                         <span className="mr-3"> {index+1}</span>

@@ -10,7 +10,12 @@ class StoreApp {
    private singlePair: any = {}
 
    public buttonType: string[] = ['All', 'Swaps', 'Adds', 'Removes']
+   public buttonTransactions: string[] = ['Total Value', 'Token Amount', 'Token Amount ', 'Account', 'Time']
+   public toggleSort: boolean = true
+
    public activeButton: any = this.buttonType[0]
+   public activeButtonHeader: any = this.buttonTransactions[0]
+   public arrow: string = 'high'
 
     constructor(){
         makeAutoObservable(this)
@@ -60,6 +65,41 @@ class StoreApp {
         this.activeButton = type
     }
 
+    updateActiveButtonHeader = (type: string) => {
+        this.activeButtonHeader = type
+    }
+
+    updateToggleSort=()=>{
+        this.toggleSort = !this.toggleSort
+    }
+
+    sortTransactions =(type:string, data: any[])=>{
+        if(type ==='Total Value'){
+            data.sort((a: { usd_amount: { value: number } },b: { usd_amount: { value: number } })=>{
+                if(this.toggleSort){ this.arrow = 'high'; return b.usd_amount.value - a.usd_amount.value}
+                if(!this.toggleSort){this.arrow = 'low'; return a.usd_amount.value - b.usd_amount.value}
+            })
+        }
+        if(type ==='Token Amount'){
+            data.sort((a: { symbol_one_amount: { value: number } },b: { symbol_one_amount: { value: number } })=>{
+                if(this.toggleSort){ this.arrow = 'high'; return b.symbol_one_amount.value - a.symbol_one_amount.value}
+                if(!this.toggleSort){this.arrow = 'low'; return a.symbol_one_amount.value - b.symbol_one_amount.value}
+            })
+        }
+        if(type ==='Token Amount '){
+            data.sort((a: { symbol_two_amount: { value: number } },b: { symbol_two_amount: { value: number } })=>{
+                if(this.toggleSort){ this.arrow = 'high'; return b.symbol_two_amount.value - a.symbol_two_amount.value}
+                if(!this.toggleSort){this.arrow = 'low'; return a.symbol_two_amount.value - b.symbol_two_amount.value}
+            })
+        }
+        if(type ==='Time'){
+            data.sort((a: { timestamp: number },b: { timestamp: number })=>{
+                if(this.toggleSort){ this.arrow = 'high'; return b.timestamp - a.timestamp}
+                if(!this.toggleSort){this.arrow = 'low'; return a.timestamp - b.timestamp}
+            })
+        }
+
+    }
 
 
     get getTokens (): any {

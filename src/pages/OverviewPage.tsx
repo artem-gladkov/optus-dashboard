@@ -8,6 +8,7 @@ import {toJS} from "mobx"
 import { Transactions } from '../components/transactions/Transactions'
 import { ChartsOverview } from '../components/charts/ChartsOverview'
 import { ChartsOverview2 } from '../components/charts/ChartsOverview2'
+import uniqid from 'uniqid'
 
 interface Props {
     
@@ -74,7 +75,7 @@ const OverviewComponent = (props: Props) => {
 
          {/* Транзакции */}
 
-        <div className='flex  flex-col mt-10'>
+        <div key={uniqid()} className='flex  flex-col mt-10'>
             <h1 className='font-medium text-2xl '>Transactions</h1>
             <Transactions data = {getOverview.transactions}/>
         </div>
