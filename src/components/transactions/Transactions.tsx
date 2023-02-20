@@ -1,5 +1,8 @@
+import { toJS } from "mobx";
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
+import { store } from "../../Store/store";
+import Button from "../buttonsGroupeTransaction/Button";
 
 
 interface Props {
@@ -9,9 +12,24 @@ interface Props {
 const TransactionsComponent = (props: Props) => {
 
 const {data} = props
+const {buttonType} = store
+
+console.log(toJS(data))
 
 
-const transaction = data?.map((trans: any, index: number)=>{
+const ButtonGroupeComponent = buttonType.map((type)=>{
+        return (<Button key={type} type ={type} active = {store.activeButton === type}>{type}</Button>)
+})
+
+
+
+const transaction = data?.filter((trans: { type: string; })=>{
+    if(store.activeButton === 'All'){return trans}
+    if(store.activeButton === 'Swaps'){return trans.type === 'swap'}
+    if(store.activeButton === 'Swaps'){return trans.type === 'add'}
+    if(store.activeButton === 'Swaps'){return trans.type === 'remove'}
+})
+    .map((trans: any, index: number)=>{
     return (
         <div key={index} className="flex w-full justify-between text-base p-4 border-b border-gray-50 border-opacity-20">
                 <div className="w-1/3">
@@ -47,10 +65,7 @@ const transaction = data?.map((trans: any, index: number)=>{
             <div className="flex  w-full  p-4 border-b border-gray-50 border-opacity-60">
                 <div  className="w-1/3"> 
                     <div className="flex justify-between w-1/2">
-                        <div className="hover:text-white"><button>All</button></div>
-                        <div className="hover:text-white"><button>Swaps</button></div>
-                        <div className="hover:text-white"><button>Adds</button></div>
-                        <div className="hover:text-white"><button>Removes</button></div>
+                        {ButtonGroupeComponent}
                     </div>
                 </div>
 

@@ -9,6 +9,8 @@ class StoreApp {
    private singleToken: any = {}
    private singlePair: any = {}
 
+   public buttonType: string[] = ['All', 'Swaps', 'Adds', 'Removes']
+   public activeButton: any = this.buttonType[0]
 
     constructor(){
         makeAutoObservable(this)
@@ -53,6 +55,11 @@ class StoreApp {
             this.singlePair =  resPair
         })
     }
+
+    updateActiveButton = (type: string) => {
+        this.activeButton = type
+    }
+
 
 
     get getTokens (): any {
