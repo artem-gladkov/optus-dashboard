@@ -11,7 +11,7 @@ const ChartsOverviewComponent2 = props => {
 			textColor = 'black',
 			areaTopColor = '#2962FF',
 			areaBottomColor = 'rgba(41, 98, 255, 0.28)',
-            borderRadius = '20px'
+
 		} = {},
 	} = props;
 
@@ -34,7 +34,7 @@ const ChartsOverviewComponent2 = props => {
 			}, );
 			chart.timeScale().fitContent();
 
-			const newSeries = chart.addAreaSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
+			const newSeries = chart.addAreaSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor, });
 			newSeries.setData(data);
 
 			window.addEventListener('resize', handleResize);

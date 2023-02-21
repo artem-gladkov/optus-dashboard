@@ -8,7 +8,7 @@ import { TokenForm } from "../components/tokenForm/TokenForm"
 import { Pairs } from "../components/pairs/Pairs"
 import { Transactions } from "../components/transactions/Transactions"
 import { TokenInformation } from "../components/tokenInformation/TokenInformation"
-
+import FavouritesButton from "../components/favouritesButton/FavouritesButton"
 
 const SingleTokenPageComponent=(props: any) => {
 
@@ -23,7 +23,6 @@ const SingleTokenPageComponent=(props: any) => {
     }, [address])
  
 
-    console.log('single Token Data',toJS(getSingleToken))
     return (
         <>
             {getSingleToken.address && (
@@ -54,7 +53,7 @@ const SingleTokenPageComponent=(props: any) => {
                            <div className="ml-2 text-red-700 font-bold">{getSingleToken.current_usd_price.change} %</div>                         
                         </div>
                         <div>
-                            Добавить в избранное
+                            <FavouritesButton symbol={getSingleToken.symbol.symbol} address={getSingleToken.address}/>
                         </div>
                     </div>
 

@@ -3,7 +3,7 @@ import { toJS } from "mobx";
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
 import { store } from "../../Store/store";
-import Button from "../buttonsGroupeTransaction/Button";
+import Button from "../buttonsGroupe/ButtonTransaction";
 import uniqid from 'uniqid'
 
 interface Props {
@@ -15,7 +15,6 @@ const TransactionsComponent = (props: Props) => {
 const {data} = props
 const {buttonType, buttonTransactions} = store
 
-console.log(toJS(data))
 
 
 const ButtonGroupeTransaction = buttonType.map((type, index)=>{

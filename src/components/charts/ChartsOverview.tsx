@@ -22,7 +22,7 @@ interface Props {
 
 const ChartsOverviewComponent = ({data}: Props) => {
 
-    console.log(toJS(data))
+   
 
     return (<>
     { data &&

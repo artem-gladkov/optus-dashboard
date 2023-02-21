@@ -1,20 +1,20 @@
 import { store } from '../../Store/store'
-import { useState } from 'react';
 import uniqid from 'uniqid'
 
 interface Props {
     active: any;
     children: any;
     type: string;
-    flagTransaction: boolean;
-    data?: any
+    flagTransaction?: boolean;
+    data?: any;
+    flagTokens?: boolean;
 
 
 }
 
-const Button = ( {active, children, type, flagTransaction, data}: Props, ) => {
+const Button = ( {active, children, type, flagTransaction, data, flagTokens}: Props, ) => {
 
-const {updateActiveButton, sortTransactions, updateToggleSort, updateActiveButtonHeader , arrow, activeButtonHeader} = store
+const {updateActiveButton, sortTransactions, updateActiveButtonHeader , arrow, activeButtonHeader} = store
 
 const Arrownone = () => {
     if(active && arrow === 'high' && activeButtonHeader !== 'Account') {return (<span key={uniqid()}>&dArr;</span>)}
@@ -24,17 +24,18 @@ const Arrownone = () => {
 
 
 const style = active ? "text-slate-50 hover:text-slate-50 flex" : "hover:text-slate-50 flex"
-console.log(type)
 
 
 const TransButtonORHeaderComponent = (flagTransaction: boolean)=>{
+   
     if(flagTransaction){return ()=> {updateActiveButton(type)}}
     if(!flagTransaction){return ()=> {
-        updateToggleSort()
+   
         sortTransactions(type, data)
         updateActiveButtonHeader(type)
-    }
-}
+    }}
+
+
 }
     return (
         <>

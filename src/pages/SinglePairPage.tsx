@@ -7,6 +7,7 @@ import { toJS } from "mobx"
 import { TokenForm } from "../components/tokenForm/TokenForm"
 import { Transactions } from "../components/transactions/Transactions"
 import { PairInformation } from "../components/PairInformation/PairInformation"
+import FavouritesButton from "../components/favouritesButton/FavouritesButton"
 
 interface Props {
     
@@ -22,7 +23,7 @@ const SinglePairPageComponent = (props: Props) => {
         getPairSingleApi(address, 'day')
     }, [address])
 
-    console.log(toJS(getSinglePair))
+    
   
     
     return ( 
@@ -54,7 +55,10 @@ const SinglePairPageComponent = (props: Props) => {
                       
                         </div>
                         <div>
-                            Добавить в избранное
+                            <FavouritesButton symbol={`${getSinglePair.symbol_one.symbol}@-${getSinglePair.symbol_two.symbol}`}
+                                              address={getSinglePair.address}  />
+
+                                              {/* с помощью @ потом отличаем какой тип, пара или один токен */}
                         </div>
                     </div>
 
