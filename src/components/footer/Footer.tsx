@@ -24,7 +24,7 @@ export const Footer=observer((props: Props) => {
     console.log('footer')
   },[])
 
-  console.log(toJS(getFooterState))
+
 
   const favoriteItems = getFooterState.map((item)=>{
       return ( item[0].includes('@') ? (

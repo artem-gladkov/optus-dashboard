@@ -1,4 +1,4 @@
-import React, { Children } from 'react'
+import React, { Children, useEffect } from 'react'
 import { toJS } from 'mobx';
 import {
     ResponsiveContainer,
@@ -22,8 +22,7 @@ interface Props {
 
 const ChartsOverviewComponent = ({data}: Props) => {
 
-   
-
+  
     return (<>
     { data &&
 ( <ResponsiveContainer width="100%" height={400}>
@@ -48,6 +47,7 @@ const ChartsOverviewComponent = ({data}: Props) => {
                                 label={data[5].value} 
                                 stroke="#020114" 
                                 strokeDasharray="3 3" 
+                               
                                 
                                />
 

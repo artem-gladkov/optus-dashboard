@@ -1,27 +1,27 @@
 import { createChart, ColorType } from 'lightweight-charts';
-import React, { useEffect, useRef } from 'react';
-import { observer } from "mobx-react-lite"
+import React, { useEffect, useRef, useState } from 'react';
 
-const ChartsOverviewComponent2 = props => {
+export const ChartsOverview2 = (props: { data: any; colors?: { backgroundColor?: "white"; lineColor?: "#2962FF"; textColor?: "black"; areaTopColor?: "#2962FF"; areaBottomColor?: "rgba(41, 98, 255, 0.28)"; }; }) => {
+	
+	const [useChar, setChar] = useState<JSX.Element>()
+	
 	const {
 		data,
 		colors: {
-			backgroundColor = 'white',
-			lineColor = '#2962FF',
-			textColor = 'black',
-			areaTopColor = '#2962FF',
+			backgroundColor = 'transparent',
+			lineColor = '#bf3fb2d5',
+			textColor = '#bf3fb2d5',
+			areaTopColor = '#bf3fb2d5',
 			areaBottomColor = 'rgba(41, 98, 255, 0.28)',
-
 		} = {},
 	} = props;
 
 	const chartContainerRef = useRef();
-    console.log(chartContainerRef)
 
 	useEffect(
 		() => {
 			const handleResize = () => {
-				chart.applyOptions({ width: chartContainerRef['current' || ''].clientWidth  });
+				chart.applyOptions({ width: chartContainerRef['current' || ''].clientWidth });
 			};
 
 			const chart = createChart(chartContainerRef.current, {
@@ -31,13 +31,63 @@ const ChartsOverviewComponent2 = props => {
 				},
 				width: chartContainerRef['current' || ''].clientWidth,
 				height: 400,
-			}, );
+				grid: {
+					horzLines: {
+						color: '#bf3fb2d5',
+				  visible: false,
+					},
+					vertLines: {
+						color: 'transparent',
+					},
+				},
+				rightPriceScale: {
+					scaleMargins: {
+						top: 0.35,
+						bottom: 0.2,
+					},
+					borderVisible: false,
+				},
+				timeScale: {
+					borderVisible: false,
+				},
+				
+				
+			});
 			chart.timeScale().fitContent();
+			let dateStr = `${data[data.length-1].time.slice(0,4)}`;
 
-			const newSeries = chart.addAreaSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor, });
+			const newSeries = chart.addAreaSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
 			newSeries.setData(data);
 
 			window.addEventListener('resize', handleResize);
+
+			chart.subscribeCrosshairMove((param)=>{
+				if ( param === undefined || param.time === undefined || param.point.x < 0 || param.point.x > 400|| param.point.y < 0 || param.point.y > 400 ) {
+					setChar(()=>{
+						return (
+							<div>
+								<div>AEROSPACE</div>
+								<div>{data[data.length-1].value}</div>
+								<div>{dateStr}</div>
+							</div>
+						)
+					})  
+					
+				} else {
+					dateStr = param.time.toString() 
+					let price: any = param.seriesData.get(newSeries);
+					setChar(()=>{
+						return (                    
+						<div>
+							<div>AEROSPACE</div>
+							<div>{price.value}</div>
+							<div>{dateStr}</div>
+						</div>)
+					})
+				}
+			})
+
+
 
 			return () => {
 				window.removeEventListener('resize', handleResize);
@@ -49,34 +99,26 @@ const ChartsOverviewComponent2 = props => {
 	);
 
 	return (
-		<div
-			ref={chartContainerRef}
-		/>
+		<div ref={chartContainerRef} >
+			<Comn  char={useChar} data = {data}/>
+		</div>
 	);
 };
 
-export const ChartsOverview2 = observer(ChartsOverviewComponent2)
 
 
 
-
-const initialData = [
-	{ time: '2018-12-22', value: 32.51 },
-	{ time: '2018-12-23', value: 31.11 },
-	{ time: '2018-12-24', value: 27.02 },
-	{ time: '2018-12-25', value: 27.32 },
-	{ time: '2018-12-26', value: 25.17 },
-	{ time: '2018-12-27', value: 28.89 },
-	{ time: '2018-12-28', value: 25.46 },
-	{ time: '2018-12-29', value: 23.92 },
-	{ time: '2018-12-30', value: 22.68 },
-	{ time: '2018-12-31', value: 22.67 },
-];
-
-
-
-
-// export function App(props) {
-// 	return (
-// 		<ChartComponent {...props} data={initialData}></ChartComponent>
-// 	)}
+const Comn = ({char, data})=>{
+    console.log(char);
+    return (
+        <div className='-mb-20'>
+            {char || (
+			<div>
+				<div>AEROSPACE</div>
+				<div>{data[data.length-1].value}</div>
+				<div>{data[data.length-1].time}</div>
+			</div>
+			)}
+        </div>
+    )
+}

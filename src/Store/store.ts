@@ -191,6 +191,7 @@ class StoreApp {
     addLocalStorageSTORE=(symbol, address)=>{
         localStorage.setItem(symbol, address)
     }
+    
     removeLocalStoreSTORE=(symbol)=>{
         localStorage.removeItem(symbol)
     }
