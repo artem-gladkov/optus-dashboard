@@ -3,7 +3,7 @@ import uniqid from 'uniqid'
 
 interface Props {
     active: any;
-    children: any;
+    children: React.ReactNode;
     type: string;
     flagTransaction?: boolean;
     data?: any;
@@ -30,7 +30,6 @@ const TransButtonORHeaderComponent = (flagTransaction: boolean)=>{
    
     if(flagTransaction){return ()=> {updateActiveButton(type)}}
     if(!flagTransaction){return ()=> {
-   
         sortTransactions(type, data)
         updateActiveButtonHeader(type)
     }}

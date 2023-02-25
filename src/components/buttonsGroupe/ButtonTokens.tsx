@@ -3,7 +3,7 @@ import uniqid from 'uniqid'
 
 interface Props {
     active: any;
-    children: any;
+    children: React.ReactNode;
     type: string;
     flagTransaction?: boolean;
     data?: any;

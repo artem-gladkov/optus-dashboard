@@ -12,7 +12,7 @@ html,body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(-45deg, #f3b6fa, #c5bef6, #31b9c6, #a7eedd);
+  background: linear-gradient(-45deg, #70c4d1, #84c5cf, #1dd5e6, #1e9de6);
 	background-size: 400% 400%;
 	animation: gradient 15s ease infinite;
 	height: 100vh;
@@ -60,4 +60,8 @@ html,body {
 
 .tv-lightweight-charts{
   border-radius: 20px;
+}
+
+.h-charts{
+  height: 400px;
 }

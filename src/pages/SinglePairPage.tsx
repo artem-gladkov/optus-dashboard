@@ -19,6 +19,8 @@ const SinglePairPageComponent = (props: Props) => {
     const navigate = useNavigate()
     const goBack = ()=> navigate(-1)
 
+    console.log(toJS(getSinglePair))
+
     useEffect(()=>{
         getPairSingleApi(address, 'day')
     }, [address])

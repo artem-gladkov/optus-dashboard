@@ -6,10 +6,9 @@ import { store } from '../Store/store'
 import { useEffect } from "react"
 import {toJS} from "mobx"
 import { Transactions } from '../components/transactions/Transactions'
-import { ChartsOverview } from '../components/charts/ChartsOverview'
-import { ChartsOverview2 } from '../components/charts/ChartsOverview2'
 import uniqid from 'uniqid'
 import Char from './Char'
+import { ChartsOverview } from '../components/charts/ChartsOverview'
 
 interface Props {
     
@@ -327,6 +326,7 @@ const OverviewComponent = (props: Props) => {
         overviewApi('day')
     }, [])
 
+   
 
     
     return (<><div className='h-full'>
@@ -341,13 +341,13 @@ const OverviewComponent = (props: Props) => {
         </div>
 
         {/* Графики */}
-        <div className='flex'>
-            <div className='w-1/2 mr-2 bg-cyan-300 bg-opacity-40 rounded-2xl'>
-                    <Char />
+        <div className='flex mt-5'>
+            <div className='h-charts pb-6 w-1/2 mr-2 bg-green-200 bg-opacity-20 rounded-2xl'>
+                    <ChartsOverview titleMarker={true} type={'Liquidity'} data ={initialData} />
             </div>
 
-            <div className='w-1/2 bg-cyan-300 bg-opacity-10 rounded-2xl'>
-                    <ChartsOverview2 data ={initialData} />
+            <div className='h-charts pb-6  w-1/2 bg-green-200 bg-opacity-20 rounded-2xl'>
+                    <ChartsOverview titleMarker={true} type={'Volume (24hrs)'} data ={initialData} />
             </div>
         </div>
 

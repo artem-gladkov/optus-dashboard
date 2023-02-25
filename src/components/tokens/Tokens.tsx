@@ -19,7 +19,6 @@ const TokensComponent = (props: Props) => {
         tokensApi()
     },[])
     
-    console.log('tokens', toJS(store.getTokens))
 
 
     const ButtonGroupeTokens = buttonTokens.map((type, index)=>{

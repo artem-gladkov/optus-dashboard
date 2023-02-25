@@ -21,7 +21,6 @@ export const Footer=observer((props: Props) => {
 
   useEffect(()=>{
     footerUpdate()
-    console.log('footer')
   },[])
 
 

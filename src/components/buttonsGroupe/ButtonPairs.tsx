@@ -2,8 +2,8 @@ import { store } from '../../Store/store'
 import uniqid from 'uniqid'
 
 interface Props {
-    active: any;
-    children: any;
+    active: boolean;
+    children: React.ReactNode;
     type: string;
     flagTransaction?: boolean;
     data?: any;
