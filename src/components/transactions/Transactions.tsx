@@ -16,6 +16,7 @@ const TransactionsComponent = (props: Props) => {
     const [currentPage, setCurrentPage] = useState(1)
     const [itemPerPage, setItemPerPage] = useState(8)
 
+
     const {data} = props
     const {buttonType, buttonTransactions} = store
 
@@ -37,25 +38,28 @@ const TransactionsComponent = (props: Props) => {
                     </div>
     )
     })
+    
     const lastItemIndex = currentPage * itemPerPage;
     const firstItemIndex = lastItemIndex - itemPerPage;
 
-
-    const transaction = data?.slice(firstItemIndex, lastItemIndex).filter((trans: { type: string; }) => {
+    const dataFilter = data?.filter((trans: { type: string; }) => {
         if(store.activeButton === 'All'){return trans}
         if(store.activeButton === 'Swaps'){return trans?.type === 'swap'}
         if(store.activeButton === 'Adds'){return trans?.type === 'add'}
         if(store.activeButton === 'Removes'){return trans?.type === 'remove'}
     })
+
+
+    const transaction = dataFilter?.slice(firstItemIndex, lastItemIndex)
         .map((trans, index)=>{
         return (
             <div key={uniqid()} className="flex w-full justify-between text-base p-4 border-b border-gray-50 border-opacity-20">
                     <div  className="w-1/3">
                         <div  className="flex items-center">
                             <span className="mr-3"> 
-                                {index+1}
+                                {/* должен быть номер по счёту транзакции */}
                             </span>
-                            <Link  to={`https://tonapi.io/transaction/${trans.hash}`}>
+                            <Link  to={`https://tonapi.io/transaction/${trans.hash}`} target="_blank">
                                 <span className=" font-medium text-slate-900 text-opacity-80 hover:text-slate-50 ">
                                     {trans.type} {trans?.symbol_one?.symbol} for {trans?.symbol_two?.symbol}
                                 </span>
@@ -89,8 +93,11 @@ const TransactionsComponent = (props: Props) => {
             </div>
                     {transaction}
 
-            <div className="h-10">
-                <Pagination totalItem={data?.length} itemPerPage={itemPerPage}/>
+            <div className="flex justify-center items-center">
+                <Pagination totalItem={dataFilter?.length} 
+                            itemPerPage={itemPerPage}
+                            setCurrentPage={setCurrentPage}
+                            currentPage={currentPage}/>
             </div>
         </div>
     )

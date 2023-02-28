@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect} from "react"
+import { useEffect, useState} from "react"
 import { useParams, Link, useNavigate } from "react-router-dom"
 import { observer } from "mobx-react-lite"
 import { store } from "../Store/store"
@@ -9,20 +9,33 @@ import { Transactions } from "../components/transactions/Transactions"
 import { PairInformation } from "../components/PairInformation/PairInformation"
 import FavouritesButton from "../components/favouritesButton/FavouritesButton"
 import { SearchInput } from "../components/searchInput/SearchInput"
+import { ChartsForm } from "../components/charts/ChartsForm"
+import { ChartsOverview } from "../components/charts/ChartsOverview"
+import {ButtonsCharts} from "../components/buttonsGroupe/ButtonsCharts"
 
 interface Props {
     
 }
 
 const SinglePairPageComponent = (props: Props) => {
+    const [typeButtonCharts, setTypeButtonCharts] = useState('Liquidity')
     const {getSinglePair, getPairSingleApi}  = store
     const {address} = useParams()    
     const navigate = useNavigate()
     const goBack = ()=> navigate(-1)
 
     console.log(toJS(getSinglePair))
-    const pairPrice = toJS(getSinglePair.symbol_one_indicators?.current_pair_price.value)
 
+    const HandleChartsComponent = () => {
+        if(typeButtonCharts === "Liquidity"){ 
+            return ( <ChartsOverview titleMarker={false} type={'Liquidity'} data ={toJS(getSinglePair.liquidity_graph)}/> ) }
+        if(typeButtonCharts === "Volume"){         
+            return ( <ChartsOverview  titleMarker={false} type={'Volume (24hrs)'} data ={toJS(getSinglePair.liquidity_graph)}/> ) }
+        if(typeButtonCharts === `${getSinglePair.token_one.symbol}-${getSinglePair.token_two.symbol}`){ 
+            return ( <ChartsForm/> ) }
+        if(typeButtonCharts === `${getSinglePair.token_two.symbol}-${getSinglePair.token_one.symbol}`){ 
+            return ( <ChartsForm/> ) }
+    }
     useEffect(()=>{
         getPairSingleApi(address, 'day')
     }, [address])
@@ -117,8 +130,17 @@ const SinglePairPageComponent = (props: Props) => {
                                     </div> 
                                  </div>
                             </div>
-                            <div className="w-8/12 bg-cyan-700 bg-opacity-40 rounded-2xl mb-2">
-                                        график
+                            <div className="flex flex-col w-8/12 bg-green-200 bg-opacity-20 rounded-2xl mb-2 ">
+                                <div className="h-1/12 w-1/3 flex bg-transparent p-2 justify-between">
+                                    <ButtonsCharts namePairsOne={getSinglePair.token_one.symbol} 
+                                                    namePairsTwo={getSinglePair.token_two.symbol} 
+                                                    isPairs={true} 
+                                                    typeButtonCharts={typeButtonCharts} 
+                                                    setTypeButtonCharts={setTypeButtonCharts}/>
+                                </div>
+                                <div className="h-full">
+                                    <HandleChartsComponent/>
+                                </div>                    
                             </div>
                         </div>
                     </div>

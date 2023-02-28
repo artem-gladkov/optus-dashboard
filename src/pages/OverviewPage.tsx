@@ -29,7 +29,7 @@ const OverviewComponent = (props: Props) => {
 
     }, [])
 
-    console.log(toJS(getTokens), toJS(getPairs))
+    console.log(toJS(getTokens), toJS(getOverview))
 
 
     console.log('render2')

@@ -12,10 +12,11 @@ import FavouritesButton from "../components/favouritesButton/FavouritesButton"
 import { ChartsForm } from "../components/charts/ChartsForm"
 import { ChartsOverview } from "../components/charts/ChartsOverview"
 import { SearchInput } from "../components/searchInput/SearchInput"
+import {ButtonsCharts} from "../components/buttonsGroupe/ButtonsCharts"
 
 const SingleTokenPageComponent=(props: any) => {
 
-    const [typeButtonCharts, setTypeButtonCharts] = useState('liquidity')
+    const [typeButtonCharts, setTypeButtonCharts] = useState('Liquidity')
 
     const {getSingleToken, getTokenSingleApi}  = store
     const {address} = useParams()    
@@ -329,21 +330,14 @@ const SingleTokenPageComponent=(props: any) => {
 
     console.log(toJS(getSingleToken))
 
-    const handleCharts = (type: "liquidity" | "Volume (24hrs)" | "price") => {
-        setTypeButtonCharts(type)
-    }
+
 
     const HandleChartsComponent = () => {
-        if(typeButtonCharts === "liquidity"){ 
-            
-            return ( <ChartsOverview titleMarker={false} type={'Liquidity'} data ={initialData}/> ) }
-
-        if(typeButtonCharts === "Volume (24hrs)"){ 
-            
-            return ( <ChartsOverview  titleMarker={false} type={'Volume (24hrs)'} data ={initialData}/> ) }
-
-        if(typeButtonCharts === "price"){ 
-            
+        if(typeButtonCharts === "Liquidity"){ 
+            return ( <ChartsOverview titleMarker={false} type={'Liquidity'} data ={toJS(getSingleToken.liquidity_graph)}/> ) }
+        if(typeButtonCharts === "Volume"){         
+            return ( <ChartsOverview  titleMarker={false} type={'Volume (24hrs)'} data ={toJS(getSingleToken.volume_graph)}/> ) }
+        if(typeButtonCharts === "Price"){ 
             return ( <ChartsForm/> ) }
     }
 
@@ -368,14 +362,11 @@ const SingleTokenPageComponent=(props: any) => {
                                 <Link to={`https://tonapi.io/account/${getSingleToken.address}.ton`} className="ml-1 w-28" target="_blank" >
                                     ({getSingleToken.address.slice(0,6)}...{getSingleToken.address.slice(-6)})
                                 </Link> 
-
                             </div>
                             <div className="w-1/2">
                                 <SearchInput />
                             </div>
-
                     </div>
-
                     <div className="flex justify-between items-end mt-10">
                         <div className="flex items-end ">
                            <div><img src={getSingleToken.icon} alt="" width={40}/></div> 
@@ -402,17 +393,13 @@ const SingleTokenPageComponent=(props: any) => {
                                 <TokenForm title={'Transactions (24hrs)'} value={getSingleToken.transactions_24h.value} change={getSingleToken.transactions_24h.change} transaction={true}/>
                             </div>
                             <div className="flex flex-col w-8/12 bg-green-200 bg-opacity-20 rounded-2xl mb-2 ">
-                                        <div className="h-1/12 w-1/3 flex bg-transparent p-2 justify-between">
-                                            <button className="hover:text-slate-50 flex cursor-pointer" onClick={()=>{handleCharts('liquidity')}}>Liquidity</button>
-                                            <button className="hover:text-slate-50 flex cursor-pointer" onClick={()=>{handleCharts('Volume (24hrs)')}}>Volume</button>
-                                            <button className="hover:text-slate-50 flex cursor-pointer" onClick={()=>{handleCharts('price')}}>Price</button>
-                                        </div>
-                                        <div className="h-full">
-                                            <HandleChartsComponent/>
-                                        </div>
-                                        
+                                <div className="h-1/12 w-1/3 flex bg-transparent p-2 justify-between">
+                                    <ButtonsCharts isPairs={false} typeButtonCharts={typeButtonCharts} setTypeButtonCharts={setTypeButtonCharts}/>
+                                </div>
+                                <div className="h-full">
+                                    <HandleChartsComponent/>
+                                </div>                    
                             </div>
-
                         </div>
                     </div>
 

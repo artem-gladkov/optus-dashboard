@@ -26,8 +26,9 @@ class StoreApp {
 
   
 
-   public arrow: string = 'high'
    
+   public sortFlag: boolean = false
+   public arrow: string = 'high' 
 
     constructor(){
         makeAutoObservable(this)
@@ -89,108 +90,124 @@ class StoreApp {
         this.activeButtonPairs = type
     }
 
+    updateArrow =()=>{
+            this.sortFlag ? this.arrow = 'high' : this.arrow ='low'
+    }
+
 
     sortTransactions =(type:string, data: any[])=>{
         if(type ==='Total Value'){
             data.sort((a: { usd_amount: { value: number } },b: { usd_amount: { value: number } })=>{
-                if(this.arrow === 'low'){ this.arrow = 'high'; return b.usd_amount.value - a.usd_amount.value}
-                if(this.arrow === 'high'){this.arrow = 'low'; return a.usd_amount.value - b.usd_amount.value}
+                if(this.sortFlag === false){ return b.usd_amount.value - a.usd_amount.value}
+                if(this.sortFlag === true){return a.usd_amount.value - b.usd_amount.value}
             })
+            this.sortFlag = !this.sortFlag
         }
         if(type ==='Token Amount'){
             data.sort((a: { symbol_one_amount: { value: number } },b: { symbol_one_amount: { value: number } })=>{
-                if(this.arrow === 'low'){ this.arrow = 'high'; return b.symbol_one_amount.value - a.symbol_one_amount.value}
-                if(this.arrow === 'high'){this.arrow = 'low'; return a.symbol_one_amount.value - b.symbol_one_amount.value}
+                if(this.sortFlag === false){ return b.symbol_one_amount.value - a.symbol_one_amount.value}
+                if(this.sortFlag === true){return a.symbol_one_amount.value - b.symbol_one_amount.value}
             })
+            this.sortFlag = !this.sortFlag
         }
         if(type ==='Token Amount '){
             data.sort((a: { symbol_two_amount: { value: number } },b: { symbol_two_amount: { value: number } })=>{
-                if(this.arrow === 'low'){ this.arrow = 'high'; return b.symbol_two_amount.value - a.symbol_two_amount.value}
-                if(this.arrow === 'high'){this.arrow = 'low'; return a.symbol_two_amount.value - b.symbol_two_amount.value}
+                if(this.sortFlag === false){ return b.symbol_two_amount.value - a.symbol_two_amount.value}
+                if(this.sortFlag === true){return b.symbol_two_amount.value - a.symbol_two_amount.value}
             })
+            this.sortFlag = !this.sortFlag
         }
         if(type ==='Time'){
             data.sort((a: { timestamp: number },b: { timestamp: number })=>{
-                if(this.arrow === 'low'){ this.arrow = 'high'; return b.timestamp - a.timestamp}
-                if(this.arrow === 'high'){this.arrow = 'low'; return a.timestamp - b.timestamp}
+                if(this.sortFlag === false){ return b.timestamp - a.timestamp}
+                if(this.sortFlag === true){ return a.timestamp - b.timestamp}
             })
+            this.sortFlag = !this.sortFlag
         }
 
-    }
-    sortTokenTest(data, type) {
-        data.sort((a,b)=>{return a.liquidity.value - b.liquidity.value})
     }
 
     sortTokens =(type:string, data: any[])=>{
         
         if(type ==='Symbol'){
             data.sort((a,b)=>{
-                if(this.arrow === 'low'){ this.arrow = 'high'; return  a.symbol.localeCompare(b.symbol)}
-                if(this.arrow === 'high'){this.arrow = 'low'; return b.symbol.localeCompare(a.symbol)}
+                if(this.sortFlag === false){ return  a.symbol.localeCompare(b.symbol)}
+                if(this.sortFlag === true){return b.symbol.localeCompare(a.symbol)}
             })
+            this.sortFlag = !this.sortFlag
         }
         if(type ==='Liquidity'){
             data.sort((a,b)=>{
-                if(this.arrow === 'low'){ this.arrow = 'high'; return b.liquidity.value - a.liquidity.value}
-                if(this.arrow === 'high'){this.arrow = 'low'; return a.liquidity.value - b.liquidity.value}
-            })
+                if(this.sortFlag === false){ return b.liquidity.value - a.liquidity.value}
+                if(this.sortFlag === true){ return a.liquidity.value - b.liquidity.value}} 
+              )
+              this.sortFlag = !this.sortFlag
         }                    
         
         if(type ==='Volume (24hrs)'){
              data.sort((a,b)=>{
-                if(this.arrow === 'low'){ this.arrow = 'high'; return b.volume_24h.value - a.volume_24h.value}
-                if(this.arrow === 'high'){this.arrow = 'low'; return a.volume_24h.value - b.volume_24h.value}
+                if(this.sortFlag === false){ return b.volume_24h.value - a.volume_24h.value}
+                if(this.sortFlag === true){ return a.volume_24h.value - b.volume_24h.value}
             })
+            this.sortFlag = !this.sortFlag
         }
         if(type ==='Price'){
              data.sort((a,b)=>{
-                if(this.arrow === 'low'){ this.arrow = 'high'; return b.current_usd_price.value - a.current_usd_price.value}
-                if(this.arrow === 'high'){this.arrow = 'low'; return a.current_usd_price.value - b.current_usd_price.value}
+                if(this.sortFlag === false){  return b.current_usd_price.value - a.current_usd_price.value}
+                if(this.sortFlag === true){ return a.current_usd_price.value - b.current_usd_price.value}
             })
+            this.sortFlag = !this.sortFlag
         }
                 if(type ==='Price Change (24hrs)'){
             this.tokens =  data.sort((a,b)=>{
-                if(this.arrow === 'low'){ this.arrow = 'high'; return b.current_usd_price.change - a.current_usd_price.change}
-                if(this.arrow === 'high'){this.arrow = 'low'; return a.current_usd_price.change - b.current_usd_price.change}
+                if(this.sortFlag === false){  return b.current_usd_price.change - a.current_usd_price.change}
+                if(this.sortFlag === true){ return a.current_usd_price.change - b.current_usd_price.change}
             })
+            this.sortFlag = !this.sortFlag
         }
     }
 
     sortPairs =(type:string, data: any[])=>{
         if(type ==='Liquidity'){
             data.sort((a,b)=>{
-                if(this.arrow === 'low'){ this.arrow = 'high'; return b.liquidity.value - a.liquidity.value}
-                if(this.arrow === 'high'){this.arrow = 'low'; return a.liquidity.value - b.liquidity.value}
+                if(this.sortFlag === false){  return b.liquidity.value - a.liquidity.value}
+                if(this.sortFlag === true){ return a.liquidity.value - b.liquidity.value}
             })
+            this.sortFlag = !this.sortFlag
         }
         if(type ==='Volume (24hrs)'){
             data.sort((a,b)=>{
-                if(this.arrow === 'low'){ this.arrow = 'high'; return b.volume_24h.value - a.volume_24h.value}
-                if(this.arrow === 'high'){this.arrow = 'low'; return a.volume_24h.value - b.volume_24h.value}
+                if(this.sortFlag === false){  return b.volume_24h.value - a.volume_24h.value}
+                if(this.sortFlag === true){ return a.volume_24h.value - b.volume_24h.value}
             })
+            this.sortFlag = !this.sortFlag
         }                    
         
         if(type ==='Volume (7d)'){
             data.sort((a,b)=>{
-                if(this.arrow === 'low'){ this.arrow = 'high'; return b.volume_7d.value - a.volume_7d.value}
-                if(this.arrow === 'high'){this.arrow = 'low'; return a.volume_7d.value - b.volume_7d.value}
+                if(this.sortFlag === false){  return b.volume_7d.value - a.volume_7d.value}
+                if(this.sortFlag === true){ return a.volume_7d.value - b.volume_7d.value}
             })
+            this.sortFlag = !this.sortFlag
         }
         if(type ==='Fees (24hrs)'){
             data.sort((a,b)=>{
-                if(this.arrow === 'low'){ this.arrow = 'high'; return b.fees_24h.value - a.fees_24h.value}
-                if(this.arrow === 'high'){this.arrow = 'low'; return a.fees_24h.value - b.fees_24h.value}
+                if(this.sortFlag === false){  return b.fees_24h.value - a.fees_24h.value}
+                if(this.sortFlag === true){ return a.fees_24h.value - b.fees_24h.value}
             })
+            this.sortFlag = !this.sortFlag
         }
                 if(type ==='1y Feels/Liquidity'){
             data.sort((a,b)=>{
-                if(this.arrow === 'low'){ this.arrow = 'high'; return b.fees_24h.change - a.fees_24h.change}
-                if(this.arrow === 'high'){this.arrow = 'low'; return a.fees_24h.change - b.fees_24h.change}
+                if(this.sortFlag === false){ return b.fees_24h.change - a.fees_24h.change}
+                if(this.sortFlag === true){return a.fees_24h.change - b.fees_24h.change}
             })
+            this.sortFlag = !this.sortFlag
         }
 
 
     }
+
 
     addLocalStorageSTORE=(symbol, address)=>{
         localStorage.setItem(symbol, address)
