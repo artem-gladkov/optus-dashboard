@@ -18,7 +18,7 @@ const PairInformationComponent = ({pairname, pairAddress, DAIaddress, USDCAddres
                 </div>
                 <div className='w-1/4'>
                     <p className='mb-2'> Pair Address</p>
-                    <div className='font-medium'>{pairAddress}</div>
+                    <div className='font-medium'>{`${pairAddress.slice(0,4)}...${pairAddress.slice(-4)}`}</div>
                 </div>
                 <div className='w-1/4'>
                     <p className='mb-2'>DAI Address</p> 

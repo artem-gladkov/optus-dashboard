@@ -1,29 +1,30 @@
 import { makeAutoObservable, runInAction } from "mobx"
-
+import { toJS } from "mobx"
 
 
 class StoreApp {
-   private tokens = []
-   private pairs = []
-   private overview: any = {}
-   private singleToken: any = {}
-   private singlePair: any = {}
+    public tokens = []
+    public pairs = []
+    public overview: any = {}
+    public singleToken: any = {}
+    public singlePair: any = {}
 
-   public buttonFavoritesFlag: boolean = false;
-   public footerState: any = []
+    public buttonFavoritesFlag: boolean = false;
+    public footerState: any = []
 
-   public buttonType: string[] = ['All', 'Swaps', 'Adds', 'Removes']
-   public buttonTransactions: string[] = ['Total Value', 'Token Amount', 'Token Amount ', 'Account', 'Time']
+    public buttonType: string[] = ['All', 'Swaps', 'Adds', 'Removes']
+    public activeButton: any = this.buttonType[0]
 
+    public buttonTransactions: string[] = ['Total Value', 'Token Amount', 'Token Amount ', 'Account', 'Time']
+    public activeButtonHeader: any = this.buttonTransactions[0]
 
-   public buttonTokens: string[] = ['Symbol', 'Liquidity', 'Volume (24hrs)', 'Price', 'Price Change (24hrs)']
-   public activeButtonTokens: string = this.buttonTokens[0]
+    public buttonTokens: string[] = ['Symbol', 'Liquidity', 'Volume (24hrs)', 'Price', 'Price Change (24hrs)']
+    public activeButtonTokens: string = this.buttonTokens[0]
 
-   public buttonPairs: string[] = ['Liquidity', 'Volume (24hrs)', 'Volume (7d)', 'Fees (24hrs)', '1y Feels/Liquidity']
-   public activeButtonPairs: string = this.buttonPairs[0]
+    public buttonPairs: string[] = ['Liquidity', 'Volume (24hrs)', 'Volume (7d)', 'Fees (24hrs)', '1y Feels/Liquidity']
+    public activeButtonPairs: string = this.buttonPairs[0]
 
-   public activeButton: any = this.buttonType[0]
-   public activeButtonHeader: any = this.buttonTransactions[0]
+  
 
    public arrow: string = 'high'
    
@@ -51,7 +52,7 @@ class StoreApp {
     overviewApi = async(period: string) => {
         const reqOverview = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/overview?period=${period}&dex=STON.fi`)
         const respOverview = await reqOverview.json()
-        runInAction(()=>{
+        return await runInAction(()=>{
             this.overview =  respOverview
         })
     }
@@ -59,7 +60,7 @@ class StoreApp {
     getTokenSingleApi = async (address:any, period:any) => {
         const reqToken = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/token?address=${address}&period=${period}&dex=STON.fi`)
         const resToken = await reqToken.json()
-        runInAction(()=>{
+        return await runInAction(()=>{
             this.singleToken =  resToken
         })
     }
@@ -67,7 +68,7 @@ class StoreApp {
     getPairSingleApi = async (address:any, period:any) => {
         const reqPair = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/pair?address=${address}&period=${period}&dex=STON.fi`)
         const resPair = await reqPair.json()
-        runInAction(()=>{
+        return await runInAction(()=>{
             this.singlePair =  resPair
         })
     }
@@ -116,13 +117,16 @@ class StoreApp {
         }
 
     }
+    sortTokenTest(data, type) {
+        data.sort((a,b)=>{return a.liquidity.value - b.liquidity.value})
+    }
 
     sortTokens =(type:string, data: any[])=>{
+        
         if(type ==='Symbol'){
             data.sort((a,b)=>{
-                
-                if(this.arrow === 'low'){ this.arrow = 'high'; return  a.symbol.symbol.localeCompare(b.symbol.symbol)}
-                if(this.arrow === 'high'){this.arrow = 'low'; return b.symbol.symbol.localeCompare(a.symbol.symbol)}
+                if(this.arrow === 'low'){ this.arrow = 'high'; return  a.symbol.localeCompare(b.symbol)}
+                if(this.arrow === 'high'){this.arrow = 'low'; return b.symbol.localeCompare(a.symbol)}
             })
         }
         if(type ==='Liquidity'){
@@ -133,19 +137,19 @@ class StoreApp {
         }                    
         
         if(type ==='Volume (24hrs)'){
-            data.sort((a,b)=>{
+             data.sort((a,b)=>{
                 if(this.arrow === 'low'){ this.arrow = 'high'; return b.volume_24h.value - a.volume_24h.value}
                 if(this.arrow === 'high'){this.arrow = 'low'; return a.volume_24h.value - b.volume_24h.value}
             })
         }
         if(type ==='Price'){
-            data.sort((a,b)=>{
+             data.sort((a,b)=>{
                 if(this.arrow === 'low'){ this.arrow = 'high'; return b.current_usd_price.value - a.current_usd_price.value}
                 if(this.arrow === 'high'){this.arrow = 'low'; return a.current_usd_price.value - b.current_usd_price.value}
             })
         }
                 if(type ==='Price Change (24hrs)'){
-            data.sort((a,b)=>{
+            this.tokens =  data.sort((a,b)=>{
                 if(this.arrow === 'low'){ this.arrow = 'high'; return b.current_usd_price.change - a.current_usd_price.change}
                 if(this.arrow === 'high'){this.arrow = 'low'; return a.current_usd_price.change - b.current_usd_price.change}
             })

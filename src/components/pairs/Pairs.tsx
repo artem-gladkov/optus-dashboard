@@ -8,17 +8,17 @@ import ButtonPairs from "../buttonsGroupe/ButtonPairs"
 import FavouritesButton from "../favouritesButton/FavouritesButton"
 
 interface Props {
-    
+    data: any
 }
 
-const PairsComponent = (props: Props) => {
+const PairsComponent = ({data}: Props) => {
 
     useEffect(()=>{
         store.pairsApi()
     },[])
     const {getPairs, buttonPairs, activeButtonPairs} = store
     
-
+    console.log('pairs', toJS(getPairs))
     const ButtonGroupePairs = buttonPairs.map((type, index)=>{
         return (
             <div key={uniqid()} className="flex w-1/5">
@@ -32,15 +32,15 @@ const PairsComponent = (props: Props) => {
 
 
 
-   const pairs =store.getPairs.map((pair: any, index:number)=>{
+   const pairs =data.map((pair: any, index:number)=>{
     return (
         <div key={uniqid()} className="flex w-full justify-between p-4 border-b border-gray-50 border-opacity-20">
                 <div className="w-1/3">
                     <div className="flex items-center ">
                         <span className="mr-3"> {index+1}</span>
-                        <img className="-mr-2 z-10" src={pair.symbol_one.icon} alt="imgToken1" style={{width: 20, height: 20}}/>
-                        <img className="mr-3" src={pair.symbol_two.icon} alt="imgToken2" style={{width: 20, height: 20}}/>
-                        <Link to={`/pairs/${pair.address}`}>   <span className=" font-medium text-slate-900 text-opacity-80 hover:text-slate-50 "> <span>{pair.symbol_one.symbol +  '-' + pair.symbol_two.symbol}</span></span>  </Link>
+                        <img className="-mr-2 z-10" src={pair.token_one.icon} alt="imgToken1" style={{width: 20, height: 20}}/>
+                        <img className="mr-3" src={pair.token_two.icon} alt="imgToken2" style={{width: 20, height: 20}}/>
+                        <Link to={`/pairs/${pair.address}`}>   <span className=" font-medium text-slate-900 text-opacity-80 hover:text-slate-50 "> <span>{pair.name}</span></span>  </Link>
                     </div>
                 </div>
                 <div className="flex w-2/3 ">
@@ -55,7 +55,10 @@ const PairsComponent = (props: Props) => {
    })
 
     return (
-        <div className="w-full border rounded-2xl mt-4">
+        <>
+        {
+            store.getPairs && (
+                <div className="w-full border rounded-2xl mt-4">
             <div className="flex  w-full  p-4 border-b border-gray-50 border-opacity-60">
                 <div  className="w-1/3"> 
                     <div>Name</div>
@@ -70,6 +73,11 @@ const PairsComponent = (props: Props) => {
             {pairs}
             <div className="h-10"></div>
         </div>
+            )
+        }
+        </>
+        
+        
     )
 }
 

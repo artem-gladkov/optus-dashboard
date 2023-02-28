@@ -16,29 +16,29 @@ export const ChartsOverview = (props: {titleMarker?: boolean, type: typeCharts, 
 			backgroundColor = 'transparent',
 			lineColor = '#bf3fb2d5',
 			textColor = 'black',
-			areaTopColor = '#fc039890',
-			areaBottomColor = '#fa059837',
+			areaTopColor = '#fc0097d5',
+			areaBottomColor = '#fc00970e',
 		} = {},
 	} = props;
 
-	const chartContainerRef = useRef();
+	const chartContainerRef = useRef()
 
 	useEffect(
 		() => {
 			const handleResize = () => {
 				chart.applyOptions({ 
 					width: chartContainerRef['current' || ''].clientWidth,
-					height: chartContainerRef['current' || ''].clientHeight,
+					height:  chartContainerRef['current' || ''].clientHeight,
 					
 				 });
 			};
 
-			const chart = createChart(chartContainerRef.current, {
+			const chart = createChart(data &&  chartContainerRef.current, {
 				layout: {
 					background: { type: ColorType.Solid, color: backgroundColor },
 					textColor,
 				},
-				width: chartContainerRef['current' || ''].clientWidth,
+				width:  chartContainerRef['current' || ''].clientWidth,
 				height: chartContainerRef['current' || ''].clientHeight,
 				grid: {
 					horzLines: {
@@ -141,9 +141,12 @@ export const ChartsOverview = (props: {titleMarker?: boolean, type: typeCharts, 
 	);
 
 	return (
-		<div className='h-full' ref={chartContainerRef} >
+		<>
+		{data && 		(<div className='h-full' ref={chartContainerRef} >
 			<Comn titleMarker={titleMarker}  title={type}  char={useChar} data = {data}/>
-		</div>
+		</div>) }
+		</>
+
 	);
 };
 

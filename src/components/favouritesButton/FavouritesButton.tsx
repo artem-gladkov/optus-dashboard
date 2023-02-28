@@ -9,7 +9,7 @@ interface Props  {
 }
 
 const FavouritesButton = observer (({symbol, address}: Props) => {
-    const [active, setActive] = useState(false)
+   
 
     const {getFooterState,addLocalStorageSTORE, removeLocalStoreSTORE,footerUpdate,updatebuttonFavoritesFlag,buttonFavoritesFlag} = store
 

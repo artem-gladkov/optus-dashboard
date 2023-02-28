@@ -11,6 +11,7 @@ import { TokenInformation } from "../components/tokenInformation/TokenInformatio
 import FavouritesButton from "../components/favouritesButton/FavouritesButton"
 import { ChartsForm } from "../components/charts/ChartsForm"
 import { ChartsOverview } from "../components/charts/ChartsOverview"
+import { SearchInput } from "../components/searchInput/SearchInput"
 
 const SingleTokenPageComponent=(props: any) => {
 
@@ -369,19 +370,22 @@ const SingleTokenPageComponent=(props: any) => {
                                 </Link> 
 
                             </div>
-                            <input type="text" className="inputSearch h-6" />
+                            <div className="w-1/2">
+                                <SearchInput />
+                            </div>
+
                     </div>
 
                     <div className="flex justify-between items-end mt-10">
                         <div className="flex items-end ">
-                           <div><img src={getSingleToken.symbol.icon} alt="" width={40}/></div> 
-                           <div className="text-3xl ml-2">{getSingleToken.symbol.name}</div>
-                           <div className="text-3xl ml-2">({getSingleToken.symbol.symbol})</div>
+                           <div><img src={getSingleToken.icon} alt="" width={40}/></div> 
+                           <div className="text-3xl ml-2">{getSingleToken.name}</div>
+                           <div className="text-3xl ml-2">({getSingleToken.symbol})</div>
                            <div className="text-xl ml-2">{getSingleToken.current_usd_price.value}$</div>
                            <div className="ml-2 text-red-700 font-bold">{getSingleToken.current_usd_price.change} %</div>                         
                         </div>
                         <div>
-                            <FavouritesButton symbol={getSingleToken.symbol.symbol} address={getSingleToken.address}/>
+                            <FavouritesButton symbol={getSingleToken.symbol} address={getSingleToken.address}/>
                         </div>
                     </div>
 
@@ -416,7 +420,7 @@ const SingleTokenPageComponent=(props: any) => {
 
                     <div className="flex flex-col mt-5">
                         <h2 className="text-2xl font-normal">Top Pairs</h2>
-                        <Pairs/>    
+                        <Pairs data={getSingleToken.pairs}/>    
                     </div>  
 
                         {/* Транзакции */}
@@ -431,7 +435,7 @@ const SingleTokenPageComponent=(props: any) => {
                     
                     <div className="flex flex-col mt-5">
                         <h2 className="text-2xl font-normal">Token Iformation</h2>
-                        <TokenInformation symbol = {getSingleToken.symbol.symbol} name ={getSingleToken.symbol.name} address = {'1234..12333'}/>    
+                        <TokenInformation symbol = {getSingleToken.symbol} name ={getSingleToken.name} address = {getSingleToken.address}/>    
                     </div>  
 
                     <div className="flex w-full h-10 m-10">
