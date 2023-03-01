@@ -58,8 +58,6 @@ const SearchInputComponent = ({getTokens= store.getTokens, getPairs= store.getPa
                 </ul>
         ) : null
     }
-        
-
     </form>  
     )
 }

@@ -1,10 +1,9 @@
 import { store } from '../../Store/store'
 import uniqid from 'uniqid'
-import { toJS } from 'mobx';
 
 interface Props {
     active?: any;
-    type: 'tokens' | 'pairs' | 'transactions';
+    type: 'tokens' | 'pairs' | 'transactions' | 'filter_transactions';
     flagTransaction?: boolean;
     data?: any;
     flagTokens?: boolean;
@@ -19,11 +18,13 @@ const {arrow, updateActiveButtonTokens,
     sortTokens,
     updateArrow,  
      updateActiveButtonPairs, 
-    sortPairs,updateActiveButton, sortTransactions,} = store
+    sortPairs,updateActiveButtonTransaction, sortTransactions,
+    updateFilterButton} = store
 
 const Arrownone = (button) => {
-    if(button === active && arrow === 'high') {return (<span key={uniqid()}>&dArr;</span>)}
-    if(button === active && arrow === 'low') {return (<span key={uniqid()}>&uArr;</span>)}
+    if(button === active && arrow === 'high' && button !== 'Account' && type !== "filter_transactions" ) {return (<span key={uniqid()}>&dArr;</span>)}
+    if(button === active && arrow === 'low' && button !== 'Account'  && type !== "filter_transactions") {return (<span key={uniqid()}>&uArr;</span>)}
+    return ''
 }    
 
 
@@ -42,9 +43,12 @@ const style = "w-1/5 text-slate-50 hover:text-slate-50 flex"
         updateArrow()
     }
     if(type === "transactions"){
-        updateActiveButton(button)
+        updateActiveButtonTransaction(button)
         sortTransactions(button, data)
         updateArrow()
+    }
+    if(type === "filter_transactions" ){
+        updateFilterButton(button)
     }
 
 }
@@ -53,7 +57,9 @@ const style = "w-1/5 text-slate-50 hover:text-slate-50 flex"
     return (
 
         <>
-        {arrButtons.map((button)=>{ return (
+        {arrButtons.map((button)=>{ 
+            
+            return (
             
             <button key={uniqid()}  
                     onClick={()=>{ButtonHeaderComponent(button)}} 

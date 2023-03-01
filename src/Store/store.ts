@@ -1,5 +1,5 @@
+/* eslint-disable array-callback-return */
 import { makeAutoObservable, runInAction } from "mobx"
-import { toJS } from "mobx"
 
 
 class StoreApp {
@@ -8,15 +8,16 @@ class StoreApp {
     public overview: any = {}
     public singleToken: any = {}
     public singlePair: any = {}
+    public transactions: any = []
 
     public buttonFavoritesFlag: boolean = false;
     public footerState: any = []
 
-    public buttonType: string[] = ['All', 'Swaps', 'Adds', 'Removes']
-    public activeButton: any = this.buttonType[0]
+    public buttonFilterTransaction: string[] = ['All', 'Swaps', 'Adds', 'Removes']
+    public activeButtonFilter: any = this.buttonFilterTransaction[0]
 
     public buttonTransactions: string[] = ['Total Value', 'Token Amount', 'Token Amount ', 'Account', 'Time']
-    public activeButtonHeader: any = this.buttonTransactions[0]
+    public activeButtonTransactions: any = this.buttonTransactions[0]
 
     public buttonTokens: string[] = ['Symbol', 'Liquidity', 'Volume (24hrs)', 'Price', 'Price Change (24hrs)']
     public activeButtonTokens: string = this.buttonTokens[0]
@@ -53,9 +54,14 @@ class StoreApp {
     overviewApi = async(period: string) => {
         const reqOverview = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/overview?period=${period}&dex=STON.fi`)
         const respOverview = await reqOverview.json()
-        return await runInAction(()=>{
+          runInAction( ()=>{
             this.overview =  respOverview
+            this.transactions =   respOverview.transactions
         })
+    }
+    getTransactions = async()=>{
+        await this.overview
+        this.transactions = await this.overview.transactions
     }
 
     getTokenSingleApi = async (address:any, period:any) => {
@@ -74,12 +80,12 @@ class StoreApp {
         })
     }
 
-    updateActiveButton = (type: string) => {
-        this.activeButton = type
+    updateFilterButton = (type: string) => {
+        this.activeButtonFilter = type
     }
 
-    updateActiveButtonHeader = (type: string) => {
-        this.activeButtonHeader = type
+    updateActiveButtonTransaction = (type: string) => {
+        this.activeButtonTransactions = type
     }
 
     updateActiveButtonTokens = (type: string) => {
@@ -111,9 +117,9 @@ class StoreApp {
             this.sortFlag = !this.sortFlag
         }
         if(type ==='Token Amount '){
-            data.sort((a: { symbol_two_amount: { value: number } },b: { symbol_two_amount: { value: number } })=>{
-                if(this.sortFlag === false){ return b.symbol_two_amount.value - a.symbol_two_amount.value}
-                if(this.sortFlag === true){return b.symbol_two_amount.value - a.symbol_two_amount.value}
+            data?.sort((a: { symbol_two_amount: { value: number } },b: { symbol_two_amount: { value: number } })=>{
+                if(this.sortFlag === false){ return b.symbol_two_amount?.value - a.symbol_two_amount?.value}
+                if(this.sortFlag === true){  return a.symbol_two_amount?.value - b.symbol_two_amount?.value}
             })
             this.sortFlag = !this.sortFlag
         }
@@ -226,7 +232,8 @@ class StoreApp {
     updatebuttonFavoritesFlag=()=>{
         this.buttonFavoritesFlag = ! this.buttonFavoritesFlag
     }
-   
+
+
     get getFooterState (){
         return this.footerState
     }
@@ -249,6 +256,19 @@ class StoreApp {
     
     get getSinglePair (): any {
         return this.singlePair
+    }
+
+    get trans (){
+        return this.transactions
+    }
+
+    getTransactionFilter= () =>{
+         this.trans.filter((trans: { type: string; }) => {
+            if(this.activeButtonFilter === 'All'){return trans}
+            if(this.activeButtonFilter === 'Swaps'){return trans?.type === 'swap'}
+            if(this.activeButtonFilter === 'Adds'){return trans?.type === 'add'}
+            if(this.activeButtonFilter === 'Removes'){return trans?.type === 'remove'}
+        })
     }
 
 

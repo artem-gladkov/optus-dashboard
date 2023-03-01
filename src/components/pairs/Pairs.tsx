@@ -4,10 +4,9 @@ import { useEffect, useState } from "react"
 import {toJS} from "mobx"
 import { Link } from "react-router-dom"
 import uniqid from 'uniqid'
-import ButtonPairs from "../buttonsGroupe/ButtonPairs"
 import FavouritesButton from "../favouritesButton/FavouritesButton"
 import { Pagination } from "../pagination/Pagination";
-import {ButtonTokens} from "../buttonsGroupe/ButtonTokens"
+import {ButtonTokens} from "../buttonsGroupe/ButtonGroupeForm"
 
 
 interface Props {
@@ -23,17 +22,6 @@ const PairsComponent = ({data}: Props) => {
     },[])
     const {getPairs, buttonPairs, activeButtonPairs} = store
     
-
-    const ButtonGroupePairs = buttonPairs.map((type, index)=>{
-        return (
-            <div key={uniqid()} className="flex w-1/5">
-                <ButtonPairs data={getPairs} key={uniqid()}  type ={type} active = {activeButtonPairs=== type} >
-                    {type}
-                </ButtonPairs>
-            </div>
-        )
-
-})
 
     const lastItemIndex = currentPage * itemPerPage;
     let firstItemIndex = lastItemIndex - itemPerPage;

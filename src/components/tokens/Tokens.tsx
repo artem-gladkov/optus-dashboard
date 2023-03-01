@@ -2,9 +2,8 @@ import { store } from "../../Store/store"
 import { observer } from "mobx-react-lite"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import {toJS} from "mobx"
 import uniqid from 'uniqid'
-import {ButtonTokens} from "../buttonsGroupe/ButtonTokens"
+import {ButtonTokens} from "../buttonsGroupe/ButtonGroupeForm"
 import { Pagination } from "../pagination/Pagination";
 
 
@@ -14,12 +13,14 @@ interface Props {
 
 const TokensComponent = (props: Props) => {
     const [currentPage, setCurrentPage] = useState(1)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [itemPerPage, setItemPerPage] = useState(8)
 
-    const {buttonTokens,tokensApi, activeButtonTokens,getTokens, sortTokens} = store; 
+    const {buttonTokens,tokensApi, activeButtonTokens,getTokens} = store; 
 
     useEffect(()=>{
         tokensApi()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     
     const lastItemIndex = currentPage * itemPerPage;

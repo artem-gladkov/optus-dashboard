@@ -3,13 +3,11 @@ import { Tokens } from '../components/tokens/Tokens'
 import { observer } from "mobx-react-lite"
 import { Pairs } from '../components/pairs/Pairs'
 import { store } from '../Store/store'
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import {toJS} from "mobx"
 import { Transactions } from '../components/transactions/Transactions'
 import uniqid from 'uniqid'
-import Char from './Char'
 import { ChartsOverview } from '../components/charts/ChartsOverview'
-import { Link } from 'react-router-dom'
 import {SearchInput} from '../components/searchInput/SearchInput'
 
 interface Props {
@@ -20,7 +18,7 @@ const OverviewComponent = (props: Props) => {
 
 
 
-    const {overviewApi, getOverview, getPairs, getTokens } = store
+    const {overviewApi, getOverview, getPairs, getTokens ,trans } = store
 
     useEffect(()=>{
         store.pairsApi()
@@ -87,7 +85,7 @@ const OverviewComponent = (props: Props) => {
 
             <div key={uniqid()} className='flex  flex-col mt-10'>
                 <h1 className='font-medium text-2xl '>Transactions</h1>
-                <Transactions data = {getOverview.transactions}/>
+                <Transactions data = {trans}/>
             </div>
 
 

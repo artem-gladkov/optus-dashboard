@@ -1,9 +1,8 @@
 import { observer } from "mobx-react-lite"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { store } from "../../Store/store"
 import { Link } from "react-router-dom"
 import uniqid from "uniqid"
-import { toJS } from "mobx"
 
 interface Props  {
     
@@ -21,6 +20,7 @@ export const Footer=observer((props: Props) => {
 
   useEffect(()=>{
     footerUpdate()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
 
@@ -31,7 +31,7 @@ export const Footer=observer((props: Props) => {
           <Link to={`/pairs/${item[1]}`}>{item[0].replace('@','')}</Link>
           <button className="ml-2" onClick={()=>{removeItem(item[0])}}>&times;</button>
         </div>
-      ) : (<div className="text-xs mb-2 text-xs font-medium " key={uniqid()}>
+      ) : (<div className="text-xs mb-2  font-medium " key={uniqid()}>
         <Link to={`/tokens/${item[1]}`}>{item[0]}</Link>
         <button className="ml-2" onClick={()=>{removeItem(item[0])}}>&times;</button>
       </div>)

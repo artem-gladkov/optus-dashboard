@@ -1,12 +1,12 @@
 /* eslint-disable array-callback-return */
-import { toJS } from "mobx";
 import { observer } from "mobx-react-lite"
 import { Link } from "react-router-dom"
 import { store } from "../../Store/store";
-import Button from "../buttonsGroupe/ButtonTransaction";
 import uniqid from 'uniqid'
 import { useState } from "react";
 import { Pagination } from "../pagination/Pagination";
+import {ButtonTokens} from "../buttonsGroupe/ButtonGroupeForm"
+
 
 interface Props {
     data: any;
@@ -14,44 +14,28 @@ interface Props {
 
 const TransactionsComponent = (props: Props) => {
     const [currentPage, setCurrentPage] = useState(1)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [itemPerPage, setItemPerPage] = useState(8)
 
 
     const {data} = props
-    const {buttonType, buttonTransactions} = store
+    const {buttonFilterTransaction, buttonTransactions, activeButtonTransactions, activeButtonFilter} = store
 
 
-
-    const ButtonGroupeTransaction = buttonType.map((type, index)=>{
-            return (
-            <Button key={uniqid()}  type ={type} active = {store.activeButton === type} flagTransaction={true} >
-                {type}
-            </Button>)
+    const dataFilter = data?.filter((trans: { type: string; }) => {
+        if(activeButtonFilter=== 'All'){return trans}
+        if(activeButtonFilter === 'Swaps'){return trans?.type === 'swap'}
+        if(activeButtonFilter === 'Adds'){return trans?.type === 'add'}
+        if(activeButtonFilter=== 'Removes'){return trans?.type === 'remove'}
     })
 
-    const ButtonHeaderTransaction = buttonTransactions.map((type, index)=>{
-        return (
-                    <div key={uniqid()} className="flex w-1/5">
-                        <Button data ={data} key = {uniqid()} type ={type} active = {store.activeButtonHeader === type} flagTransaction={false} >
-                            {type}
-                        </Button> 
-                    </div>
-    )
-    })
+
     
     const lastItemIndex = currentPage * itemPerPage;
     const firstItemIndex = lastItemIndex - itemPerPage;
-
-    const dataFilter = data?.filter((trans: { type: string; }) => {
-        if(store.activeButton === 'All'){return trans}
-        if(store.activeButton === 'Swaps'){return trans?.type === 'swap'}
-        if(store.activeButton === 'Adds'){return trans?.type === 'add'}
-        if(store.activeButton === 'Removes'){return trans?.type === 'remove'}
-    })
-
-
+    
     const transaction = dataFilter?.slice(firstItemIndex, lastItemIndex)
-        .map((trans, index)=>{
+        .map((trans)=>{
         return (
             <div key={uniqid()} className="flex w-full justify-between text-base p-4 border-b border-gray-50 border-opacity-20">
                     <div  className="w-1/3">
@@ -82,13 +66,12 @@ const TransactionsComponent = (props: Props) => {
         <div key={uniqid()} className="w-full h-full border rounded-2xl mt-4 ">
             <div className="flex  w-full  p-4 border-b border-gray-50 border-opacity-60">
                 <div  className="w-1/3"> 
-                    <div className="flex justify-between w-2/3">
-                        {ButtonGroupeTransaction}
+                    <div className="flex justify-between w-1/2">
+                        <ButtonTokens arrButtons={buttonFilterTransaction} data={data} key={uniqid()}  active = {activeButtonFilter} type='filter_transactions'/>
                     </div>
                 </div>
-
-                <div  className="flex w-2/3">
-                    {ButtonHeaderTransaction    }                
+                <div className="flex w-2/3 ">
+                   <ButtonTokens arrButtons={buttonTransactions} data={data} key={uniqid()}  active = {activeButtonTransactions} type='transactions'/>
                 </div>
             </div>
                     {transaction}
