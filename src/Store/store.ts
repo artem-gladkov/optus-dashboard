@@ -3,15 +3,25 @@ import { makeAutoObservable, runInAction } from "mobx"
 
 
 class StoreApp {
-    public tokens = []
-    public pairs = []
-    public overview: any = {}
-    public singleToken: any = {}
-    public singlePair: any = {}
-    public transactions: any = []
+    private tokens = []
+    private pairs = []
+    private overview: any = {}
+    private singleToken: any = {}
+    private singlePair: any = {}
+    private transactions: any = []
+
+    private errorTokens: boolean = false
+    private errorTransactions: boolean = false
+    private errorPairs: boolean = false
+    private errorOverview: boolean = false
+    private errorSingleToken: boolean = false
+    private errorSinglePair: boolean = false
+
+
+    private buttonPagination: number[] = []
 
     public buttonFavoritesFlag: boolean = false;
-    public footerState: any = []
+    private footerState: any = []
 
     public buttonFilterTransaction: string[] = ['All', 'Swaps', 'Adds', 'Removes']
     public activeButtonFilter: any = this.buttonFilterTransaction[0]
@@ -36,48 +46,102 @@ class StoreApp {
     }
 
    tokensApi = async () => {
-        const getTokens = await fetch('http://217.61.62.159:8001/api/v1/dashboard/top_tokens?limit=20')
-        const respTokens = await getTokens.json()
-        runInAction( ()=>{
-            this.tokens =   respTokens
-        })
+        try  {
+            const getTokens = await fetch('http://217.61.62.159:8001/api/v1/dashboard/top_tokens?limit=200')
+            if(!getTokens.ok){
+                this.updateErrorTokens(true)
+                throw new Error(getTokens.statusText);
+            }
+            const respTokens = await getTokens.json()
+            runInAction( ()=>{
+                this.tokens =   respTokens
+                this.updateErrorTokens(false)
+            })
+        } catch  (error) {
+            this.updateErrorTokens(true)
+            console.log('tokensApi>>>>>', error)
+        }
     }
 
     pairsApi = async ()  => {
-        const reqPairs = await fetch('http://217.61.62.159:8001/api/v1/dashboard/top_pairs?limit=20')
-        const respPairs = await reqPairs.json()
-        runInAction(()=>{
-            this.pairs =  respPairs
-        })
+        try {
+            const reqPairs = await fetch('http://217.61.62.159:8001/api/v1/dashboard/top_pairs?limit=200')
+            if(!reqPairs.ok){
+                this.updateErrorPairs(true)
+                throw new Error(reqPairs.statusText);
+            }
+            const respPairs = await reqPairs.json()
+            runInAction(()=>{
+                this.pairs =  respPairs
+                this.updateErrorPairs(false)
+            })
+        } catch (error) {
+            this.updateErrorPairs(true)
+            console.log('pairsApi>>>>>', error)
+        }
     }
 
     overviewApi = async(period: string) => {
-        const reqOverview = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/overview?period=${period}&dex=STON.fi`)
-        const respOverview = await reqOverview.json()
-          runInAction( ()=>{
-            this.overview =  respOverview
-            this.transactions =   respOverview.transactions
-        })
-    }
-    getTransactions = async()=>{
-        await this.overview
-        this.transactions = await this.overview.transactions
+        try {
+            const reqOverview = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/overview?period=${period}&dex=STON.fi`)
+            if(!reqOverview.ok){
+                this.updateErrorOwerview(true)
+                throw new Error(reqOverview.statusText);
+            }
+            const respOverview = await reqOverview.json()
+            runInAction(()=>{
+                this.updateOverview(respOverview)
+                this.updateErrorOwerview(false)
+            })
+
+       
+        } catch (error) {
+            this.updateErrorOwerview(true)
+            console.log('overviewApi>>>>',error)    
+        }
+        
     }
 
+
     getTokenSingleApi = async (address:any, period:any) => {
-        const reqToken = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/token?address=${address}&period=${period}&dex=STON.fi`)
-        const resToken = await reqToken.json()
-        return await runInAction(()=>{
-            this.singleToken =  resToken
-        })
+
+        try {
+            const reqToken = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/token?address=${address}&period=${period}&dex=STON.fi`)
+            if(!reqToken.ok){
+                
+                this.updateSingleTokenError(true)
+                throw new Error(reqToken.statusText);
+            }
+            const resToken = await reqToken.json()
+             runInAction(()=>{
+                this.singleToken =  resToken
+                this.updateSingleTokenError(false)
+            })
+    
+            } catch (error) {  
+                this.updateSingleTokenError(true)
+                console.log('getTokenSingleApi>>>>>>',error)   
+            }
     }
 
     getPairSingleApi = async (address:any, period:any) => {
-        const reqPair = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/pair?address=${address}&period=${period}&dex=STON.fi`)
-        const resPair = await reqPair.json()
-        return await runInAction(()=>{
-            this.singlePair =  resPair
-        })
+        try {
+            const reqPair = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/pair?address=${address}&period=${period}&dex=STON.fi`)
+            if(!reqPair.ok){
+                
+                this.updateSinglePairError(true)
+                throw new Error(reqPair.statusText);
+            }
+            const resPair = await reqPair.json()
+             runInAction(()=>{
+                this.singlePair =  resPair
+                this.updateSinglePairError(false)
+            })
+        } catch (error) {
+            this.updateSinglePairError(true)
+            console.log('getPairSingleApi>>>>>',error)   
+        }
+
     }
 
     updateFilterButton = (type: string) => {
@@ -98,6 +162,43 @@ class StoreApp {
 
     updateArrow =()=>{
             this.sortFlag ? this.arrow = 'high' : this.arrow ='low'
+    }
+
+    updateButtonPagination = (button: number[])=>{
+        this.buttonPagination = button
+    }
+
+    updateErrorTokens = (boolean)=>{
+        this.errorTokens = boolean
+    }
+
+    updateErrorPairs = (boolean)=>{
+        this.errorPairs = boolean
+    }
+
+    updateErrorTransactions = (boolean)=>{
+        this.errorTransactions = boolean
+    }
+
+    updateErrorOwerview = (boolean) => {
+        this.errorOverview = boolean
+    }
+
+    
+    updateSingleTokenError = (boolean)=>{
+        this.errorSingleToken = boolean
+    }
+
+    updateSinglePairError = (boolean)=>{
+        this.errorSinglePair = boolean
+    }
+
+    updateTransactions = async (data) => {
+         this.transactions =  data
+    }
+
+    updateOverview = async (data) => {
+        this.overview =  data
     }
 
 
@@ -214,6 +315,15 @@ class StoreApp {
 
     }
 
+    getTransactionFilter= () =>{
+        this.getTrans.filter((trans: { type: string; }) => {
+           if(this.activeButtonFilter === 'All'){return trans}
+           if(this.activeButtonFilter === 'Swaps'){return trans?.type === 'swap'}
+           if(this.activeButtonFilter === 'Adds'){return trans?.type === 'add'}
+           if(this.activeButtonFilter === 'Removes'){return trans?.type === 'remove'}
+       })
+   }
+
 
     addLocalStorageSTORE=(symbol, address)=>{
         localStorage.setItem(symbol, address)
@@ -232,6 +342,7 @@ class StoreApp {
     updatebuttonFavoritesFlag=()=>{
         this.buttonFavoritesFlag = ! this.buttonFavoritesFlag
     }
+
 
 
     get getFooterState (){
@@ -258,20 +369,37 @@ class StoreApp {
         return this.singlePair
     }
 
-    get trans (){
+    get getTrans (){
         return this.transactions
     }
 
-    getTransactionFilter= () =>{
-         this.trans.filter((trans: { type: string; }) => {
-            if(this.activeButtonFilter === 'All'){return trans}
-            if(this.activeButtonFilter === 'Swaps'){return trans?.type === 'swap'}
-            if(this.activeButtonFilter === 'Adds'){return trans?.type === 'add'}
-            if(this.activeButtonFilter === 'Removes'){return trans?.type === 'remove'}
-        })
+    get getPaginationButton (): any {
+        return this.buttonPagination
     }
 
+    get getErrorTokens (): boolean {
+        return this.errorTokens
+    }
 
+    get getErrorPairs (): boolean {
+        return this.errorPairs
+    }
+
+    get getErrorTransactions(): boolean {
+        return this.errorTransactions
+    }
+
+    get getErrorOverview() : boolean {
+        return this.errorOverview
+    }
+
+    get getErrorSingleToken(): boolean {
+        return this.errorSingleToken
+    }
+
+    get getErrorSinglePair(): boolean {
+        return this.errorSinglePair
+    }
 }
 
 

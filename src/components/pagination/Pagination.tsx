@@ -1,5 +1,6 @@
-import React from 'react'
 import uniqid from 'uniqid'
+import { store } from '../../Store/store';
+import { observer } from 'mobx-react-lite';
 
 
 interface Props  {
@@ -9,7 +10,7 @@ interface Props  {
     currentPage: number;
 }
 
-export const Pagination = ({totalItem, itemPerPage, setCurrentPage, currentPage}: Props) => {
+ const PaginationComponent = ({totalItem, itemPerPage, setCurrentPage, currentPage}: Props) => {
   let pages = []
   
   for(let i =1 ; i <=Math.ceil(totalItem/itemPerPage); i++){
@@ -31,3 +32,5 @@ export const Pagination = ({totalItem, itemPerPage, setCurrentPage, currentPage}
     </div>
   )
 }
+
+export const Pagination = observer(PaginationComponent)

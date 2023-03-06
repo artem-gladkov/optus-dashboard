@@ -23,6 +23,8 @@ html,body {
   width: 100%;
 }
 
+/* Background */
+
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
@@ -64,4 +66,53 @@ html,body {
 
 .h-charts{
   height: 400px;
+  width: 50%;
+}
+
+/* Spinner */
+
+.spinner-box {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  margin: 0;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: .25;
+    transform: scale(.75);
+  }
+}
+
+
+.pulse-container {
+  width: 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pulse-bubble {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #f16fc096;
+}
+
+.pulse-bubble-1 {
+    animation: pulse .4s ease 0s infinite alternate;
+}
+.pulse-bubble-2 {
+    animation: pulse .4s ease .2s infinite alternate;
+}
+.pulse-bubble-3 {
+    animation: pulse .4s ease .4s infinite alternate;
 }

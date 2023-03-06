@@ -1,11 +1,14 @@
 import { store } from "../../Store/store"
 import { observer } from "mobx-react-lite"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { Link } from "react-router-dom"
 import uniqid from 'uniqid'
 import {ButtonTokens} from "../buttonsGroupe/ButtonGroupeForm"
 import { Pagination } from "../pagination/Pagination";
-
+import { numberWithSpaces } from "../../function/numberWithSpaces"
+import { numberColor } from "../../function/colorChanges"
+import Spinner from "../spinner/Spinner"
+import { toJS } from "mobx"
 
 interface Props {
     
@@ -15,18 +18,18 @@ const TokensComponent = (props: Props) => {
     const [currentPage, setCurrentPage] = useState(1)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [itemPerPage, setItemPerPage] = useState(8)
-
-    const {buttonTokens,tokensApi, activeButtonTokens,getTokens} = store; 
+    const {buttonTokens,tokensApi, activeButtonTokens,getTokens, getErrorTokens} = store; 
 
     useEffect(()=>{
         tokensApi()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
+
     
     const lastItemIndex = currentPage * itemPerPage;
     let firstItemIndex = lastItemIndex - itemPerPage;
     let idx = firstItemIndex+1
-    const tokens = getTokens.slice(firstItemIndex, lastItemIndex)
+    const tokens = getTokens?.slice(firstItemIndex, lastItemIndex)
                                   .map((token: any, index:number)=>{
                                         return (
                                             <div key={uniqid()} className="flex w-full justify-between p-4 border-b border-gray-50 border-opacity-20">
@@ -38,12 +41,11 @@ const TokensComponent = (props: Props) => {
                                                         </div>
                                                     </div>
                                                     <div className="flex w-2/3">
-                                                        <div className="flex w-1/5"><span>{token.symbol}</span></div>
-                                                        <div className="flex w-1/5"><span>{token.liquidity.value} $</span></div>
-                                                        <div className="flex w-1/5"><span>{token.volume_24h.value} $</span></div>
-                                                        <div className="flex w-1/5"><span className="flex">{token.current_usd_price.value} $</span></div>
-                                                        <div className="flex whitespace-nowrap w-1/5"><span>{token.current_usd_price.change} %</span></div>
-                                                    </div>
+                                                            <div className="flex w-1/5"><span>{token.symbol}</span></div>
+                                                            <div className="flex w-1/5"><span>{numberWithSpaces(token.liquidity.value) } $</span></div>
+                                                            <div className="flex w-1/5"><span>{token.volume_24h.value} $</span></div>
+                                                            <div className="flex w-1/5"><span className="flex">{token.current_usd_price.value} $</span></div>  
+                                                     </div>
                                             </div>
                                         )
                                 })
@@ -60,7 +62,17 @@ const TokensComponent = (props: Props) => {
                 </div>
 
             </div>
-            {tokens}
+           
+            {getTokens.length ? (
+                <>
+                    {!getErrorTokens ? tokens : 'Произошла ошибка, но мы решаем эту проблему'}
+                </>
+            ) : ( getErrorTokens ? 'Произошла ошибка, но мы решаем эту проблему' : ( 
+                                        <div className='w-full h-full flex justify-center  items-center'>
+                                             <Spinner/>
+                                        </div>)) }
+          
+
             <div className="flex justify-center items-center">
                 <Pagination totalItem={store.getTokens.length} 
                             itemPerPage={itemPerPage}

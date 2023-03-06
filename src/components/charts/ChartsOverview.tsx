@@ -1,6 +1,7 @@
 import { createChart, ColorType, ISeriesApi, IChartApi, AreaData, HistogramSeriesOptions, CrosshairMode, LineStyle } from 'lightweight-charts';
-import React, { useEffect, useRef, useState } from 'react';
-
+import { useEffect, useRef, useState } from 'react';
+import { numberWithSpaces } from '../../function/numberWithSpaces';
+import Spinner from '../spinner/Spinner';
 
 type typeCharts = 'Liquidity' | 'Volume (24hrs)'
 
@@ -62,6 +63,11 @@ export const ChartsOverview = (props: {titleMarker?: boolean, type: typeCharts, 
 				
 				
 			});
+			const currentLocale = window.navigator.languages[0];
+			const myPriceFormatter = Intl.NumberFormat(currentLocale, {
+				style: 'currency',
+				currency: 'USD', 
+			}).format;
 	
 			let dateStr = `${data[data.length-1].time.toString().slice(0,4)}`;
 
@@ -86,7 +92,7 @@ export const ChartsOverview = (props: {titleMarker?: boolean, type: typeCharts, 
 						return (
 							<div>
 								{titleMarker ? (<div>{type}</div>) : (<div></div>) }   
-								<div className='text-xl mt-2 font-medium'>{`${data[data.length-1].value} $`}</div>
+								<div className='text-xl mt-2 font-medium'>{`${numberWithSpaces(data[data.length-1].value)} $`}</div>
 								<div className='text-xs'>{dateStr}</div>
 							</div>
 						)
@@ -99,7 +105,7 @@ export const ChartsOverview = (props: {titleMarker?: boolean, type: typeCharts, 
 						return (                    
 						<div>
 							 {titleMarker ? (<div>{type}</div>) : (<div></div>) }   
-							<div className='text-xl mt-2 font-medium'>{`${price.value} $`}</div>
+							<div className='text-xl mt-2 font-medium'>{`${numberWithSpaces(price.value)} $`}</div>
 							<div className='text-xs'>{dateStr}</div>
 						</div>)
 					})
@@ -125,7 +131,10 @@ export const ChartsOverview = (props: {titleMarker?: boolean, type: typeCharts, 
 						color: '#ee69faa4',
 						labelBackgroundColor: '#ee69faa4',
 					},
-				}
+				},
+				localization: {
+					priceFormatter: myPriceFormatter,
+				},
 			})
 			
 
@@ -159,8 +168,8 @@ const Comn = ({title,char, data, titleMarker})=>{
             {char || (
 			<div>
 				{titleMarker ? (<div>{title}</div>) : (<div></div>) } 
-				<div className='text-xl mt-2 font-medium'>{`${data[data.length-1].value} $`}</div>
-				<div className='text-xs'>{data[data.length-1].time}</div>
+				<div className='text-xl mt-2 font-medium'>{`${numberWithSpaces(data[data.length-1]?.value)} $`}</div>
+				<div className='text-xs'>{data[data.length-1]?.time}</div>
 			</div>
 			)}
         </div>

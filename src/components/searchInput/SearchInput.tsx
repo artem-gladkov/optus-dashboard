@@ -5,16 +5,16 @@ import { observer } from 'mobx-react';
 import { store } from '../../Store/store';
 
 interface Props {
-   getPairs?: any;
+   getPairs?: any
    getTokens?: any
 }
 
-const SearchInputComponent = ({getTokens= store.getTokens, getPairs= store.getPairs}: Props) => {
+const SearchInputComponent = ({getTokens, getPairs}: Props) => {
 
     const [valueInput, setValueInput] = useState('')
 
 
-    const searchInput = getTokens
+    const searchInput = getTokens ? getTokens
         .filter((token)=>{return token.name.toLocaleLowerCase().includes(valueInput.toLocaleLowerCase()) || token.symbol.toLocaleLowerCase().includes(valueInput.toLocaleLowerCase())  })
         .map( (token)=>{
             return (
@@ -23,10 +23,10 @@ const SearchInputComponent = ({getTokens= store.getTokens, getPairs= store.getPa
                 </li>
 
             )
-        })
+        }) : ['произошла ошибка']
 
 
-    const searchPairs = getPairs
+    const searchPairs =getPairs ? getPairs
         .filter((pair)=>{
             return pair.name.toLocaleLowerCase().includes(valueInput.toLocaleLowerCase()) || 
                     pair.token_one.name.toLocaleLowerCase().includes(valueInput.toLocaleLowerCase()) ||
@@ -38,7 +38,7 @@ const SearchInputComponent = ({getTokens= store.getTokens, getPairs= store.getPa
                 </li>
 
             )
-        })
+        }) : (<li>ПРОИЗОШЛА ОШИБКА</li>)
 
     return (
 

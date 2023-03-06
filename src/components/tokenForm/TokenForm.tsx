@@ -1,4 +1,6 @@
 import {observer} from 'mobx-react-lite'
+import { numberColor } from '../../function/colorChanges';
+import { numberWithSpaces } from '../../function/numberWithSpaces';
 
 interface Props {
     title:string;
@@ -9,13 +11,13 @@ interface Props {
 
 const TokenFormComponent = ({title, value, change, transaction = false}: Props) => {
     return (
-        <div className="flex flex-col bg-green-200 bg-opacity-20 rounded-2xl p-4 mb-2">
+(        <div className="flex flex-col bg-green-200 bg-opacity-20 rounded-2xl p-4 mb-2">
             <div className='mb-5'><h3>{title}</h3></div>
                 <div className='flex justify-between'>
-                    <div className='text-2xl'>{value} {transaction ?  '' : '$'}</div>
-                    <div>{change}%</div>    
+                    <div className='text-2xl'>{numberWithSpaces(value)} {transaction ?  '' : '$'}</div>
+                    <div className={`${numberColor(change)} font-bold`}>{change}%</div>    
                 </div> 
-        </div>
+        </div>)
     )
 }
 
