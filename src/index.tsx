@@ -20,7 +20,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <BrowserRouter>
+  <div className='wrap'>
       <App />
+  </div>
   </BrowserRouter>
 
 );

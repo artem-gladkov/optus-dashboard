@@ -9,19 +9,19 @@ interface Props {
 
 const TokenInformationComponent = ({name, symbol, address}: Props) => {
     return (
-        <div className='flex w-full mt-4 mb-10 p-4 border rounded-2xl'>
-            <div className='flex w-1/2' >
-                <div className='w-1/3'>
-                    <p className='mb-2'>Symbol</p>   
-                    <div className='font-medium'>{symbol}</div>
+        <div className='flex  w-full mt-4 mb-10 p-4 border rounded-2xl'>
+            <div className='flex md:w-1/2 w-full flex-col md:flex-row' >
+                <div className='md:w-1/3 w-full flex md:block justify-between md:justify-start'>
+                    <p className='mb-2 w-1/2'>Symbol</p>   
+                    <div className='font-medium w-1/2'>{symbol}</div>
                 </div>
-                <div className='w-1/3'>
-                    <p className='mb-2'> Name</p>
-                    <div className='font-medium'>{name}</div>
+                <div className='md:w-1/3 w-full flex md:block justify-between  md:justify-start'>
+                    <p className='mb-2 w-1/2'> Name</p>
+                    <div className='font-medium w-1/2'>{name}</div>
                 </div>
-                <div className='w-1/3'>
-                    <p className='mb-2'>Address</p> 
-                    <div className='font-medium'>{address}</div>
+                <div className='md:w-1/3 w-full flex md:block justify-between  md:justify-start'>
+                    <p className='mb-2 w-1/2'>Address</p> 
+                    <div className='font-medium w-1/2'>{address.slice(0,4)+'...'+ address.slice(-4)}</div>
                 </div>
             </div>
         </div>

@@ -1,0 +1,41 @@
+.swapanimation {
+    
+  /*   background-size: cover; */
+  /*   background-repeat: no-repeat; */
+  
+}
+
+
+
+.swapbutton {
+  display: flex;
+  justify-content: center;
+ position: absolute;
+  width: 100%;
+  height: 450px;
+  border-radius: 150px;
+  filter: blur(40px);
+}
+
+
+
+.swapbutton span {
+  /* margin-right: -350px; */
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  background: linear-gradient(#d4ff28bc, #cb5eb3e0, #7b46ffce);
+  filter: blur(20px);
+  animation: animate 7s linear infinite;
+}
+
+
+
+@keyframes animate {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}

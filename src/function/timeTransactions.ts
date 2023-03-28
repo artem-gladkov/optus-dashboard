@@ -17,7 +17,7 @@ export const timeTransactions = (t) => {
         const mass =  [years, months, days, hours, minutes, seconds]
 
 
-        console.log(mass)
+
         return `${minutes} minutes ago`
         // if(furstIndex[0] === 0){return `${years} years ago`}
         // if(furstIndex[0] === 1){return `${months} months ago`} 

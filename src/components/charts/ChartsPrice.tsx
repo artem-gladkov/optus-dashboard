@@ -24,7 +24,7 @@ export const ChartsForm = ({data}: Props) => {
         const chart = createChart(chartContainerRef.current, {
             layout: {
                 background: { type: ColorType.Solid, color: 'transparent' },
-                textColor: 'black',
+                textColor: '#6A637A',
             },
             width: chartContainerRef['current' || ''].clientWidth,
             height: chartContainerRef['current' || ''].clientHeight,
@@ -67,13 +67,13 @@ export const ChartsForm = ({data}: Props) => {
                 mode: CrosshairMode.Normal,
                 vertLine: {
                     width: 4,
-                    color: '#0630028e',
+                    color: '#7602eb',
                     style: LineStyle.Solid,
-                    labelBackgroundColor: '#0630028e',
+                    labelBackgroundColor: '#7602eb',
                 },
                 horzLine: {
-                    color: '#0630028e',
-                    labelBackgroundColor: '#0630028e',
+                    color: '#7602eb',
+                    labelBackgroundColor: '#7602eb',
                 },
             },
 

@@ -35,8 +35,13 @@ class StoreApp {
     public buttonPairs: string[] = ['Liquidity', 'Volume (24hrs)', 'Volume (7d)', 'Fees (24hrs)', '1y Feels/Liquidity']
     public activeButtonPairs: string = this.buttonPairs[0]
 
-  
+    public buttonDex: string[]= ['STON.fi', 'Megaton']
+    public activeButtonDex: string = this.buttonDex[0]
 
+    public page: string[]= ['', 'pairs', 'tokens']
+    public activePage: string = this.page[0]
+
+    public handlerButtonDex: boolean = true
    
    public sortFlag: boolean = false
    public arrow: string = 'high' 
@@ -45,9 +50,9 @@ class StoreApp {
         makeAutoObservable(this)
     }
 
-   tokensApi = async () => {
+   tokensApi = async (activedex) => {
         try  {
-            const getTokens = await fetch('http://217.61.62.159:8001/api/v1/dashboard/top_tokens?limit=200')
+            const getTokens = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/top_tokens?limit=50&dex=${activedex || 'STON.fi'}`)
             if(!getTokens.ok){
                 this.updateErrorTokens(true)
                 throw new Error(getTokens.statusText);
@@ -63,9 +68,9 @@ class StoreApp {
         }
     }
 
-    pairsApi = async ()  => {
+    pairsApi = async (activedex)  => {
         try {
-            const reqPairs = await fetch('http://217.61.62.159:8001/api/v1/dashboard/top_pairs?limit=200')
+            const reqPairs = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/top_pairs?limit=50&dex=${activedex || 'STON.fi'}`)
             if(!reqPairs.ok){
                 this.updateErrorPairs(true)
                 throw new Error(reqPairs.statusText);
@@ -81,9 +86,9 @@ class StoreApp {
         }
     }
 
-    overviewApi = async(period: string) => {
+    overviewApi = async(period: string, activedex: string) => {
         try {
-            const reqOverview = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/overview?period=${period}&dex=STON.fi`)
+            const reqOverview = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/overview?period=${period}&dex=${activedex || 'STON.fi'}`)
             if(!reqOverview.ok){
                 this.updateErrorOwerview(true)
                 throw new Error(reqOverview.statusText);
@@ -102,11 +107,19 @@ class StoreApp {
         
     }
 
+    updateHandlerButtonDex =() => {
+        this.handlerButtonDex = !this.handlerButtonDex
+    }
+    updateHandlerButtonDexBo = (boolean) => {
+        this.handlerButtonDex = boolean
+    }
+ 
 
-    getTokenSingleApi = async (address:any, period:any) => {
+
+    getTokenSingleApi = async (address:any, period:any, activedex) => {
 
         try {
-            const reqToken = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/token?address=${address}&period=${period}&dex=STON.fi`)
+            const reqToken = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/token?address=${address}&period=${period}&dex=${activedex}`)
             if(!reqToken.ok){
                 
                 this.updateSingleTokenError(true)
@@ -124,9 +137,9 @@ class StoreApp {
             }
     }
 
-    getPairSingleApi = async (address:any, period:any) => {
+    getPairSingleApi = async (address:any, period:any, activedex) => {
         try {
-            const reqPair = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/pair?address=${address}&period=${period}&dex=STON.fi`)
+            const reqPair = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/pair?address=${address}&period=${period}&dex=${activedex}`)
             if(!reqPair.ok){
                 
                 this.updateSinglePairError(true)
@@ -158,6 +171,10 @@ class StoreApp {
 
     updateActiveButtonPairs = (type: string) => {
         this.activeButtonPairs = type
+    }
+
+    updateActiveButtonDex = (type: string) => {
+        this.activeButtonDex = type
     }
 
     updateArrow =()=>{
@@ -199,6 +216,10 @@ class StoreApp {
 
     updateOverview = async (data) => {
         this.overview =  data
+    }
+
+    updateActivePage = (page)=> {
+        this.activePage = page
     }
 
 
@@ -343,6 +364,9 @@ class StoreApp {
         this.buttonFavoritesFlag = ! this.buttonFavoritesFlag
     }
 
+    getActiveButtonDex = (dex) => {
+        this.activeButtonDex = dex
+    }
 
 
     get getFooterState (){
@@ -400,6 +424,8 @@ class StoreApp {
     get getErrorSinglePair(): boolean {
         return this.errorSinglePair
     }
+
+    
 }
 
 

@@ -17,12 +17,12 @@ interface Props  {
     pages.push(i)
   }
 
-  const styleButton = 'mr-3 border-2 border-spacing-2 px-2 rounded-lg hover:text-slate-200 border-violet-500 hover:border-slate-200 active:text-violet-500 active:border-violet-500'
+  const styleButton = 'font-medium mr-3 text-inActive px-3 py-1 rounded-lg hover:text-text'
 
   const pagesComponent = pages.map((page)=>{
     return (
         <button onClick={()=>{setCurrentPage(page)}} 
-                className= { page !== currentPage ? styleButton : `${styleButton} text-slate-200 border-slate-200 ring-4`} key = {uniqid()}>{page}</button>
+                className= { page !== currentPage ? styleButton : `${styleButton} text-text bg-active px-3 py-1`} key = {uniqid()}>{page}</button>
     )
   })
 

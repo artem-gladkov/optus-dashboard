@@ -1,9 +1,9 @@
 export const numberColor = (number: number) => {
         if(number >=0) {
-            return "text-green-700"
+            return "text-numberGreen"
         }
         if(number < 0){
-            return "text-red-600 "
+            return "text-numberRed "
         }
         return ""
 }

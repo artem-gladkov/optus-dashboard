@@ -5,7 +5,15 @@ import Spinner from '../spinner/Spinner';
 
 type typeCharts = 'Liquidity' | 'Volume (24hrs)'
 
-export const ChartsOverview = (props: {titleMarker?: boolean, type: typeCharts, data: any; colors?: { backgroundColor?: "white"; lineColor?: "#2962FF"; textColor?: "black"; areaTopColor?: "#2962FF"; areaBottomColor?: "rgba(41, 98, 255, 0.28)"; }; }) => {
+export const ChartsOverview = (
+	props: {titleMarker?: boolean, type: typeCharts, data: any; 
+	colors?: { backgroundColor?: any; 
+				lineColor?: any; 
+				textColor?: any; 
+				areaTopColor?: any; 
+				areaBottomColor?: any;
+ }; 
+}) => {
 	
 	const [useChar, setChar] = useState<JSX.Element>()
 	
@@ -16,7 +24,7 @@ export const ChartsOverview = (props: {titleMarker?: boolean, type: typeCharts, 
 		colors: {
 			backgroundColor = 'transparent',
 			lineColor = '#bf3fb2d5',
-			textColor = 'black',
+			textColor = '#6A637A',
 			areaTopColor = '#fc0097d5',
 			areaBottomColor = '#fc00970e',
 		} = {},
@@ -43,7 +51,7 @@ export const ChartsOverview = (props: {titleMarker?: boolean, type: typeCharts, 
 				height: chartContainerRef['current' || ''].clientHeight,
 				grid: {
 					horzLines: {
-						color: '#bf3fb2d5',
+						color: areaTopColor,
 				  visible: false,
 					},
 					vertLines: {
@@ -81,7 +89,7 @@ export const ChartsOverview = (props: {titleMarker?: boolean, type: typeCharts, 
 				 });
 			}
 			if(type === 'Volume (24hrs)'){
-				series = chart.addHistogramSeries({ color: '#bf3fb2d5' });
+				series = chart.addHistogramSeries({ color: areaTopColor });
 			}
 
 			series.setData(data);
@@ -105,8 +113,8 @@ export const ChartsOverview = (props: {titleMarker?: boolean, type: typeCharts, 
 						return (                    
 						<div>
 							 {titleMarker ? (<div>{type}</div>) : (<div></div>) }   
-							<div className='text-xl mt-2 font-medium'>{`${numberWithSpaces(price.value)} $`}</div>
-							<div className='text-xs'>{dateStr}</div>
+							<div className='text-xl mt-2 font-medium text-text'>{`${numberWithSpaces(price.value)} $`}</div>
+							<div className='text-xs text-text'>{dateStr}</div>
 						</div>)
 					})
 				}
@@ -123,13 +131,13 @@ export const ChartsOverview = (props: {titleMarker?: boolean, type: typeCharts, 
 					mode: CrosshairMode.Magnet,
 					vertLine: {
 						width: 4,
-						color: '#C3BCDB44',
+						color: areaTopColor,
 						style: LineStyle.Solid,
-						labelBackgroundColor: '#ee69faa4',
+						labelBackgroundColor: areaTopColor,
 					},
 					horzLine: {
-						color: '#ee69faa4',
-						labelBackgroundColor: '#ee69faa4',
+						color: areaTopColor,
+						labelBackgroundColor: areaTopColor,
 					},
 				},
 				localization: {
@@ -151,7 +159,7 @@ export const ChartsOverview = (props: {titleMarker?: boolean, type: typeCharts, 
 
 	return (
 		<>
-		{data && 		(<div className='h-full' ref={chartContainerRef} >
+		{data && 		(<div className='h-full text-text' ref={chartContainerRef} >
 			<Comn titleMarker={titleMarker}  title={type}  char={useChar} data = {data}/>
 		</div>) }
 		</>
@@ -164,12 +172,12 @@ export const ChartsOverview = (props: {titleMarker?: boolean, type: typeCharts, 
 
 const Comn = ({title,char, data, titleMarker})=>{
     return (
-        <div className='-mb-20 p-3'>
+        <div className='-mb-20 p-3 text-text'>
             {char || (
 			<div>
 				{titleMarker ? (<div>{title}</div>) : (<div></div>) } 
-				<div className='text-xl mt-2 font-medium'>{`${numberWithSpaces(data[data.length-1]?.value)} $`}</div>
-				<div className='text-xs'>{data[data.length-1]?.time}</div>
+				<div className='text-xl mt-2 font-medium text-text'>{`${numberWithSpaces(data[data.length-1]?.value)} $`}</div>
+				<div className='text-xs text-text'>{data[data.length-1]?.time}</div>
 			</div>
 			)}
         </div>

@@ -9,6 +9,7 @@ import {ButtonTokens} from "../buttonsGroupe/ButtonGroupeForm"
 import { toJS } from "mobx";
 import { timeTransactions } from "../../function/timeTransactions";
 import Spinner from "../spinner/Spinner";
+import useMedia from "../../hooks/useMedia";
 
 interface Props {
     data: any;
@@ -21,14 +22,19 @@ const TransactionsComponent = ({data, address, error}: Props) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [itemPerPage, setItemPerPage] = useState(8)
 
-
+    const matches = useMedia("(min-width: 1224px)")
+    const matches2 = useMedia("(min-width: 1024px)")
 
     const {buttonFilterTransaction, 
         buttonTransactions, 
         activeButtonTransactions, 
         activeButtonFilter, 
         getErrorTransactions, 
+        activeButtonDex
      } = store
+     const [handleButtonTypeTransaction, setHandleButtonTypeTransaction] = useState(false)
+
+     useEffect(()=>{},[activeButtonDex])
 
 
     const dataFilter = data?.filter((trans: { type: string; }) => {
@@ -43,7 +49,7 @@ const TransactionsComponent = ({data, address, error}: Props) => {
     const transaction = dataFilter?.slice(firstItemIndex, lastItemIndex)
         .map((trans)=>{
         return (
-            <div key={uniqid()} className="flex w-full justify-between text-base p-4 border-b border-gray-50 border-opacity-20">
+            <div key={uniqid()} className="flex w-full justify-between p-4 border-b border-inActive border-opacity-20 text-xs sm:text-base">
                     <div  className="w-1/3">
                         <div  className="flex items-center">
                             <Link  to={`https://tonapi.io/transaction/${trans.hash}`} target="_blank">
@@ -54,17 +60,17 @@ const TransactionsComponent = ({data, address, error}: Props) => {
                         </div>
                     </div>
                     <div  className="flex w-2/3 ">
-                        <div  className="flex w-1/5"><span>{trans.usd_amount.value} $</span></div>
-                        <div  className="flex w-1/5"><span>{trans.symbol_one_amount.value} {trans.symbol_one.symbol}</span></div>
-                        <div  className="flex w-1/5"><span>{trans?.symbol_two_amount?.value} {trans?.symbol_two?.symbol}</span></div>
-                        <div  className="flex w-1/5">
+                        <div  className="flex lg:w-1/5 w-1/2 justify-center lg:justify-start"><span>{trans.usd_amount.value} $</span></div>
+                        <div  className="lg:flex lg:w-1/5 hidden"><span>{trans.symbol_one_amount.value} {trans.symbol_one.symbol}</span></div>
+                        <div  className="lg:flex lg:w-1/5 hidden"><span>{trans?.symbol_two_amount?.value} {trans?.symbol_two?.symbol}</span></div>
+                        <div  className="lg:flex lg:w-1/5 hidden">
                             <Link to={`https://tonapi.io/account/${trans.account}`} target="_blank">
                                 <span className="font-medium text-slate-900 text-opacity-80 hover:text-slate-50 ">
                                     {`${trans.account.slice(0,4)}...${trans.account.slice(-4)}`}
                                 </span>
                             </Link> 
                         </div>
-                        <div  className="flex  whitespace-nowrap w-1/5"><span>{timeTransactions(trans.timestamp)}</span></div>
+                        <div  className="flex  whitespace-nowrap lg:w-1/5 w-1/2 justify-center lg:justify-start"><span>{timeTransactions(trans.timestamp)}</span></div>
                     </div>
             </div>
         )
@@ -72,15 +78,30 @@ const TransactionsComponent = ({data, address, error}: Props) => {
 
 
  return (
-        <div key={uniqid()} className="w-full h-full border rounded-2xl mt-4 ">
-            <div className="flex  w-full  p-4 border-b border-gray-50 border-opacity-60">
+        <div key={uniqid()} className="w-full h-full border rounded-2xl mt-4 bg-form border-inActive ">
+            <div className="flex  w-full  p-4 border-b border-inActive border-opacity-60">
                 <div  className="w-1/3"> 
-                    <div className="flex justify-between w-1/2">
-                        <ButtonTokens arrButtons={buttonFilterTransaction} data={data} key={uniqid()}  active = {activeButtonFilter} type='filter_transactions'/>
-                    </div>
+                {matches ? (
+                                    <div className="flex justify-between w-1/2">
+                                        <ButtonTokens arrButtons={buttonFilterTransaction} data={data} key={uniqid()}  active = {activeButtonFilter} type='filter_transactions'/>
+                                    </div>
+                ) : (   <div>
+                            <button className="border h-7 w-24 rounded flex justify-around" 
+                                    onClick={()=>setHandleButtonTypeTransaction((v)=>!v)}>{activeButtonFilter}
+                                    <div className="rotate-90 text-xl">&#8250;</div>
+                            </button>
+                            {handleButtonTypeTransaction ? (
+                                <div className="absolute bg-form border rounded-md w-24 flex flex-col items-center">
+                                            <ButtonTokens arrButtons={buttonFilterTransaction} data={data} key={uniqid()}  active = {activeButtonFilter} type='filter_transactions'/>
+                                </div>
+                            ): (null)}
+                         </div>
+
+                ) }
+
                 </div>
-                <div className="flex w-2/3 ">
-                    <ButtonTokens arrButtons={buttonTransactions} data={data} key={uniqid()}  active = {activeButtonTransactions} type='transactions'/>
+                <div className="flex w-2/3 text-xs sm:text-base justify-around lg:justify-start">
+                    <ButtonTokens arrButtons={matches2 ? buttonTransactions : ['Total Value', 'Time']} data={data} key={uniqid()}  active = {activeButtonTransactions} type='transactions'/>
                 </div>
             </div>
 
