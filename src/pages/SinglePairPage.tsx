@@ -152,7 +152,7 @@ const SinglePairPageComponent = (props: Props) => {
                                                             <button className="md:hidden flex border items-center justify-around rounded-md" onClick={()=>setHandleButtonCharts((v)=>!v)}>             {typeButtonCharts}<div className="rotate-90 text-2xl">&#8250;</div>
                                                             </button>
                                                             <div className="hidden md:block">
-                                                            <ButtonsCharts namePairsOne={getSinglePair.token_one.symbol} 
+                                                                    <ButtonsCharts namePairsOne={getSinglePair.token_one.symbol} 
                                                                         namePairsTwo={getSinglePair.token_two.symbol} 
                                                                         isPairs={true} 
                                                                         typeButtonCharts={typeButtonCharts} 
@@ -160,7 +160,7 @@ const SinglePairPageComponent = (props: Props) => {
                                                             </div>
                                                                 {handleButtonCharts ? (
                                                                     <div className="absolute flex z-50 mt-7 bg-form flex-end md:hidden">
-                                                                        <ButtonsCharts namePairsOne={getSinglePair.token_one.symbol} 
+                                                                    <ButtonsCharts namePairsOne={getSinglePair.token_one.symbol} 
                                                                         namePairsTwo={getSinglePair.token_two.symbol} 
                                                                         isPairs={true} 
                                                                         typeButtonCharts={typeButtonCharts} 
