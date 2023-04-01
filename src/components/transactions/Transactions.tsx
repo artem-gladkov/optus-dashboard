@@ -70,7 +70,7 @@ const TransactionsComponent = ({data, address, error}: Props) => {
                                 </span>
                             </Link> 
                         </div>
-                        <div  className="flex  whitespace-nowrap lg:w-1/5 w-1/2 justify-center lg:justify-start"><span>{timeTransactions(trans.timestamp)}</span></div>
+                        <div  className="flex  whitespace-nowrap lg:w-1/5 w-1/2 justify-center lg:justify-start"><span>{trans.time_ago}</span></div>
                     </div>
             </div>
         )
