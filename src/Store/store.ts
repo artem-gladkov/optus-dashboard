@@ -52,7 +52,7 @@ class StoreApp {
 
    tokensApi = async (activedex) => {
         try  {
-            const getTokens = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/top_tokens?limit=50&dex=${activedex || 'STON.fi'}`)
+            const getTokens = await fetch(`https://api.optus.fi/api/v1/dashboard/top_tokens?limit=50&dex=${activedex || 'STON.fi'}`)
             if(!getTokens.ok){
                 this.updateErrorTokens(true)
                 throw new Error(getTokens.statusText);
@@ -70,7 +70,7 @@ class StoreApp {
 
     pairsApi = async (activedex)  => {
         try {
-            const reqPairs = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/top_pairs?limit=50&dex=${activedex || 'STON.fi'}`)
+            const reqPairs = await fetch(`https://api.optus.fi/api/v1/dashboard/top_pairs?limit=50&dex=${activedex || 'STON.fi'}`)
             if(!reqPairs.ok){
                 this.updateErrorPairs(true)
                 throw new Error(reqPairs.statusText);
@@ -88,7 +88,7 @@ class StoreApp {
 
     overviewApi = async(period: string, activedex: string) => {
         try {
-            const reqOverview = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/overview?period=${period}&dex=${activedex || 'STON.fi'}`)
+            const reqOverview = await fetch(`https://api.optus.fi/api/v1/dashboard/overview?period=${period}&dex=${activedex || 'STON.fi'}`)
             if(!reqOverview.ok){
                 this.updateErrorOwerview(true)
                 throw new Error(reqOverview.statusText);
@@ -119,7 +119,7 @@ class StoreApp {
     getTokenSingleApi = async (address:any, period:any, activedex) => {
 
         try {
-            const reqToken = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/token?address=${address}&period=${period}&dex=${activedex}`)
+            const reqToken = await fetch(`https://api.optus.fi/api/v1/dashboard/token?address=${address}&period=${period}&dex=${activedex}`)
             if(!reqToken.ok){
                 
                 this.updateSingleTokenError(true)
@@ -139,7 +139,7 @@ class StoreApp {
 
     getPairSingleApi = async (address:any, period:any, activedex) => {
         try {
-            const reqPair = await fetch(`http://217.61.62.159:8001/api/v1/dashboard/pair?address=${address}&period=${period}&dex=${activedex}`)
+            const reqPair = await fetch(`https://api.optus.fi/api/v1/dashboard/pair?address=${address}&period=${period}&dex=${activedex}`)
             if(!reqPair.ok){
                 
                 this.updateSinglePairError(true)
