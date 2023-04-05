@@ -24,7 +24,7 @@
   width: 550px;
   height: 550px;
   border-radius: 50%;
-  background: linear-gradient(#d4ff28bc, #cb5eb3e0, #7b46ffce);
+  background: linear-gradient(#F7C64E, #BD64B0, #7449F6);
   filter: blur(20px);
   animation: animate 7s linear infinite;
 }

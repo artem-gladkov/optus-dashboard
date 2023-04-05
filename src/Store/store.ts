@@ -1,4 +1,5 @@
 /* eslint-disable array-callback-return */
+import { log } from "console"
 import { makeAutoObservable, runInAction } from "mobx"
 
 
@@ -126,6 +127,7 @@ class StoreApp {
                 throw new Error(reqToken.statusText);
             }
             const resToken = await reqToken.json()
+            
              runInAction(()=>{
                 this.singleToken =  resToken
                 this.updateSingleTokenError(false)
@@ -146,6 +148,7 @@ class StoreApp {
                 throw new Error(reqPair.statusText);
             }
             const resPair = await reqPair.json()
+            console.log(resPair)
              runInAction(()=>{
                 this.singlePair =  resPair
                 this.updateSinglePairError(false)

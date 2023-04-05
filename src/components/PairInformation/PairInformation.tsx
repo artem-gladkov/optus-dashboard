@@ -1,4 +1,5 @@
 import {observer} from 'mobx-react-lite'
+import { Link } from 'react-router-dom';
 
 
 interface Props {
@@ -18,7 +19,9 @@ const PairInformationComponent = ({pairname, pairAddress, DAIaddress, USDCAddres
                 </div>
                 <div className='md:w-1/4 w-full flex md:block'>
                     <p className='mb-2 w-1/2'> Pair Address</p>
-                    <div className='font-medium'>{`${pairAddress.slice(0,4)}...${pairAddress.slice(-4)}`}</div>
+                    <Link to={`https://tonapi.io/account/${pairAddress}`} target="_blank">
+                        <div className='font-medium'>{`${pairAddress.slice(0,4)}...${pairAddress.slice(-4)}`}</div>
+                    </Link>
                 </div>
                 <div className='md:w-1/4 w-full flex md:block'>
                     <p className='mb-2 w-1/2'>DAI Address</p> 
