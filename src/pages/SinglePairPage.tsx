@@ -51,7 +51,7 @@ const SinglePairPageComponent = (props: Props) => {
         updateHandlerButtonDexBo(true)
     }, [address])
 
-    
+    console.log(toJS(getSinglePair))
   
     
     return ( 
@@ -192,8 +192,10 @@ const SinglePairPageComponent = (props: Props) => {
                                                 <h2 className="text-2xl font-normal">Pair Information</h2>
                                                 <PairInformation pairname={`${getSinglePair.token_one.symbol} - ${getSinglePair.token_two.symbol}`}
                                                                     pairAddress={getSinglePair.address}
-                                                                    DAIaddress='1223123'
-                                                                    USDCAddress="123123"/>    
+                                                                    tokenOneAddress={getSinglePair.token_one.address}
+                                                                    tokenTwoAddress={getSinglePair.token_two.address}
+                                                                    tokenOneSymbol={getSinglePair.token_one.symbol}
+                                                                    tokenTwoSymbol={getSinglePair.token_two.symbol}/>    
                                             </div>  
 
                                             <div className="flex w-full h-10 m-10">
