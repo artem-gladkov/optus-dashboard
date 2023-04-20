@@ -1,28 +1,17 @@
-.swapanimation {
-    
-  /*   background-size: cover; */
-  /*   background-repeat: no-repeat; */
-  
-}
-
 
 
 .swapbutton {
-  display: flex;
-  justify-content: center;
- position: absolute;
-  width: 100%;
+  position: absolute;
   height: 450px;
   border-radius: 150px;
   filter: blur(40px);
 }
 
 
-
 .swapbutton span {
-  /* margin-right: -350px; */
-  width: 550px;
-  height: 550px;
+  position: static;
+  min-width: 450px;
+  height: 450px;
   border-radius: 50%;
   background: linear-gradient(#F7C64E, #BD64B0, #7449F6);
   filter: blur(20px);
@@ -39,3 +28,16 @@
       transform: rotate(360deg);
   }
 }
+
+/* @media (max-width: 580px){
+  .swapbutton span {
+    position: absolute;
+    display: block;
+    width: 550px;
+    height: 550px;
+  }
+
+  .swapbutton {
+    position: relative;
+  }
+} */
