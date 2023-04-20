@@ -27,7 +27,7 @@ const PairsComponent = ( {data}: Props) => {
     },[activeButtonDex])
    
     
-
+console.log(toJS(data))
     const lastItemIndex = currentPage * itemPerPage;
     let firstItemIndex = lastItemIndex - itemPerPage;
     let idx = firstItemIndex+1
@@ -52,7 +52,7 @@ const PairsComponent = ( {data}: Props) => {
                             <div className={!matches ? 'flex w-1/2 justify-end' : 'flex w-1/5'}><span>{pair.volume_24h.value} $</span></div>
                             <div className={!matches ? 'hidden' : 'flex w-1/5'}><span>{pair.volume_7d.value} $</span></div>
                             <div className={!matches ? 'hidden' : 'flex w-1/5'}><span className="flex">{pair.fees_24h.value} $</span></div>
-                            <div className={!matches ? 'hidden' : `${numberColor(pair.volume_24h.change)} flex  whitespace-nowrap w-1/5 font-bold`}><span className="whitespace-nowrap">{pair.volume_24h.change} %</span></div>
+                            <div className={!matches ? 'hidden' : `${numberColor(pair.fees_liquidity_ratio.value)} flex  whitespace-nowrap w-1/5 font-bold`}><span className="whitespace-nowrap">{pair.fees_liquidity_ratio.value} %</span></div>
 
                         </>
                        )

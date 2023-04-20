@@ -24,18 +24,16 @@ const PairsPageComponent = (props: Props) => {
     return (
         <div className="h-full py-14 relative  bg-bg flex flex-col justify-center mt-14">
             <div className="lg:px-14 ">
-            <Bg/>
-            <div className="flex w-full relative flex-col text-text z-50">
-                <div className="flex justify-between w-full  flex-wrap  items-center my-5 z-50">
-                        <h2 className="flex text-3xl font-medium">Top Pairs {activeButtonDex}</h2>
-                        <div className="w-1/2">
-                            {/* <SearchInput /> */}
-                        </div>
+                <Bg/>
+                <div className="flex w-full relative flex-col text-text z-50">
+                    <div className="flex justify-between w-full  flex-wrap  items-center my-5 z-50">
+                            <h2 className="flex text-3xl font-medium">Top Pairs {activeButtonDex}</h2>
+                            <div className="w-1/2">
+                                {/* <SearchInput /> */}
+                            </div>
+                    </div>
+                    <Pairs data= {getPairs}/>
                 </div>
-                <Pairs data= {getPairs}/>
-            </div>
-
-
             </div>
         </div>
 
