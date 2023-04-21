@@ -21,6 +21,8 @@ const Bg = (props: Props) => {
           <span className='-ml-80'></span>
           <span className='-ml-80'></span>
           <span className='-ml-80'></span>
+          <span className='-ml-80'></span>
+          <span className='-ml-80'></span>
       </div>
     </div>
 
