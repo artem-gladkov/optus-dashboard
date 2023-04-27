@@ -20,16 +20,10 @@ const RoutesPathComponent = (props: Props) => {
                 <Route index element = {<Overview/>} />
                 <Route path="/dex" element = {<Overview/>} /> 
                 <Route path=":dex" element = {<Overview/>} />
-                 
                 <Route path=":dex/tokens" element = {<TokensPage/>} />
                 <Route path=":dex/tokens/:address" element = {<SingleTokenPage/>} />
                 <Route path=":dex/pairs" element = {<PairsPage/>} />
                 <Route path=":dex/pairs/:address" element = {<SinglePairPage/>} />
-
-                {/* <Route path=":dex/:tokens" element = {<TokensPage/>} />
-                <Route path=":dex/:tokens/:address" element = {<SingleTokenPage/>} />
-                <Route path=":dex/:pairs" element = {<PairsPage/>} />
-                <Route path=":dex/:pairs/:address" element = {<SinglePairPage/>} /> */}
                 <Route path="*" element = {<NotfoundPage/>} />
             </Route>   
         </Routes>

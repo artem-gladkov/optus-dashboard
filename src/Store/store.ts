@@ -51,6 +51,14 @@ class StoreApp {
         makeAutoObservable(this)
     }
 
+   dexListApi = async  () => {
+        const req = await fetch('https://api.optus.fi/api/v1/dashboard/dex_list')
+        const res = await req.json()
+        runInAction(()=> {
+            this.buttonDex = res
+        })
+   } 
+
    tokensApi = async (activedex) => {
         try  {
             const getTokens = await fetch(`https://api.optus.fi/api/v1/dashboard/top_tokens?limit=50&dex=${activedex || 'STON.fi'}`)

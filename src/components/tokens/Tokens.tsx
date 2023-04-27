@@ -45,10 +45,10 @@ const TokensComponent = (props: Props) => {
                                                         <div className="flex items-center ">
                                                             <span className="mr-3"> {idx++}</span>
                                                             <img className="mr-3" src={token.icon} alt="imgToken" style={{width: 20, height: 20}}/>
-                                                            <Link  to={`/${dex}/tokens/${token.address}`}>   
+                                                            <Link  to={`/${dex || 'STON.fi'}/tokens/${token.address}`}>   
                                                                 <span className="font-medium  text-opacity-80  ">{token.name}</span>
                                                                 <span className="text-inActive ml-2">({token.symbol})</span> 
-                                                             </Link>
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                     <div className="flex lg:w-2/3 w-full text-xs sm:text-base font-medium">

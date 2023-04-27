@@ -15,30 +15,27 @@ import Bg from '../components/background/bg'
 import { Link, useParams } from "react-router-dom"
 
 
-interface Props {
-    
-}
 
-const OverviewComponent = (props: Props) => {
+
+const OverviewComponent = () => {
     
 
     const [errorTransaction, setErrorTransaction] = useState(false)
-    const {overviewApi, getOverview, getPairs , getErrorOverview, activeButtonDex, buttonDex, updateActiveButtonDex,updateOverview,updateHandlerButtonDexBo } = store
+    const {overviewApi, getOverview, getPairs , getErrorOverview, activeButtonDex, updateOverview,updateHandlerButtonDexBo, dexListApi } = store
 
     const {dex} = useParams()
 
-    const [prevBTN, setPrevBTN] = useState(activeButtonDex)
 
 
     useEffect(()=>{
+        dexListApi()
         updateHandlerButtonDexBo(true)
         updateOverview({})
         if(getErrorOverview) {setErrorTransaction(true)}
         if(!getErrorOverview) {setErrorTransaction(false)}
         overviewApi('1Y', dex || 'STON.fi')  
         updateHandlerButtonDexBo(true)
-
-        console.log('effect overvue')
+    
     }, [activeButtonDex])
     
 
