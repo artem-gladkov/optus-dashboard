@@ -17,7 +17,7 @@ interface Props {
 }
 
 const PairsComponent = ( {data}: Props) => {
-    const matches = useMedia("(min-width: 835px)")
+    const matches = useMedia("(min-width: 1300px)")
     const [currentPage, setCurrentPage] = useState(1)
     const [itemPerPage, setItemPerPage] = useState(8)
     const {getPairs, buttonPairs, activeButtonPairs, pairsApi, getErrorPairs, activeButtonDex} = store
@@ -35,9 +35,9 @@ console.log(toJS(data))
    const pairs =data?.slice(firstItemIndex, lastItemIndex).map((pair: any, index:number)=>{
     
     return (
-        <div key={uniqid()} className="flex w-full justify-between p-4 border-b border-inActive border-opacity-20">
+        <div key={uniqid()} className="flex w-full p-4 border-b border-inActive border-opacity-20 ">
                 <div className="lg:w-1/3 w-1/4">
-                    <div className="flex items-center ">
+                    <div className="flex items-center">
                         <span className="mr-3"> {idx++}</span>
                         <img className="-mr-2 z-10" src={pair.token_one.icon} alt="imgToken1" style={{width: 20, height: 20}}/>
                         <img className="mr-3" src={pair.token_two.icon} alt="imgToken2" style={{width: 20, height: 20}}/>
@@ -48,11 +48,15 @@ console.log(toJS(data))
                     {
                        pair.liquidity?.value && (
                         <>
-                            <div className={!matches ? 'flex w-1/2 justify-end' : 'flex w-1/5'}><span>{numberWithSpaces(pair.liquidity.value)} $</span></div>
-                            <div className={!matches ? 'flex w-1/2 justify-end' : 'flex w-1/5'}><span>{pair.volume_24h.value} $</span></div>
-                            <div className={!matches ? 'hidden' : 'flex w-1/5'}><span>{pair.volume_7d.value} $</span></div>
-                            <div className={!matches ? 'hidden' : 'flex w-1/5'}><span className="flex">{pair.fees_24h.value} $</span></div>
-                            <div className={!matches ? 'hidden' : `${numberColor(pair.fees_liquidity_ratio.value)} flex  whitespace-nowrap w-1/5 font-bold`}><span className="whitespace-nowrap">{pair.fees_liquidity_ratio.value} %</span></div>
+                            <div className={!matches ? 'flex w-1/3 justify-center' : 'flex w-1/6'}><span>{numberWithSpaces(pair.liquidity.value)} $</span></div>
+                            <div className={!matches ? 'flex w-1/3 items-center flex-col break-all' : 'flex w-1/6 flex-col break-all'}>
+                                <span>{pair.symbol_one_indicators.pool_quantity.value} {pair.token_one.symbol}</span>
+                                <span>{pair.symbol_two_indicators.pool_quantity.value} {pair.token_two.symbol}</span>
+                            </div>
+                            <div className={!matches ? 'flex w-1/3 justify-center' : 'flex w-1/6'}><span>{pair.volume_24h.value} $</span></div>
+                            <div className={!matches ? 'hidden' : 'flex w-1/6'}><span>{pair.volume_7d.value} $</span></div>
+                            <div className={!matches ? 'hidden' : 'flex w-1/6'}><span className="flex">{pair.fees_24h.value} $</span></div>
+                            <div className={!matches ? 'hidden' : `${numberColor(pair.fees_liquidity_ratio.value)} flex  whitespace-nowrap w-1/6 font-bold`}><span className="whitespace-nowrap">{pair.fees_liquidity_ratio.value} %</span></div>
 
                         </>
                        )
@@ -64,15 +68,15 @@ console.log(toJS(data))
 
     return (
        
-                <div className="w-full border rounded-2xl mt-4 bg-form border-inActive text-xs sm:text-base">
+                <div className="w-full border rounded-2xl mt-4 bg-form border-inActive text-xs sm:text-base ">
                     <div className="flex  w-full  p-4 border-b border-inActive border-opacity-60">
                         <div  className="lg:w-1/3 w-1/4 font-medium"> 
                             <div>Name</div>
                         </div>
 
-                        <div className={`flex ${!matches ? 'w-3/4' : 'w-2/3'} whitespace-nowrap`}>
+                        <div className={`flex ${!matches ? 'w-3/4' : 'w-2/3'}`}>
                         <ButtonTokens 
-                                arrButtons={!matches ? ['Liquidity', 'Volume (24hrs)'] : buttonPairs} 
+                                arrButtons={!matches ? ['Liquidity','Liquidity Jettons', 'Volume (24hrs)'] : buttonPairs} 
                                 data={getPairs} 
                                 key={uniqid()}  
                                 active = {activeButtonPairs} 
