@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { store } from "../../Store/store"
 import { observer } from "mobx-react-lite"
 import { useEffect, useState } from "react"
 import {toJS} from "mobx"
 import { Link, useParams } from "react-router-dom"
 import uniqid from 'uniqid'
-import FavouritesButton from "../favouritesButton/FavouritesButton"
 import { Pagination } from "../pagination/Pagination";
 import {ButtonTokens} from "../buttonsGroupe/ButtonGroupeForm"
 import { numberWithSpaces } from "../../function/numberWithSpaces"
@@ -19,6 +19,7 @@ interface Props {
 const PairsComponent = ( {data}: Props) => {
     const matches = useMedia("(min-width: 1300px)")
     const [currentPage, setCurrentPage] = useState(1)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [itemPerPage, setItemPerPage] = useState(8)
     const {getPairs, buttonPairs, activeButtonPairs, pairsApi, getErrorPairs, activeButtonDex} = store
     const {dex} = useParams()

@@ -6,8 +6,6 @@ import uniqid from 'uniqid'
 import { useEffect, useState } from "react";
 import { Pagination } from "../pagination/Pagination";
 import {ButtonTokens} from "../buttonsGroupe/ButtonGroupeForm"
-import { toJS } from "mobx";
-import { timeTransactions } from "../../function/timeTransactions";
 import Spinner from "../spinner/Spinner";
 import useMedia from "../../hooks/useMedia";
 
@@ -29,7 +27,6 @@ const TransactionsComponent = ({data, address, error}: Props) => {
         buttonTransactions, 
         activeButtonTransactions, 
         activeButtonFilter, 
-        getErrorTransactions, 
         activeButtonDex
      } = store
      const [handleButtonTypeTransaction, setHandleButtonTypeTransaction] = useState(false)
