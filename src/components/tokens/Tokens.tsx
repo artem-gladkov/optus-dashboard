@@ -1,6 +1,6 @@
 import { store } from "../../Store/store"
 import { observer } from "mobx-react-lite"
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import uniqid from 'uniqid'
 import {ButtonTokens} from "../buttonsGroupe/ButtonGroupeForm"
@@ -8,7 +8,6 @@ import { Pagination } from "../pagination/Pagination";
 import { numberWithSpaces } from "../../function/numberWithSpaces"
 import { numberColor } from "../../function/colorChanges"
 import Spinner from "../spinner/Spinner"
-import { toJS } from "mobx"
 import useMedia from "../../hooks/useMedia"
 
 interface Props {
@@ -25,7 +24,7 @@ const TokensComponent = (props: Props) => {
     
     const {dex} = useParams()
 
-    console.log(toJS(getTokens))
+    // console.log(toJS(getTokens))
 
     useEffect(()=>{
         tokensApi(dex)
@@ -59,6 +58,7 @@ const TokensComponent = (props: Props) => {
                                                                 </Link>
                                                             </div>
                                                             <div className="flex md:w-1/5 w-1/3  justify-center md:justify-start"><span>{numberWithSpaces(token.liquidity.value) } $</span></div>
+                                                            <div className="flex md:w-1/5 w-1/3  justify-center md:justify-start"><span>{token.native_liquidity.value } </span></div>
                                                             <div className="flex md:w-1/5 w-1/3 px-2 justify-center  md:justify-start"><span>{token.volume_24h.value} $</span></div>
                                                             <div className="md:flex md:w-1/5 hidden  md:flex-row justify-center  md:justify-start"><span className="flex">{token.current_usd_price.value} $</span></div>
                                                             <div className={`md:flex md:w-1/5 hidden  md:flex-row justify-end  md:justify-start ${numberColor(token.current_usd_price.change)}`}><span className="flex">{token.current_usd_price.change} %</span></div>  
@@ -69,14 +69,14 @@ const TokensComponent = (props: Props) => {
                                 })
 
     return (
-        <div className="w-full h-full border border-inActive rounded-2xl mt-4 bg-form tex-text">
-            <div className="flex  w-full  p-4 border-b border-inActive border-opacity-60 text-xs sm:text-base">
+        <div className="w-full border rounded-2xl mt-4 bg-form border-inActive text-xs sm:text-base">
+            <div className="flex  w-full  p-4 border-b border-inActive border-opacity-60">
                 <div  className="lg:w-1/3 hidden lg:flex"> 
                     <div>Name</div>
                 </div>
 
-                <div className="flex lg:w-2/3 w-full ">
-                   <ButtonTokens arrButtons={!matches ? ['Symbol', 'Liquidity', 'Volume (24hrs)'] : buttonTokens} 
+                <div className="flex lg:w-2/3 w-full break-all">
+                   <ButtonTokens arrButtons={!matches ? ['Symbol', 'Liquidity $', 'Liquidity Jettons', 'Volume (24hrs)'] : buttonTokens} 
                                     data={getTokens} key={uniqid()}  
                                     active = {activeButtonTokens} 
                                     type='tokens'/>

@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import { log } from "console"
+
 import { makeAutoObservable, runInAction } from "mobx"
 
 
@@ -30,10 +30,10 @@ class StoreApp {
     public buttonTransactions: string[] = ['Total Value', 'Token Amount', 'Token Amount ', 'Account', 'Time']
     public activeButtonTransactions: any = this.buttonTransactions[0]
 
-    public buttonTokens: string[] = ['Symbol', 'Liquidity', 'Volume (24hrs)', 'Price', 'Price Change (24hrs)']
+    public buttonTokens: string[] = ['Symbol', 'Liquidity $', 'Liquidity Jettons', 'Volume (24hrs)', 'Price', 'Price Change (24hrs)']
     public activeButtonTokens: string = this.buttonTokens[0]
 
-    public buttonPairs: string[] = ['Liquidity', 'Volume (24hrs)', 'Volume (7d)', 'Fees (24hrs)', '1y Feels/Liquidity']
+    public buttonPairs: string[] = ['Liquidity', 'Liquidity Jettons', 'Volume (24hrs)', 'Volume (7d)', 'Fees (24hrs)', '1y Feels/Liquidity']
     public activeButtonPairs: string = this.buttonPairs[0]
 
     public buttonDex: string[]= ['STON.fi', 'Megaton']
@@ -275,13 +275,21 @@ class StoreApp {
             })
             this.sortFlag = !this.sortFlag
         }
-        if(type ==='Liquidity'){
+        if(type ==='Liquidity $'){
             data.sort((a,b)=>{
                 if(this.sortFlag === false){ return b.liquidity.value - a.liquidity.value}
                 if(this.sortFlag === true){ return a.liquidity.value - b.liquidity.value}} 
               )
               this.sortFlag = !this.sortFlag
-        }                    
+        }
+        
+        if(type ==='Liquidity Jettons'){
+            data.sort((a,b)=>{
+                if(this.sortFlag === false){ return b.liquidity.value - a.liquidity.value}
+                if(this.sortFlag === true){ return a.liquidity.value - b.liquidity.value}} 
+              )
+              this.sortFlag = !this.sortFlag
+        }    
         
         if(type ==='Volume (24hrs)'){
              data.sort((a,b)=>{

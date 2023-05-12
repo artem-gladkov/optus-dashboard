@@ -6,8 +6,6 @@ import uniqid from 'uniqid'
 import { useEffect, useState } from "react";
 import { Pagination } from "../pagination/Pagination";
 import {ButtonTokens} from "../buttonsGroupe/ButtonGroupeForm"
-import { toJS } from "mobx";
-import { timeTransactions } from "../../function/timeTransactions";
 import Spinner from "../spinner/Spinner";
 import useMedia from "../../hooks/useMedia";
 
@@ -29,7 +27,6 @@ const TransactionsComponent = ({data, address, error}: Props) => {
         buttonTransactions, 
         activeButtonTransactions, 
         activeButtonFilter, 
-        getErrorTransactions, 
         activeButtonDex
      } = store
      const [handleButtonTypeTransaction, setHandleButtonTypeTransaction] = useState(false)
@@ -78,7 +75,7 @@ const TransactionsComponent = ({data, address, error}: Props) => {
 
 
  return (
-        <div key={uniqid()} className="w-full h-full border rounded-2xl mt-4 bg-form border-inActive ">
+        <div key={uniqid()} className="w-full border rounded-2xl mt-4 bg-form border-inActive text-xs sm:text-base">
             <div className="flex  w-full  p-4 border-b border-inActive border-opacity-60">
                 <div  className="w-1/3"> 
                 {matches ? (
@@ -86,7 +83,7 @@ const TransactionsComponent = ({data, address, error}: Props) => {
                                         <ButtonTokens arrButtons={buttonFilterTransaction} data={data} key={uniqid()}  active = {activeButtonFilter} type='filter_transactions'/>
                                     </div>
                 ) : (   <div>
-                            <button className="border h-7 w-24 rounded flex justify-around" 
+                            <button className="border h-7 w-24 rounded flex justify-around items-center" 
                                     onClick={()=>setHandleButtonTypeTransaction((v)=>!v)}>{activeButtonFilter}
                                     <div className="rotate-90 text-xl">&#8250;</div>
                             </button>
