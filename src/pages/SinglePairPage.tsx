@@ -79,8 +79,8 @@ const SinglePairPageComponent = (props: Props) => {
                                               
                                                 <div className="flex ld:text-3xl text-xl font-medium mb-4">
                                                     <div className="flex">
-                                                        <div className="z-10"><img src={getSinglePair.token_one.icon} alt="iconToken" width={30} height={30}/></div>
-                                                        <div className="-ml-4"><img src={getSinglePair.token_two.icon} alt="iconToken" width={30} height={30}/></div>
+                                                        <div className="z-10"><img src={getSinglePair.token_one.icon} alt="iconToken" width={30} height={30} className="rounded-full"/></div>
+                                                        <div className="-ml-4"><img src={getSinglePair.token_two.icon} alt="iconToken" width={30} height={30} className="rounded-full"/></div>
                                                     </div>
                                                         <div className="ml-4">
                                                             {getSinglePair.token_one.symbol}-{getSinglePair.token_two.symbol} <span>Pair</span> 
@@ -133,13 +133,13 @@ const SinglePairPageComponent = (props: Props) => {
                                                             </div>
                                                             <div className="flex">
                                                                 <div className="mb-3">
-                                                                    <img src={getSinglePair.token_one.icon} alt="iconToken" width={24} height={24}/> 
+                                                                    <img src={getSinglePair.token_one.icon} alt="iconToken" width={24} height={24} className="rounded-full"/> 
                                                                 </div>
                                                                 <div className="ml-2"> <span>{getSinglePair.symbol_one_indicators.pool_quantity.value}</span> {getSinglePair.token_one.symbol}</div>
                                                             </div>
                                                             <div className="flex">
                                                                 <div className="mb-3">
-                                                                    <img src={getSinglePair.token_two.icon} alt="iconToken" width={24} height={24}/> 
+                                                                    <img src={getSinglePair.token_two.icon} alt="iconToken" width={24} height={24} className="rounded-full"/> 
                                                                 </div>
                                                                 <div className="ml-2"> <span>{getSinglePair.symbol_two_indicators.pool_quantity.value}</span> {getSinglePair.token_two.symbol}</div>
                                                             </div> 

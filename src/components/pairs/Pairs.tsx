@@ -39,9 +39,9 @@ const PairsComponent = ( {data}: Props) => {
         <div key={uniqid()} className="flex w-full p-4 border-b border-inActive border-opacity-20 ">
                 <div className="lg:w-1/3 w-1/4">
                     <div className="flex items-center">
-                        <span className="mr-3"> {idx++}</span>
-                        <img className="-mr-2 z-10" src={pair.token_one.icon} alt="imgToken1" style={{width: 20, height: 20}}/>
-                        <img className="mr-3" src={pair.token_two.icon} alt="imgToken2" style={{width: 20, height: 20}}/>
+                        <span className="mr-3 text-inActive"> {idx++}</span>
+                        <img className="-mr-2 z-10 rounded-full" src={pair.token_one.icon} alt="imgToken1" style={{width: 20, height: 20}}/>
+                        <img className="mr-3 rounded-full" src={pair.token_two.icon} alt="imgToken2" style={{width: 20, height: 20}}/>
                         <Link to={`/${dex || 'STON.fi'}/pairs/${pair.address}`}>   <span className=" font-medium text-slate-900 text-opacity-80 hover:text-slate-50 "> <span>{pair.name}</span></span>  </Link>
                     </div>
                 </div>
@@ -72,7 +72,7 @@ const PairsComponent = ( {data}: Props) => {
                 <div className="w-full border rounded-2xl mt-4 bg-form border-inActive text-xs sm:text-base ">
                     <div className="flex  w-full  p-4 border-b border-inActive border-opacity-60">
                         <div  className="lg:w-1/3 w-1/4 font-medium text-inActive"> 
-                            Name
+                           # Name
                         </div>
 
                         <div className='flex lg:w-2/3 w-3/4'>

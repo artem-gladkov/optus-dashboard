@@ -75,7 +75,7 @@ const SingleTokenPageComponent=(props: any) => {
                     </div>
                     <div className="flex justify-between items-end mt-10">
                         <div className="flex items-end ">
-                           <div><img src={getSingleToken.icon} alt="" width={30}/></div> 
+                           <div><img src={getSingleToken.icon} alt="" width={30} className="rounded-full"/></div> 
                            <div className="lg:text-3xl text-xl ml-2 hidden md:block">{getSingleToken.name}</div>
                            <div className="lg:text-3xl text-xl ml-2">({getSingleToken.symbol})</div>
                            <div className="lg:text-xl text-base ml-2">{getSingleToken.current_usd_price.value}$</div>

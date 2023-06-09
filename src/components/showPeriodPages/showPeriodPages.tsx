@@ -22,7 +22,7 @@ export const ShowPeriodPages = ({setItemPerPage, itemPerPage, label, setCurrentP
 
   return (
     <div className='items-center'>
-      <span className='mr-1'>{label}</span>
+      <span className='mr-1 text-inActive'>{label}</span>
       <span className='mr-5'> [ {periodPages} ]</span>
     </div>
   )

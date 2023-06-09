@@ -127,7 +127,7 @@ const TransactionsComponent = ({data, address, error}: Props) => {
                                 <ShowPeriodPages setItemPerPage={setItemPerPage}
                                                 itemPerPage ={itemPerPage}
                                                 setCurrentPage={setCurrentPage}
-                                                label='pairs in pages'
+                                                label='transactions in pages'
                                                 />
                         </div>
                    </div>

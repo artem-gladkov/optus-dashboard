@@ -43,8 +43,8 @@ const TokensComponent = (props: Props) => {
                                             <div key={uniqid()} className="flex w-full justify-between p-4 border-b border-inActive border-opacity-20">
                                                     <div className="lg:w-1/3 hidden lg:block">
                                                         <div className="flex items-center ">
-                                                            <span className="mr-3"> {idx++}</span>
-                                                            <img className="mr-3" src={token.icon} alt="imgToken" style={{width: 20, height: 20}}/>
+                                                            <span className="mr-3 text-inActive"> {idx++}</span>
+                                                            <img className="mr-3 rounded-full" src={token.icon} alt="imgToken" style={{width: 20, height: 20}}/>
                                                             <Link  to={`/${dex || 'STON.fi'}/tokens/${token.address}`}>   
                                                                 <span className="font-medium  text-opacity-80  ">{token.name}</span>
                                                                 <span className="text-inActive ml-2">({token.symbol})</span> 
@@ -73,7 +73,7 @@ const TokensComponent = (props: Props) => {
         <div className="w-full border rounded-2xl mt-4 bg-form border-inActive text-xs sm:text-base">
             <div className="flex  w-full  p-4 border-b border-inActive border-opacity-60">
                 <div  className="lg:w-1/3 hidden lg:flex"> 
-                    <div className="text-inActive font-medium">Name</div>
+                    <div className="text-inActive font-medium"># Name</div>
                 </div>
 
                 <div className="flex lg:w-2/3 w-full break-all">
@@ -108,7 +108,7 @@ const TokensComponent = (props: Props) => {
                                 <ShowPeriodPages setItemPerPage={setItemPerPage}
                                                 itemPerPage ={itemPerPage}
                                                 setCurrentPage={setCurrentPage}
-                                                label='pairs in pages'
+                                                label='tokens in pages'
                                                 />
                         </div>
                    </div>
