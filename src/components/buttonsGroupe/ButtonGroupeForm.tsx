@@ -40,8 +40,8 @@ const {
         return 
     }    
 
-    let style = "md:w-1/5 w-1/3 text-text font-medium flex justify-center md:justify-start"
- 
+    let style = "text-text md:w-1/5 w-1/3 font-medium flex justify-center md:justify-start"
+    let stylePages = 'w-1/3 justify-center xl:w-1/5 xl:justify-start text-inActive'
 
     const ButtonHeaderComponent = (button: string)=>{
         if(type === "tokens"){
@@ -84,14 +84,14 @@ const {
             return (
                 <button key={uniqid()}  
                         onClick={()=>{ButtonHeaderComponent(button)}} 
-                        className={button === active ? `${!matches ? 'w-1/3 justify-center' : 'w-1/5 justify-start'} text-text font-medium flex  ` :  `${!matches ? 'w-1/3 justify-center' : 'w-1/5 justify-start'} hover:text-inActive flex` }>
+                        className={`${stylePages} font-medium flex ${button === active ? 'text-text' : 'hover:text-inActive'}` }>
                                 {button} {Arrownone(button)}                   
                 </button>)
          } else {
             return (
                 <button key={uniqid()}  
                         onClick={()=>{ButtonHeaderComponent(button)}} 
-                        className={button === active ?  style :  `md:w-1/5 w-1/3 hover:text-inActive flex justify-center md:justify-start` }>
+                        className={button === active ?  style :  `text-inActive md:w-1/5 w-1/3 hover:text-inActive flex justify-center md:justify-start` }>
                                 {button} {Arrownone(button)}       
                 </button>)
          }

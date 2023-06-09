@@ -8,6 +8,7 @@ import { Pagination } from "../pagination/Pagination";
 import {ButtonTokens} from "../buttonsGroupe/ButtonGroupeForm"
 import Spinner from "../spinner/Spinner";
 import useMedia from "../../hooks/useMedia";
+import { ShowPeriodPages } from "../showPeriodPages/showPeriodPages";
 
 interface Props {
     data: any;
@@ -83,12 +84,12 @@ const TransactionsComponent = ({data, address, error}: Props) => {
                                         <ButtonTokens arrButtons={buttonFilterTransaction} data={data} key={uniqid()}  active = {activeButtonFilter} type='filter_transactions'/>
                                     </div>
                 ) : (   <div>
-                            <button className="border h-7 w-24 rounded flex justify-around items-center" 
+                            <button className="border h-7 w-32 rounded flex justify-around items-center" 
                                     onClick={()=>setHandleButtonTypeTransaction((v)=>!v)}>{activeButtonFilter}
                                     <div className="rotate-90 text-xl">&#8250;</div>
                             </button>
                             {handleButtonTypeTransaction ? (
-                                <div className="absolute bg-form border rounded-md w-24 flex flex-col items-center">
+                                <div className="absolute bg-form border rounded-md w-32 flex flex-col items-center">
                                             <ButtonTokens arrButtons={buttonFilterTransaction} data={data} key={uniqid()}  active = {activeButtonFilter} type='filter_transactions'/>
                                 </div>
                             ): (null)}
@@ -112,12 +113,25 @@ const TransactionsComponent = ({data, address, error}: Props) => {
                                      <Spinner/>
                                 </div>) ) }
 
-            <div className="flex justify-center items-center">
-                <Pagination totalItem={dataFilter?.length} 
+             <div className="flex flex-col items-center xl:flex-row w-full">
+                    <div className="flex  items-center w-1/3 justify-end">
+
+                    </div>
+                        <div className="flex  items-center w-full xl:w-1/3 justify-center">
+                        <Pagination totalItem={dataFilter?.length} 
                             itemPerPage={itemPerPage}
                             setCurrentPage={setCurrentPage}
-                            currentPage={currentPage}/>
-            </div>
+                            currentPage={currentPage}/>                        
+                        </div>
+                        <div className="flex items-center xl:w-1/3 w-full xl:justify-end justify-center">
+                                <ShowPeriodPages setItemPerPage={setItemPerPage}
+                                                itemPerPage ={itemPerPage}
+                                                setCurrentPage={setCurrentPage}
+                                                label='pairs in pages'
+                                                />
+                        </div>
+                   </div>
+
         </div>
     )
 }

@@ -46,12 +46,13 @@ const SearchInputComponent = ({getTokens = store.getTokens, getPairs = store.get
         <SearchSvg/>
         <input type="text"  value={valueInput} onChange={(e)=>{setValueInput(e.target.value)}} 
                 className="h-8 ml-2 w-48 bg-form rounded outline-none" placeholder='Search pairs and tokens ...'/>
+                <span onClick={(e)=>{setValueInput('')}} className='font-medium text-xl cursor-pointer'>x</span>
         { valueInput ? (
                     <ul className='bg-headerActiveBTN mt-52 h-40 w-56 overflow-auto z-50 list-none absolute  rounded-2xl '>
                     <div>
                         <div className='flex'>
                             <h2 className='text-lg pl-2'>Tokens:</h2>
-                            <span onClick={(e)=>{setValueInput('')}} className='font-medium ml-32 text-xl cursor-pointer'>x</span>
+
                         </div>
 
                         

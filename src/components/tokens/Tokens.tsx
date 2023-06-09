@@ -9,6 +9,7 @@ import { numberWithSpaces } from "../../function/numberWithSpaces"
 import { numberColor } from "../../function/colorChanges"
 import Spinner from "../spinner/Spinner"
 import useMedia from "../../hooks/useMedia"
+import { ShowPeriodPages } from "../showPeriodPages/showPeriodPages"
 
 interface Props {
     
@@ -72,7 +73,7 @@ const TokensComponent = (props: Props) => {
         <div className="w-full border rounded-2xl mt-4 bg-form border-inActive text-xs sm:text-base">
             <div className="flex  w-full  p-4 border-b border-inActive border-opacity-60">
                 <div  className="lg:w-1/3 hidden lg:flex"> 
-                    <div>Name</div>
+                    <div className="text-inActive font-medium">Name</div>
                 </div>
 
                 <div className="flex lg:w-2/3 w-full break-all">
@@ -93,14 +94,27 @@ const TokensComponent = (props: Props) => {
                                              <Spinner/>
                                         </div>)) }
           
+             <div className="flex flex-col items-center xl:flex-row w-full">
+                    <div className="flex  items-center w-1/3 justify-end">
 
-            <div className="flex justify-center items-center">
-                <Pagination totalItem={store.getTokens.length} 
+                    </div>
+                        <div className="flex  items-center w-full xl:w-1/3 justify-center">
+                        <Pagination totalItem={store.getTokens.length} 
                             itemPerPage={itemPerPage}
                             setCurrentPage={setCurrentPage}
-                            currentPage={currentPage}/>
-            </div>
-        </div>
+                            currentPage={currentPage}/>                          
+                        </div>
+                        <div className="flex items-center xl:w-1/3 w-full xl:justify-end justify-center">
+                                <ShowPeriodPages setItemPerPage={setItemPerPage}
+                                                itemPerPage ={itemPerPage}
+                                                setCurrentPage={setCurrentPage}
+                                                label='pairs in pages'
+                                                />
+                        </div>
+                   </div>
+
+                </div>
+      
     )
 }
 
