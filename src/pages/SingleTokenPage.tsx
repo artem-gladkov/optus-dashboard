@@ -55,7 +55,7 @@ const SingleTokenPageComponent=(props: any) => {
                      <div className="h-full flex flex-col justify-center absolut mt-40">
                                 <Bg type={'single'}/>
                         </div>
-                    <div className="flex w-full h-full flex-col text-text lg:px-28 z-50 -mt-36">
+                    <div className="flex w-full h-full flex-col text-text lg:px-28 px-4 z-50 -mt-36">
                     <div className="flex justify-between w-full  flex-wrap  items-center my-5">
                             <div className="flex">
                                 <button onClick={goBack}>

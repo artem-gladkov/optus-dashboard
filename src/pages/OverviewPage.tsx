@@ -44,7 +44,7 @@ const OverviewComponent = () => {
    
         <div className='h-full py-14  relative bg-bg flex flex-col justify-center mt-20'>
             <Bg/>
-            <div className='p-0 lg:px-14'>
+            <div className='py-0 px-4 lg:px-14'>
                 <div className='flex flex-col z-50 relative'>
                             <h1 className='font-bold text-3xl text-text'>Overview {activeButtonDex}</h1>
                             {/* Графики */}

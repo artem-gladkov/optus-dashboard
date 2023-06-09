@@ -23,7 +23,7 @@ const PairsPageComponent = (props: Props) => {
 
     return (
         <div className="h-full py-14 relative  bg-bg flex flex-col justify-center mt-14">
-            <div className="lg:px-14 ">
+            <div className="lg:px-14 px-4">
                 <Bg/>
                 <div className="flex w-full relative flex-col text-text z-50">
                     <div className="flex justify-between w-full  flex-wrap  items-center my-5 z-50">

@@ -60,7 +60,7 @@ const SinglePairPageComponent = (props: Props) => {
                                     <div className="h-full flex flex-col justify-center absolut mt-64">
                                         <Bg type={'single'}/>
                                     </div>
-                                    <div className="flex w-full h-full flex-col text-text xl:px-28 z-50 -mt-64 absolut">
+                                    <div className="flex w-full h-full flex-col text-text xl:px-28 px-4 z-50 -mt-64 absolut">
                                         <div className="flex justify-between w-full  flex-wrap  items-center my-5">
                                                 <div className="flex">
                                                     <button onClick={goBack}>

@@ -13,7 +13,7 @@ const TokensPageComponent = (props: Props) => {
     const {activeButtonDex} = store
     return (
         <div className="h-full py-14 relative  bg-bg flex flex-col justify-center mt-14">
-             <div className="lg:px-14 ">
+             <div className="lg:px-14 px-4">
             <Bg/>
             
                 <div className="flex w-full  relative flex-col text-text   z-50">
