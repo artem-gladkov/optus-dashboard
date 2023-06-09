@@ -33,7 +33,7 @@ const OverviewComponent = () => {
         updateOverview({})
         if(getErrorOverview) {setErrorTransaction(true)}
         if(!getErrorOverview) {setErrorTransaction(false)}
-        overviewApi('1Y', dex || 'STON.fi')  
+        overviewApi('1Y', dex || 'OPTUS')  
         updateHandlerButtonDexBo(true)
     
     }, [activeButtonDex])

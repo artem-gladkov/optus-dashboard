@@ -17,12 +17,12 @@ const NavigationsComponent = (props: Props) => {
 
     return (
         <nav  className='flex center text-inActive font-medium text-sm'>   
-            <CustomLink onClick={()=>{updateHandlerButtonDexBo(true);updateActivePage('')}} className='flex  m-1  hover:text-text transition-all duration-400 px-4 py-2 rounded ' to={`/${dex ? dex : over}`}>Overview</CustomLink>
-
+            <CustomLink onClick={()=>{updateHandlerButtonDexBo(true);updateActivePage('')}} className='flex  m-1  hover:text-text transition-all duration-400 px-4 py-2 rounded ' 
+                to={`/${dex ? dex : activeButtonDex}`}>Overview</CustomLink>
             <CustomLink onClick={()=>{updateActivePage(tokens)}} className='m-1  hover:text-text transition-all duration-400 px-4 py-2 rounded' 
-                to={`/${dex ? dex : over}/${tokens}`}>Tokens</CustomLink>
+                to={`/${dex ? dex : activeButtonDex}/${tokens}`}>Tokens</CustomLink>
             <CustomLink onClick={()=>{updateActivePage(pairs)}} className='m-1   hover:text-text transition-all duration-400 px-4 py-2 rounded' 
-                to={`/${dex ? dex : over}/${pairs}`}>Pairs</CustomLink>
+                to={`/${dex ? dex : activeButtonDex}/${pairs}`}>Pairs</CustomLink>
         </nav> 
     )
 }

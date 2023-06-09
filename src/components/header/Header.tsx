@@ -17,16 +17,14 @@ const RoutesNavigationComponent = (props: Props) => {
   console.log(matches)
   const pairs = 'pairs'
   const tokens = 'tokens'
-  const over = 'STON.fi'
+  const over = 'OPTUS'
   const {dex} = useParams()
   const [page, setPage] = useState('')
   const [burger, setBurger] = useState(false)
   const {handlerButtonDex,activeButtonDex, buttonDex,updateActivePage, activePage, updateHandlerButtonDexBo,updateActiveButtonDex,updateHandlerButtonDex } = store
 
   useEffect(() => {
-    dex ? updateActiveButtonDex(window.location.pathname.split('/')[1]) : updateActiveButtonDex('STON.fi')
-    console.log(dex ? 'a' : 'STON.fi')
-    console.log(activeButtonDex)
+    dex ? updateActiveButtonDex(window.location.pathname.split('/')[1]) : updateActiveButtonDex('OPTUS')
   }, [])
 
   const [transitionHandleDex, setTransitionHandleDex ] = useState(false)
@@ -35,11 +33,11 @@ const RoutesNavigationComponent = (props: Props) => {
             <div className='flex w-full  fixed  bg-form items-center  px-8 py-3 justify-between'>
 
               <div className="font-bold  w-1/5 flex ">
-                <Link className="flex items-center" onClick={()=>{ updateHandlerButtonDexBo(true); setPage('')}} to={`/${dex ? dex : over}`}>
+                <Link className="flex items-center" onClick={()=>{ updateHandlerButtonDexBo(true)}} to={`/`}>
                 <Icon/>
                 </Link>
               <div className="ml-6">
-               <button  onClick={updateHandlerButtonDex} className='flex items-center'><span className="px-2">{activeButtonDex || 'STON.fi'}</span><div className="rotate-90 text-2xl">&#8250;</div></button>
+               <button  onClick={updateHandlerButtonDex} className='flex items-center'><span className="px-2">{activeButtonDex || 'OPTUS'}</span><div className="rotate-90 text-2xl">&#8250;</div></button>
                 <div className="absolute bg-form px-2  rounded">
                  {!handlerButtonDex &&  <ButtonTokens arrButtons={buttonDex}  key={uniqid()}  active = {activeButtonDex} type='buttonDex' page={activePage}/>}
                 </div>

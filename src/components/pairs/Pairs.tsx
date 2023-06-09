@@ -27,8 +27,6 @@ const PairsComponent = ( {data}: Props) => {
         pairsApi(dex)
     },[activeButtonDex])
    
-    
-console.log(toJS(data))
     const lastItemIndex = currentPage * itemPerPage;
     let firstItemIndex = lastItemIndex - itemPerPage;
     let idx = firstItemIndex+1
@@ -72,13 +70,13 @@ console.log(toJS(data))
                 <div className="w-full border rounded-2xl mt-4 bg-form border-inActive text-xs sm:text-base ">
                     <div className="flex  w-full  p-4 border-b border-inActive border-opacity-60">
                         <div  className="lg:w-1/3 w-1/4 font-medium"> 
-                            <div>Name</div>
+                            Name
                         </div>
 
-                        <div className={`flex ${!matches ? 'w-3/4' : 'w-2/3'}`}>
+                        <div className='flex lg:w-2/3 w-3/4'>
                         <ButtonTokens 
                                 arrButtons={!matches ? ['Liquidity','Liquidity Jettons', 'Volume (24hrs)'] : buttonPairs} 
-                                data={getPairs} 
+                                data={data} 
                                 key={uniqid()}  
                                 active = {activeButtonPairs} 
                                 type='pairs'/>

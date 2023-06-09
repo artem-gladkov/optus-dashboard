@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 
-import { makeAutoObservable, runInAction } from "mobx"
+import { makeAutoObservable, runInAction, toJS } from "mobx"
 
 
 class StoreApp {
@@ -36,7 +36,7 @@ class StoreApp {
     public buttonPairs: string[] = ['Liquidity', 'Liquidity Jettons', 'Volume (24hrs)', 'Volume (7d)', 'Fees (24hrs)', '1y Feels/Liquidity']
     public activeButtonPairs: string = this.buttonPairs[0]
 
-    public buttonDex: string[]= ['STON.fi', 'Megaton']
+    public buttonDex: string[]= ['OPTUS', 'STON.fi', 'Megaton']
     public activeButtonDex: string = this.buttonDex[0]
 
     public page: string[]= ['', 'pairs', 'tokens']
@@ -49,6 +49,7 @@ class StoreApp {
 
     constructor(){
         makeAutoObservable(this)
+        this.dexListApi()
     }
 
    dexListApi = async  () => {
@@ -56,12 +57,13 @@ class StoreApp {
         const res = await req.json()
         runInAction(()=> {
             this.buttonDex = res
+            console.log(res)
         })
    } 
 
    tokensApi = async (activedex) => {
         try  {
-            const getTokens = await fetch(`https://api.optus.fi/api/v1/dashboard/top_tokens?limit=50&dex=${activedex || 'STON.fi'}`)
+            const getTokens = await fetch(`https://api.optus.fi/api/v1/dashboard/top_tokens?limit=50&dex=${activedex || 'OPTUS'}`)
             if(!getTokens.ok){
                 this.updateErrorTokens(true)
                 throw new Error(getTokens.statusText);
@@ -79,7 +81,7 @@ class StoreApp {
 
     pairsApi = async (activedex)  => {
         try {
-            const reqPairs = await fetch(`https://api.optus.fi/api/v1/dashboard/top_pairs?limit=50&dex=${activedex || 'STON.fi'}`)
+            const reqPairs = await fetch(`https://api.optus.fi/api/v1/dashboard/top_pairs?limit=50&dex=${activedex || 'OPTUS'}`)
             if(!reqPairs.ok){
                 this.updateErrorPairs(true)
                 throw new Error(reqPairs.statusText);
@@ -97,7 +99,7 @@ class StoreApp {
 
     overviewApi = async(period: string, activedex: string) => {
         try {
-            const reqOverview = await fetch(`https://api.optus.fi/api/v1/dashboard/overview?period=${period}&dex=${activedex || 'STON.fi'}`)
+            const reqOverview = await fetch(`https://api.optus.fi/api/v1/dashboard/overview?period=${period}&dex=${activedex || 'OPTUS'}`)
             if(!reqOverview.ok){
                 this.updateErrorOwerview(true)
                 throw new Error(reqOverview.statusText);
@@ -315,7 +317,9 @@ class StoreApp {
     }
 
     sortPairs =(type:string, data: any[])=>{
+        console.log(toJS(data))
         if(type ==='Liquidity'){
+            console.log('c')
             data.sort((a,b)=>{
                 if(this.sortFlag === false){  return b.liquidity.value - a.liquidity.value}
                 if(this.sortFlag === true){ return a.liquidity.value - b.liquidity.value}

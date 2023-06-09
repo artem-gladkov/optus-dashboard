@@ -7,10 +7,12 @@ interface Props {
 
 export const Welcome = (props: Props) => {
   return (
-    <div className='h-full w-full py-14 bg-bg flex flex-col justify-center px-52'>
+    <div className='className="h-full py-14 relative  bg-bg flex flex-col justify-center mt-24'>
       <Bg/>
-      <div className="text-text flex flex-col z-50  h-full">
-          Выберите DEX
+      <div className="flex w-full relative flex-col text-text z-50">
+          <div>
+
+          </div>
       </div>
     </div>
   )

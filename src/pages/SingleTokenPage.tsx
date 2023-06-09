@@ -45,7 +45,8 @@ const SingleTokenPageComponent=(props: any) => {
         getTokenSingleApi(address, '1Y', dex)
         updateHandlerButtonDexBo(true)
     }, [address])
- 
+    
+    console.log(toJS(getSingleToken.pairs))
 
     return (
         <>

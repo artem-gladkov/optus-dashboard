@@ -204,7 +204,7 @@ const SinglePairPageComponent = (props: Props) => {
                                 </div>
 
                                 )
-                            ) : ( getErrorSinglePair ? "Произошла ошибка, но мы уже решаем эту проблему" : <Spinner/>)
+                            ) : ( getErrorSinglePair ? "Произошла ошибка, но мы уже решаем эту проблему" : <div className="flex w-full h-full justify-center items-center mt-20"><Spinner/></div>)
             }
         </>
 

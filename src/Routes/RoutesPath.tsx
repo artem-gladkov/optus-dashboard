@@ -8,6 +8,7 @@ import { SingleTokenPage } from "../pages/SingleTokenPage";
 import { SinglePairPage } from "../pages/SinglePairPage";
 import { Welcome } from "../pages/Welcom";
 import { observer } from "mobx-react-lite"
+import { Analitics } from "../pages/Analitics";
 
 interface Props {
     
