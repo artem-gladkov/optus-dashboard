@@ -18,7 +18,7 @@ interface Props {
 const TokensComponent = (props: Props) => {
     const [currentPage, setCurrentPage] = useState(1)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [itemPerPage, setItemPerPage] = useState(8)
+    const [itemPerPage, setItemPerPage] = useState(10)
     const {buttonTokens,tokensApi, activeButtonTokens,getTokens, getErrorTokens, activeButtonDex, updateHandlerButtonDexBo} = store; 
     const matches = useMedia("(min-width: 768px)")
 

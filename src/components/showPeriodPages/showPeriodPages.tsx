@@ -10,7 +10,7 @@ type Props = {
 
 export const ShowPeriodPages = ({setItemPerPage, itemPerPage, label, setCurrentPage}: Props) => {
 
-  const period = [8,20,50]  
+  const period = [10,20,50]  
   const styleButton = 'font-medium  text-inActive px-2 py-1 rounded-lg hover:text-text'
 
   const periodPages = period.map((period)=>{
