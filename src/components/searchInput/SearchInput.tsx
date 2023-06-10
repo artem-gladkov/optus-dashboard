@@ -23,7 +23,7 @@ const SearchInputComponent = ({getTokens = store.getTokens, getPairs = store.get
         .map( (token)=>{
             return (
                 <li key={uniqid()} className=' bg-form hover:bg-opacity-30 cursor-pointer flex items-center my-3'>
-                    <img src={token.icon} width={20} height={20} alt="token" className='mr-2'/>
+                    <img src={token.icon} width={20} height={20} alt="token" className='mr-2 rounded-full'/>
                     <Link to={`${dex}/tokens/${token.address}`} className='font-semibold text-sm'> {token.symbol} </Link>
                 </li>
 
@@ -52,7 +52,7 @@ const SearchInputComponent = ({getTokens = store.getTokens, getPairs = store.get
     return (
 
         
-    <form className='flex items-center  text-xs h-9 w-64 bg-form rounded border-inActive border text-text' action="">
+    <form className='flex items-center  text-xs h-9 w-64 bg-form rounded border-inActive border text-text' action="" onSubmit={ (e)=>{e.preventDefault()} }>
         <div className='mx-3'>
             <SearchSvg/>
         </div>
