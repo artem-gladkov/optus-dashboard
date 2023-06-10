@@ -1,9 +1,7 @@
 import {useState, useCallback, useEffect} from 'react'
-import { ErrorBar } from 'recharts'
 
 
-
-export const UseCopyClick = () => {
+export const useCopyClick = () => {
     const [isCopied, setIsCopied] = useState(false)
     
     const copy = useCallback((text)=>{
@@ -11,7 +9,7 @@ export const UseCopyClick = () => {
         .writeText(text)
         .then(()=>{setIsCopied(true)})
         .catch( err => {
-            console.error('Unable to copy text', ErrorBar)
+            console.error('Unable to copy text', err)
         })
                         
     },[])
