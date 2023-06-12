@@ -8,11 +8,9 @@ import {toJS} from "mobx"
 import { Transactions } from '../components/transactions/Transactions'
 import uniqid from 'uniqid'
 import { ChartsOverview } from '../components/charts/ChartsOverview'
-import {SearchInput} from '../components/searchInput/SearchInput'
 import Spinner from '../components/spinner/Spinner'
-import { ButtonTokens } from '../components/buttonsGroupe/ButtonGroupeForm'
 import Bg from '../components/background/bg'
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 
 

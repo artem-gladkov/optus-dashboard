@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { store } from '../../Store/store';
 import { CustomLink } from '../customLink/CustomLink';
 import { useEffect } from 'react';
-import { toJS } from 'mobx';
 
 interface Props {
     dexProp: string

@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { observer } from "mobx-react-lite"
 import { useEffect } from "react"
 import { Pairs } from "../components/pairs/Pairs"
-import { SearchInput } from "../components/searchInput/SearchInput"
 import Bg from '../components/background/bg'
 import { store } from "../Store/store"
 import "../index.css"
