@@ -1,5 +1,5 @@
-import { createChart, ColorType, ISeriesApi, IChartApi, AreaData, HistogramSeriesOptions, CrosshairMode, LineStyle } from 'lightweight-charts';
-import React, { useEffect, useRef, useState } from 'react';
+import { createChart, ColorType, CrosshairMode, LineStyle } from 'lightweight-charts';
+import  { useEffect, useRef } from 'react';
 
 
 interface Props {
@@ -49,9 +49,6 @@ export const ChartsForm = ({data}: Props) => {
             },
         });
 
-        const currentLocale = window.navigator.languages[0];
-
-
         var candleSeries = chart.addCandlestickSeries({
             wickUpColor: '#0a6302',
             upColor: '#0a6302',
@@ -86,6 +83,7 @@ export const ChartsForm = ({data}: Props) => {
         }
 
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 

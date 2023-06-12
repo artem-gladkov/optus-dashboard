@@ -2,7 +2,6 @@
 
 import { makeAutoObservable, runInAction, toJS } from "mobx"
 
-
 class StoreApp {
     private tokens = []
     private pairs = []
@@ -53,12 +52,21 @@ class StoreApp {
     }
 
    dexListApi = async  () => {
+    try {
         const req = await fetch('https://api.optus.fi/api/v1/dashboard/dex_list')
+        if(!req.ok){
+            throw new Error(req.statusText);
+        }
         const res = await req.json()
         runInAction(()=> {
             this.buttonDex = res
-            console.log(res)
+            this.activeButtonDex = res[0]
         })
+    } catch (error) {
+        this.buttonDex = ['OPTUS', 'STON.fi', 'Megaton']
+        this.activeButtonDex = this.buttonDex[0]
+        console.log('dexListApi>>>>>', error)
+    }
    } 
 
    tokensApi = async (activedex) => {
@@ -387,7 +395,7 @@ class StoreApp {
         this.buttonFavoritesFlag = ! this.buttonFavoritesFlag
     }
 
-    getActiveButtonDex = (dex) => {
+    getgetActiveButtonDex = (dex) => {
         this.activeButtonDex = dex
     }
 

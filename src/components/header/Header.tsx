@@ -28,6 +28,7 @@ const RoutesNavigationComponent = (props: Props) => {
 
   useEffect(() => {
     dex ? updateActiveButtonDex(window.location.pathname.split('/')[1]) : updateActiveButtonDex('OPTUS')
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

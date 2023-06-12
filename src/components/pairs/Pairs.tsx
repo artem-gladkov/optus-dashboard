@@ -23,7 +23,7 @@ const PairsComponent = ( {data}: Props) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
     const [itemPerPage, setItemPerPage] = useState(10)
-    const {getPairs, buttonPairs, activeButtonPairs, pairsApi, getErrorPairs, activeButtonDex} = store
+    const {buttonPairs, activeButtonPairs, pairsApi, getErrorPairs, activeButtonDex} = store
     const {dex} = useParams()
     useEffect(()=>{
         pairsApi(dex)

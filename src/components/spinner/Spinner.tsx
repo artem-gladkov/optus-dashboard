@@ -1,10 +1,4 @@
-import React from 'react'
-
-interface Props {
-    
-}
-
-const Spinner = (props: Props) => {
+const Spinner = () => {
     return (
         <div className="spinner-box flex w-full h-full justify-center items-center">
             <div className="pulse-container flex w-full h-full justify-center items-center">  

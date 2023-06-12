@@ -9,9 +9,7 @@ interface Props {
 }
 
 const TokenInformationComponent = ({name, symbol, address}: Props) => {
-
     const {isCopied, copy} =useCopyClick()
-
     return (
         <div className='flex  w-full mt-4 mb-10 p-4 border rounded-2xl'>
             <div className='flex md:w-1/2 w-full flex-col md:flex-row' >

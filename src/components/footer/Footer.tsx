@@ -4,11 +4,8 @@ import { store } from "../../Store/store"
 import { Link } from "react-router-dom"
 import uniqid from "uniqid"
 
-interface Props  {
-    
-}
 
-export const Footer=observer((props: Props) => {
+export const Footer=observer(() => {
     
   const {footerUpdate, getFooterState, removeLocalStoreSTORE,updatebuttonFavoritesFlag} = store
 

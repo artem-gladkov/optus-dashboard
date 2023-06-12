@@ -1,7 +1,6 @@
 import { store } from '../../Store/store'
 import uniqid from 'uniqid'
 import { Link } from 'react-router-dom';
-import useMedia from '../../hooks/useMedia';
 
 interface Props {
     active?: any;
@@ -29,10 +28,7 @@ const {
     updateHandlerButtonDexBo
 } = store
 
-    const matches = useMedia("(min-width: 1300px)")
     const a = typeof window.location.pathname.split('/')[2] == 'undefined' ? '' : `/${window.location.pathname.split('/')[2]}`
-
-
     const Arrownone = (button) => {
         if(button === active && arrow === 'high' && button !== 'Account' && button !== 'Liquidity Jettons' && type !== "filter_transactions" ) {return (<span key={uniqid()}>&dArr;</span>)}
         if(button === active && arrow === 'low' && button !== 'Account'  && button !== 'Liquidity Jettons'  && type !== "filter_transactions") {return (<span key={uniqid()}>&uArr;</span>)}

@@ -20,19 +20,16 @@ const TransactionsComponent = ({data, address, error}: Props) => {
     const [currentPage, setCurrentPage] = useState(1)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [itemPerPage, setItemPerPage] = useState(10)
-
     const matches = useMedia("(min-width: 1224px)")
     const matches2 = useMedia("(min-width: 1024px)")
-
     const {buttonFilterTransaction, 
         buttonTransactions, 
         activeButtonTransactions, 
         activeButtonFilter, 
         activeButtonDex
      } = store
-     const [handleButtonTypeTransaction, setHandleButtonTypeTransaction] = useState(false)
-
-     useEffect(()=>{},[activeButtonDex])
+    const [handleButtonTypeTransaction, setHandleButtonTypeTransaction] = useState(false)
+    useEffect(()=>{},[activeButtonDex])
 
 
     const dataFilter = data?.filter((trans: { type: string; }) => {
@@ -96,14 +93,11 @@ const TransactionsComponent = ({data, address, error}: Props) => {
                          </div>
 
                 ) }
-
                 </div>
                 <div className="flex w-2/3 text-xs sm:text-base justify-around lg:justify-start">
                     <ButtonTokens arrButtons={matches2 ? buttonTransactions : ['Total Value', 'Time']} data={data} key={uniqid()}  active = {activeButtonTransactions} type='transactions'/>
                 </div>
             </div>
-
-
                 {dataFilter ? (
                                 <>
                                     {error ? 'Произошла ошибка, но мы решаем эту проблему1' :  transaction}
@@ -112,10 +106,8 @@ const TransactionsComponent = ({data, address, error}: Props) => {
                                 <div className='w-full h-full flex justify-center  items-center'>
                                      <Spinner/>
                                 </div>) ) }
-
              <div className="flex flex-col items-center xl:flex-row w-full">
                     <div className="flex  items-center w-1/3 justify-end">
-
                     </div>
                         <div className="flex  items-center w-full xl:w-1/3 justify-center">
                         <Pagination totalItem={dataFilter?.length} 
@@ -131,7 +123,6 @@ const TransactionsComponent = ({data, address, error}: Props) => {
                                                 />
                         </div>
                    </div>
-
         </div>
     )
 }

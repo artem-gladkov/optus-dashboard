@@ -1,4 +1,3 @@
-import React from 'react'
 import uniqid from 'uniqid'
 
 type Props = {
@@ -9,17 +8,15 @@ type Props = {
 }
 
 export const ShowPeriodPages = ({setItemPerPage, itemPerPage, label, setCurrentPage}: Props) => {
-
   const period = [10,20,50]  
   const styleButton = 'font-medium  text-inActive px-2 py-1 rounded-lg hover:text-text'
-
   const periodPages = period.map((period)=>{
     return (
         <button onClick={()=>{setItemPerPage(period); setCurrentPage(1) }} 
                 className= { period !== itemPerPage ? styleButton : `${styleButton} text-text bg-active px-3 py-1`} key = {uniqid()}>{period}</button>
     )
   })
-
+  
   return (
     <div className='items-center'>
       <span className='mr-1 text-inActive'>{label}</span>

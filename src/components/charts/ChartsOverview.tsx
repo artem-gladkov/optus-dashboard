@@ -1,7 +1,7 @@
-import { createChart, ColorType, ISeriesApi, IChartApi, AreaData, HistogramSeriesOptions, CrosshairMode, LineStyle } from 'lightweight-charts';
+import { createChart, ColorType, CrosshairMode, LineStyle } from 'lightweight-charts';
 import { useEffect, useRef, useState } from 'react';
 import { numberWithSpaces } from '../../function/numberWithSpaces';
-import Spinner from '../spinner/Spinner';
+
 
 type typeCharts = 'Liquidity' | 'Volume (24hrs)'
 

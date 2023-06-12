@@ -15,7 +15,6 @@ interface Props {
 
 
 const SearchInputComponent = ({getTokens = store.getTokens, getPairs = store.getPairs, hiddenNav}: Props) => {
-    console.log(toJS(getPairs))
     const {dex} = useParams()
     const [valueInput, setValueInput] = useState('')
     const searchInput = getTokens ? getTokens
@@ -29,7 +28,6 @@ const SearchInputComponent = ({getTokens = store.getTokens, getPairs = store.get
 
             )
         }) : ['произошла ошибка']
-
 
     const searchPairs =getPairs ? getPairs
         .filter((pair)=>{
@@ -45,13 +43,9 @@ const SearchInputComponent = ({getTokens = store.getTokens, getPairs = store.get
            
                     <Link to={`${dex}/pairs/${pair.address}`} className='font-semibold text-sm'>{pair.name}</Link>
                 </li>
-
             )
         }) : (<li>ПРОИЗОШЛА ОШИБКА</li>)
-
     return (
-
-        
     <form className='flex items-center  text-xs h-9 w-64 bg-form rounded border-inActive border text-text' action="" onSubmit={ (e)=>{e.preventDefault()} }>
         <div className='mx-3'>
             <SearchSvg/>

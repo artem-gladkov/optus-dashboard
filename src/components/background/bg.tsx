@@ -1,5 +1,3 @@
-import React from 'react'
-import useMedia from "../../hooks/useMedia"
 import "./bg.css"
 
 type Props = {
