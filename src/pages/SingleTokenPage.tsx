@@ -8,10 +8,8 @@ import { TokenForm } from "../components/tokenForm/TokenForm"
 import { Pairs } from "../components/pairs/Pairs"
 import { Transactions } from "../components/transactions/Transactions"
 import { TokenInformation } from "../components/tokenInformation/TokenInformation"
-import FavouritesButton from "../components/favouritesButton/FavouritesButton"
 import { ChartsForm } from "../components/charts/ChartsPrice"
 import { ChartsOverview } from "../components/charts/ChartsOverview"
-import { SearchInput } from "../components/searchInput/SearchInput"
 import {ButtonsCharts} from "../components/buttonsGroupe/ButtonsCharts"
 import { numberColor } from "../function/colorChanges"
 import Spinner from "../components/spinner/Spinner"
@@ -46,7 +44,7 @@ const SingleTokenPageComponent=(props: any) => {
         updateHandlerButtonDexBo(true)
     }, [address])
     
-    console.log(toJS(getSingleToken.pairs))
+
 
     return (
         <>
@@ -127,7 +125,7 @@ const SingleTokenPageComponent=(props: any) => {
                         {/* Token Information */}
                     
                     <div className="flex flex-col mt-5">
-                        <h2 className="text-2xl font-normal">Token Iformation</h2>
+                        <h2 className="text-2xl font-normal">Token Information</h2>
                         <TokenInformation symbol = {getSingleToken.symbol} name ={getSingleToken.name} address = {getSingleToken.address}/>    
                     </div>  
                 </div>

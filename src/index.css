@@ -11,12 +11,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(rgb(152, 3, 189), rgb(60, 2, 105));
+  background: linear-gradient(rgb(139, 62, 158),rgb(73, 23, 112));
   border-radius: 15px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(rgb(99, 23, 213),rgb(240, 237, 241));
+  background: linear-gradient(rgb(110, 42, 211),rgb(194, 192, 195));
 }
 
 

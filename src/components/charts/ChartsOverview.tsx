@@ -16,7 +16,6 @@ export const ChartsOverview = (
 }) => {
 	
 	const [useChar, setChar] = useState<JSX.Element>()
-	
 	const {
 		titleMarker,
 		type,
@@ -67,9 +66,7 @@ export const ChartsOverview = (
 				},
 				timeScale: {
 					borderVisible: false,
-				},
-				
-				
+				},	
 			});
 			const currentLocale = window.navigator.languages[0];
 			const myPriceFormatter = Intl.NumberFormat(currentLocale, {

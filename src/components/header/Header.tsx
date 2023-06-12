@@ -8,6 +8,7 @@ import {Icon} from "../svg/Icon"
 import useMedia from "../../hooks/useMedia"
 import { Navigations } from "../navigations/Navigations" 
 import { SearchInput } from "../searchInput/SearchInput"
+import { toJS } from "mobx"
 
 interface Props  {}
 
@@ -19,10 +20,9 @@ const RoutesNavigationComponent = (props: Props) => {
   const over = 'OPTUS'
   const {dex} = useParams()
   const [burger, setBurger] = useState(false)
-  const {handlerButtonDex,activeButtonDex, buttonDex,updateActivePage, activePage, updateHandlerButtonDexBo,updateActiveButtonDex,updateHandlerButtonDex } = store
+  const {getActiveButtonDex, handlerButtonDex,activeButtonDex, buttonDex,updateActivePage, activePage, updateHandlerButtonDexBo,updateActiveButtonDex,updateHandlerButtonDex } = store
   const [hidden, setHidden] = useState(false)
   const hiddenNav = (hidden: boolean) =>{
-
     setHidden(hidden)
   }
 
@@ -49,7 +49,7 @@ const RoutesNavigationComponent = (props: Props) => {
               </div>
 
             {matches ? (
-                     <Navigations/>
+                     <Navigations dexProp ={getActiveButtonDex}/>
             )  :  (    <>
                          <div className="flex flex-end text-inActive">
                               <div onClick={()=>{setBurger((v)=>!v)}} className={`ml-4 mt-1 w-7 h-7 rounded flex flex-col justify-between bg-bg hover:bg-inActive transition-all duration-300 cursor-pointer ${burger ? 'rotate-90' : ''}`}>

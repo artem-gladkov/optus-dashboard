@@ -1,6 +1,7 @@
 import {observer} from 'mobx-react-lite'
 import { useCopyClick } from '../../hooks/useCopyClick';
 import { CopyClick, CopyClickSuccess } from '../svg/Icon';
+import { Link } from 'react-router-dom';
 
 interface Props {
     name: string;
@@ -24,7 +25,7 @@ const TokenInformationComponent = ({name, symbol, address}: Props) => {
                 <div className='md:w-1/3 w-full flex md:block justify-between  md:justify-start'>
                     <p className='mb-2 w-1/2'>Address</p> 
                     <div className='flex  items-center w-1/2'>
-                        <div className='font-medium mr-3'>{address.slice(0,4)+'...'+ address.slice(-4)}</div>
+                        <Link to={`https://tonapi.io/account/${address}`} target="_blank" className='font-medium mr-3'>{address.slice(0,4)+'...'+ address.slice(-4)}</Link>
                         <button onClick={()=>{copy(address)}}>{!isCopied ? <CopyClick/> : <CopyClickSuccess/>}</button>
                     </div>
                     

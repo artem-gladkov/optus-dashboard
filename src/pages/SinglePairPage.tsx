@@ -94,7 +94,7 @@ const SinglePairPageComponent = (props: Props) => {
                                                         <Link to={`https://tonapi.io/account/${getSinglePair.token_one.address}` }
                                                             target="_blank"> 
                                                             <button > 
-                                                                {`1 ${getSinglePair.token_one.symbol} =< ${getSinglePair.symbol_one_indicators.current_pair_price.value} ${getSinglePair.token_two.symbol} (${getSinglePair.symbol_two_indicators?.current_usd_price?.value} $)`}
+                                                                {`1 ${getSinglePair.token_one.symbol} =< ${getSinglePair.symbol_one_indicators.current_pair_price.value} ${getSinglePair.token_two.symbol} (${getSinglePair.symbol_one_indicators?.current_usd_price?.value} $)`}
                                                             </button>
                                                         </Link>    
                                                     </div>
@@ -102,7 +102,7 @@ const SinglePairPageComponent = (props: Props) => {
                                                         <Link to={`https://tonapi.io/account/${getSinglePair.token_two.address}` }
                                                             target="_blank"> 
                                                             <button> 
-                                                                {`1 ${getSinglePair.token_two.symbol} =< ${getSinglePair?.symbol_two_indicators?.current_pair_price?.value} ${getSinglePair.token_one.symbol} (${getSinglePair.symbol_one_indicators?.current_usd_price?.value} $)`}
+                                                                {`1 ${getSinglePair.token_two.symbol} =< ${getSinglePair?.symbol_two_indicators?.current_pair_price?.value} ${getSinglePair.token_one.symbol} (${getSinglePair.symbol_two_indicators?.current_usd_price?.value} $)`}
                                                             </button>
                                                         </Link>    
                                                     </div>

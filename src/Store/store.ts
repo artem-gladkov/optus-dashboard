@@ -60,11 +60,10 @@ class StoreApp {
         const res = await req.json()
         runInAction(()=> {
             this.buttonDex = res
-            this.activeButtonDex = res[0]
+            // this.activeButtonDex = res[0]
         })
     } catch (error) {
-        this.buttonDex = ['OPTUS', 'STON.fi', 'Megaton']
-        this.activeButtonDex = this.buttonDex[0]
+
         console.log('dexListApi>>>>>', error)
     }
    } 
@@ -395,8 +394,8 @@ class StoreApp {
         this.buttonFavoritesFlag = ! this.buttonFavoritesFlag
     }
 
-    getgetActiveButtonDex = (dex) => {
-        this.activeButtonDex = dex
+    get getActiveButtonDex () {
+       return this.activeButtonDex 
     }
 
 
