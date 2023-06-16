@@ -146,7 +146,6 @@ export const ChartsOverview = (
 
 			return () => {
 				window.removeEventListener('resize', handleResize);
-
 				chart.remove();
 			}
 		},
