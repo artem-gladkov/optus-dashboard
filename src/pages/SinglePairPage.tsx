@@ -180,14 +180,14 @@ const SinglePairPageComponent = (props: Props) => {
                                                 {/* Транзакции */}
 
                                             <div className="flex flex-col mt-5">
-                                                <h2 className="text-2xl font-normal">Transaction</h2>   
+                                                <h2 className="text-2xl font-normal">Transactions</h2>   
                                                 <Transactions data={getSinglePair.transactions} error={errorTransaction}/>
                                             </div>  
 
                                                 {/* Pair Information */}
 
                                             <div className="flex flex-col mt-5">
-                                                <h2 className="text-2xl font-normal">Pair Information</h2>
+                                                <h2 className="text-2xl font-normal">Pair Informations</h2>
                                                 <PairInformation pairname={`${getSinglePair.token_one.symbol} - ${getSinglePair.token_two.symbol}`}
                                                                     pairAddress={getSinglePair.address}
                                                                     tokenOneAddress={getSinglePair.token_one.address}

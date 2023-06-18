@@ -1,6 +1,7 @@
 /* eslint-disable array-callback-return */
-
 import { makeAutoObservable, runInAction, toJS } from "mobx"
+import { isProd } from "../config/env"
+
 
 class StoreApp {
     private tokens = []
@@ -16,6 +17,8 @@ class StoreApp {
     private errorOverview: boolean = false
     private errorSingleToken: boolean = false
     private errorSinglePair: boolean = false
+
+    private _currentNetwork = isProd() ? 'https://api.optus.fi/api/v1/dashboard/' : 'https://api.dev.optus.fi/api/v1/dashboard/'
 
 
     private buttonPagination: number[] = []
@@ -46,14 +49,17 @@ class StoreApp {
    public sortFlag: boolean = false
    public arrow: string = 'high' 
 
+
+
     constructor(){
         makeAutoObservable(this)
         this.dexListApi()
     }
 
    dexListApi = async  () => {
+
     try {
-        const req = await fetch('https://api.optus.fi/api/v1/dashboard/dex_list')
+        const req = await fetch(`${this._currentNetwork}/dex_list`)
         if(!req.ok){
             throw new Error(req.statusText);
         }
@@ -70,7 +76,7 @@ class StoreApp {
 
    tokensApi = async (activedex) => {
         try  {
-            const getTokens = await fetch(`https://api.optus.fi/api/v1/dashboard/top_tokens?limit=50&dex=${activedex || 'OPTUS'}`)
+            const getTokens = await fetch(`${this._currentNetwork}/top_tokens?limit=50&dex=${activedex || 'OPTUS'}`)
             if(!getTokens.ok){
                 this.updateErrorTokens(true)
                 throw new Error(getTokens.statusText);
@@ -88,7 +94,7 @@ class StoreApp {
 
     pairsApi = async (activedex)  => {
         try {
-            const reqPairs = await fetch(`https://api.optus.fi/api/v1/dashboard/top_pairs?limit=50&dex=${activedex || 'OPTUS'}`)
+            const reqPairs = await fetch(`${this._currentNetwork}/top_pairs?limit=50&dex=${activedex || 'OPTUS'}`)
             if(!reqPairs.ok){
                 this.updateErrorPairs(true)
                 throw new Error(reqPairs.statusText);
@@ -106,7 +112,7 @@ class StoreApp {
 
     overviewApi = async(period: string, activedex: string) => {
         try {
-            const reqOverview = await fetch(`https://api.optus.fi/api/v1/dashboard/overview?period=${period}&dex=${activedex || 'OPTUS'}`)
+            const reqOverview = await fetch(`${this._currentNetwork}/overview?period=${period}&dex=${activedex || 'OPTUS'}`)
             if(!reqOverview.ok){
                 this.updateErrorOwerview(true)
                 throw new Error(reqOverview.statusText);
@@ -137,7 +143,7 @@ class StoreApp {
     getTokenSingleApi = async (address:any, period:any, activedex) => {
 
         try {
-            const reqToken = await fetch(`https://api.optus.fi/api/v1/dashboard/token?address=${address}&period=${period}&dex=${activedex}`)
+            const reqToken = await fetch(`${this._currentNetwork}/token?address=${address}&period=${period}&dex=${activedex}`)
             if(!reqToken.ok){
                 
                 this.updateSingleTokenError(true)
@@ -158,7 +164,7 @@ class StoreApp {
 
     getPairSingleApi = async (address:any, period:any, activedex) => {
         try {
-            const reqPair = await fetch(`https://api.optus.fi/api/v1/dashboard/pair?address=${address}&period=${period}&dex=${activedex}`)
+            const reqPair = await fetch(`${this._currentNetwork}/pair?address=${address}&period=${period}&dex=${activedex}`)
             if(!reqPair.ok){
                 
                 this.updateSinglePairError(true)
