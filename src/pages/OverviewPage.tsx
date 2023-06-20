@@ -19,7 +19,7 @@ const OverviewComponent = () => {
     
 
     const [errorTransaction, setErrorTransaction] = useState(false)
-    const {overviewApi, getOverview, getPairs , getErrorOverview, activeButtonDex, updateOverview,updateHandlerButtonDexBo, dexListApi, getTransactions, getTrans } = store
+    const {pairsApi,overviewApi, getOverview, getPairs , getErrorOverview, activeButtonDex, updateOverview,updateHandlerButtonDexBo, dexListApi, getTransactions, getTrans } = store
 
     const {dex} = useParams()
 
@@ -34,6 +34,7 @@ const OverviewComponent = () => {
         overviewApi('1Y', dex || 'OPTUS')  
         updateHandlerButtonDexBo(true)
         getTransactions(dex || 'OPTUS')
+        pairsApi(dex)
     }, [activeButtonDex])
     
 

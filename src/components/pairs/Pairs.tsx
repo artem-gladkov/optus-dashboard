@@ -25,10 +25,7 @@ const PairsComponent = ( {data}: Props) => {
     const [itemPerPage, setItemPerPage] = useState(10)
     const {buttonPairs, activeButtonPairs, pairsApi, getErrorPairs, activeButtonDex} = store
     const {dex} = useParams()
-    useEffect(()=>{
-        pairsApi(dex)
-    },[activeButtonDex])
-   
+
     const lastItemIndex = currentPage * itemPerPage;
     let firstItemIndex = lastItemIndex - itemPerPage;
     let idx = firstItemIndex+1
