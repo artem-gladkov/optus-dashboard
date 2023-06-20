@@ -13,7 +13,7 @@ WORKDIR /dashboard
 
 RUN npm install
 
-RUN npm run build
+RUN npm run build:dev
 
 FROM nginx
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
