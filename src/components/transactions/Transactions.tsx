@@ -18,18 +18,15 @@ interface Props {
 
 const TransactionsComponent = ({data, address, error}: Props) => {
     const [currentPage, setCurrentPage] = useState(1)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [itemPerPage, setItemPerPage] = useState(10)
     const matches = useMedia("(min-width: 1224px)")
     const matches2 = useMedia("(min-width: 1024px)")
     const {buttonFilterTransaction, 
         buttonTransactions, 
         activeButtonTransactions, 
-        activeButtonFilter, 
-        activeButtonDex
+        activeButtonFilter
      } = store
     const [handleButtonTypeTransaction, setHandleButtonTypeTransaction] = useState(false)
-    useEffect(()=>{},[activeButtonDex])
 
 
     const dataFilter = data?.filter((trans: { type: string; }) => {

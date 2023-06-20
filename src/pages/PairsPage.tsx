@@ -14,10 +14,10 @@ interface Props {
 
 const PairsPageComponent = (props: Props) => {
 
-    const {getPairs, updateHandlerButtonDexBo, activeButtonDex} = store
+    const {getPairs, updateHandlerButtonDexBo, activeButtonDex, pairsApi} = store
     const {dex} = useParams()
     useEffect(()=>{
-        store.pairsApi(dex)
+        pairsApi(dex)
         updateHandlerButtonDexBo(true)
     }, [])
 

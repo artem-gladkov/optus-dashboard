@@ -32,6 +32,7 @@ const PairsComponent = ( {data}: Props) => {
     const lastItemIndex = currentPage * itemPerPage;
     let firstItemIndex = lastItemIndex - itemPerPage;
     let idx = firstItemIndex+1
+    console.log(toJS(data))
 
    const pairs =data?.slice(firstItemIndex, lastItemIndex).map((pair: any, index:number)=>{
     

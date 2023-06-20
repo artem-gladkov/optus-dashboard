@@ -82,6 +82,7 @@ class StoreApp {
                 throw new Error(getTokens.statusText);
             }
             const respTokens = await getTokens.json()
+            console.log(respTokens)
             runInAction( ()=>{
                 this.tokens =   respTokens
                 this.updateErrorTokens(false)
@@ -95,6 +96,25 @@ class StoreApp {
     pairsApi = async (activedex)  => {
         try {
             const reqPairs = await fetch(`${this._currentNetwork}/top_pairs?limit=50&dex=${activedex || 'OPTUS'}`)
+            if(!reqPairs.ok){
+                this.updateErrorPairs(true)
+                throw new Error(reqPairs.statusText);
+            }
+            const respPairs = await reqPairs.json()
+            runInAction(()=>{
+                this.pairs =  respPairs
+                this.updateErrorPairs(false)
+            })
+        } catch (error) {
+            this.updateErrorPairs(true)
+            console.log('pairsApi>>>>>', error)
+        }
+    }
+
+    pairsForTokensApi = async (activedex, addressToken) =>{
+
+        try {
+            const reqPairs = await fetch(`${this._currentNetwork}/top_pairs?token_address=${addressToken}&dex=${activedex || 'OPTUS'}`)
             if(!reqPairs.ok){
                 this.updateErrorPairs(true)
                 throw new Error(reqPairs.statusText);
@@ -143,14 +163,13 @@ class StoreApp {
     getTokenSingleApi = async (address:any, period:any, activedex) => {
 
         try {
-            const reqToken = await fetch(`${this._currentNetwork}/token?address=${address}&period=${period}&dex=${activedex}`)
-            if(!reqToken.ok){
-                
+            const reqToken = await fetch(`${this._currentNetwork}/token?address=${address}&period=${period}&dex=${activedex || 'OPTUS'}`)
+            if(!reqToken.ok){               
                 this.updateSingleTokenError(true)
                 throw new Error(reqToken.statusText);
             }
             const resToken = await reqToken.json()
-            
+            console.log(resToken)
              runInAction(()=>{
                 this.singleToken =  resToken
                 this.updateSingleTokenError(false)
@@ -164,7 +183,7 @@ class StoreApp {
 
     getPairSingleApi = async (address:any, period:any, activedex) => {
         try {
-            const reqPair = await fetch(`${this._currentNetwork}/pair?address=${address}&period=${period}&dex=${activedex}`)
+            const reqPair = await fetch(`${this._currentNetwork}/pair?address=${address}&dex=${activedex || 'OPTUS'}`)
             if(!reqPair.ok){
                 
                 this.updateSinglePairError(true)
@@ -181,6 +200,60 @@ class StoreApp {
             console.log('getPairSingleApi>>>>>',error)   
         }
 
+    }
+
+    getTransactions = async (activedex) =>{
+        try {
+            const reqTransactions = await fetch(`${this._currentNetwork}/transactions?dex=${activedex || 'OPTUS'}`)
+            if(!reqTransactions.ok){
+                this.updateErrorTransactions(true)
+                throw new Error(reqTransactions.statusText);
+            }
+            const resTransactions = await reqTransactions.json()
+             runInAction(()=>{
+                this.transactions =  resTransactions
+                this.updateErrorTransactions(false)
+            })
+        } catch (error) {
+            this.updateErrorTransactions(true)
+            console.log('getTransactionsApi>>>>>',error)  
+        }
+    }
+
+    getSinglePairTransctions = async (activedex, pairAddress) => {
+        try {
+            const reqTransactions = await fetch(`${this._currentNetwork}/transactions?pair_address=${pairAddress}&dex=${activedex || 'OPTUS'}`)
+            if(!reqTransactions.ok){
+                this.updateErrorTransactions(true)
+                throw new Error(reqTransactions.statusText);
+            }
+            const resTransactions = await reqTransactions.json()
+             runInAction(()=>{
+                this.transactions =  resTransactions
+                this.updateErrorTransactions(false)
+            })
+        } catch (error) {
+            this.updateErrorTransactions(true)
+            console.log('getTransactionsApi>>>>>',error)  
+        }
+    }
+
+    getSingleTokenTransctions = async (activedex, tokenAddress) => {
+        try {
+            const reqTransactions = await fetch(`${this._currentNetwork}/transactions?token_address=${tokenAddress}&dex=${activedex || 'OPTUS'}`)
+            if(!reqTransactions.ok){
+                this.updateErrorTransactions(true)
+                throw new Error(reqTransactions.statusText);
+            }
+            const resTransactions = await reqTransactions.json()
+             runInAction(()=>{
+                this.transactions =  resTransactions
+                this.updateErrorTransactions(false)
+            })
+        } catch (error) {
+            this.updateErrorTransactions(true)
+            console.log('getTransactionsApi>>>>>',error)  
+        }
     }
 
     updateFilterButton = (type: string) => {
