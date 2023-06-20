@@ -18,7 +18,7 @@ class StoreApp {
     private errorSingleToken: boolean = false
     private errorSinglePair: boolean = false
 
-    private _currentNetwork = isProd() ? 'https://api.optus.fi/api/v1/dashboard/' : 'https://api.dev.optus.fi/api/v1/dashboard/'
+    private _currentNetwork = isProd() ? 'https://api.optus.fi/api/v1/dashboard' : 'https://api.dev.optus.fi/api/v1/dashboard'
 
 
     private buttonPagination: number[] = []
