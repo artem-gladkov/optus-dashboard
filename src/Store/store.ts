@@ -69,7 +69,6 @@ class StoreApp {
             // this.activeButtonDex = res[0]
         })
     } catch (error) {
-
         console.log('dexListApi>>>>>', error)
     }
    } 
@@ -82,7 +81,6 @@ class StoreApp {
                 throw new Error(getTokens.statusText);
             }
             const respTokens = await getTokens.json()
-            console.log(respTokens)
             runInAction( ()=>{
                 this.tokens =   respTokens
                 this.updateErrorTokens(false)
@@ -141,14 +139,11 @@ class StoreApp {
             runInAction(()=>{
                 this.updateOverview(respOverview)
                 this.updateErrorOwerview(false)
-            })
-
-       
+            })  
         } catch (error) {
             this.updateErrorOwerview(true)
             console.log('overviewApi>>>>',error)    
-        }
-        
+        }      
     }
 
     updateHandlerButtonDex =() => {
@@ -169,7 +164,6 @@ class StoreApp {
                 throw new Error(reqToken.statusText);
             }
             const resToken = await reqToken.json()
-            console.log(resToken)
              runInAction(()=>{
                 this.singleToken =  resToken
                 this.updateSingleTokenError(false)
@@ -190,7 +184,6 @@ class StoreApp {
                 throw new Error(reqPair.statusText);
             }
             const resPair = await reqPair.json()
-            console.log(resPair)
              runInAction(()=>{
                 this.singlePair =  resPair
                 this.updateSinglePairError(false)
@@ -403,9 +396,7 @@ class StoreApp {
     }
 
     sortPairs =(type:string, data: any[])=>{
-        console.log(toJS(data))
         if(type ==='Liquidity'){
-            console.log('c')
             data.sort((a,b)=>{
                 if(this.sortFlag === false){  return b.liquidity.value - a.liquidity.value}
                 if(this.sortFlag === true){ return a.liquidity.value - b.liquidity.value}

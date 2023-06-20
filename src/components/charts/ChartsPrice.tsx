@@ -56,7 +56,6 @@ export const ChartsForm = ({data}: Props) => {
             downColor: '#f00',
             borderVisible: false,      
           });
-          console.log(data)
           candleSeries.setData(data)
           
           chart.applyOptions({

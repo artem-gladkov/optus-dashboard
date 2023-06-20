@@ -6,7 +6,6 @@ export const getEnvVariable = (key: string) => {
 };
 
 export const isProd = () => {
-    console.log(process.env)
     if(
         getEnvVariable("REACT_APP_NODE_ENV") === "development" && 
         getEnvVariable("NODE_ENV") === "production"
