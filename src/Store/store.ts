@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import { makeAutoObservable, runInAction, toJS } from "mobx"
-import { isProd } from "../config/env"
+import { isProd, getEnvVariable } from "../config/env"
 
 
 class StoreApp {
@@ -18,7 +18,7 @@ class StoreApp {
     private errorSingleToken: boolean = false
     private errorSinglePair: boolean = false
 
-    private _currentNetwork = isProd() ? 'https://api.optus.fi/api/v1/dashboard' : 'https://api.dev.optus.fi/api/v1/dashboard'
+    private _currentNetwork = isProd() ? getEnvVariable('REACT_APP_API_URL') : getEnvVariable('REACT_APP_API_URL_DEV')
 
 
     private buttonPagination: number[] = []

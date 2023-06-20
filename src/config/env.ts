@@ -6,12 +6,15 @@ export const getEnvVariable = (key: string) => {
 };
 
 export const isProd = () => {
+    console.log(process.env)
+    if(
+        getEnvVariable("REACT_APP_NODE_ENV") === "development" && 
+        getEnvVariable("NODE_ENV") === "production"
+    ){
+        return false;
+    };
     return (
-        getEnvVariable("NODE_ENV") === "production" ||
-        getEnvVariable("REACT_APP_NODE_ENV") === "production"
+        getEnvVariable("REACT_APP_NODE_ENV") === "production" || 
+        getEnvVariable("NODE_ENV") === "production"
     );
-};
-
-export const isDev = () => {
-    return getEnvVariable("NODE_ENV") === "development";
 };
