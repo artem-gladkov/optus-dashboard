@@ -103,8 +103,6 @@ class StoreApp {
             runInAction(()=>{
                 this.pairs =  respPairs
                 this.updateErrorPairs(false)
-                console.log(toJS(this.pairs))
-                console.log('все пары')
             })
         } catch (error) {
             this.updateErrorPairs(true)
@@ -124,8 +122,6 @@ class StoreApp {
             runInAction(()=>{
                 this.pairs =  respPairs
                 this.updateErrorPairs(false)
-                console.log(toJS(this.pairs))
-                console.log('одна пара')
             })
         } catch (error) {
             this.updateErrorPairs(true)
