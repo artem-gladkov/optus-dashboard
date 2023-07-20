@@ -7,7 +7,7 @@ FROM node:18.12.1 as build
 
 RUN apt update && apt install git
 
-RUN git clone https://github.com/optus-fi/dashboard.git
+RUN git clone -b main https://github.com/optus-fi/dashboard.git
 
 WORKDIR /dashboard
 

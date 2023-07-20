@@ -21,15 +21,10 @@ const TokensComponent = (props: Props) => {
     const [itemPerPage, setItemPerPage] = useState(10)
     const {buttonTokens,tokensApi, activeButtonTokens,getTokens, getErrorTokens, activeButtonDex, updateHandlerButtonDexBo} = store; 
     const matches = useMedia("(min-width: 768px)")
-
-    
     const {dex} = useParams()
-
-    // console.log(toJS(getTokens))
 
     useEffect(()=>{
         tokensApi(dex)
-        console.log('render tokens')
         updateHandlerButtonDexBo(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[activeButtonDex])

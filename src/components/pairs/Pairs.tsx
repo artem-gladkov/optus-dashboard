@@ -23,15 +23,13 @@ const PairsComponent = ( {data}: Props) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
     const [itemPerPage, setItemPerPage] = useState(10)
-    const {buttonPairs, activeButtonPairs, pairsApi, getErrorPairs, activeButtonDex} = store
+    const {buttonPairs, activeButtonPairs, getErrorPairs, activeButtonDex} = store
     const {dex} = useParams()
-    useEffect(()=>{
-        pairsApi(dex)
-    },[activeButtonDex])
-   
+
     const lastItemIndex = currentPage * itemPerPage;
     let firstItemIndex = lastItemIndex - itemPerPage;
     let idx = firstItemIndex+1
+
 
    const pairs =data?.slice(firstItemIndex, lastItemIndex).map((pair: any, index:number)=>{
     
