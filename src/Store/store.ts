@@ -1,6 +1,7 @@
 /* eslint-disable array-callback-return */
 import { makeAutoObservable, runInAction, toJS } from "mobx"
 import { isProd, getEnvVariable } from "../config/env"
+import { log } from "console"
 
 
 class StoreApp {
@@ -102,6 +103,8 @@ class StoreApp {
             runInAction(()=>{
                 this.pairs =  respPairs
                 this.updateErrorPairs(false)
+                console.log(toJS(this.pairs))
+                console.log('все пары')
             })
         } catch (error) {
             this.updateErrorPairs(true)
@@ -121,6 +124,8 @@ class StoreApp {
             runInAction(()=>{
                 this.pairs =  respPairs
                 this.updateErrorPairs(false)
+                console.log(toJS(this.pairs))
+                console.log('одна пара')
             })
         } catch (error) {
             this.updateErrorPairs(true)

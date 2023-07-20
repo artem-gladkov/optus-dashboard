@@ -23,7 +23,7 @@ const PairsComponent = ( {data}: Props) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
     const [itemPerPage, setItemPerPage] = useState(10)
-    const {buttonPairs, activeButtonPairs, pairsApi, getErrorPairs, activeButtonDex} = store
+    const {buttonPairs, activeButtonPairs, getErrorPairs, activeButtonDex} = store
     const {dex} = useParams()
 
     const lastItemIndex = currentPage * itemPerPage;
