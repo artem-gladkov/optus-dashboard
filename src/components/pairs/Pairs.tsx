@@ -22,7 +22,7 @@ const PairsComponent = ( {data}: Props) => {
     const [currentPage, setCurrentPage] = useState(1)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-    const [itemPerPage, setItemPerPage] = useState(10)
+    const [itemPerPage, setItemPerPage] = useState(10) 
     const {buttonPairs, activeButtonPairs, getErrorPairs, activeButtonDex} = store
     const {dex} = useParams()
 
@@ -99,7 +99,8 @@ const PairsComponent = ( {data}: Props) => {
                                 <Pagination totalItem={data?.length} 
                                             itemPerPage={itemPerPage}
                                             setCurrentPage={setCurrentPage}
-                                            currentPage={currentPage}/>                        
+                                            currentPage={currentPage}
+                                            dex={dex}/>                        
                         </div>
                         <div className="flex items-center xl:w-1/3 w-full xl:justify-end justify-center">
                                 <ShowPeriodPages setItemPerPage={setItemPerPage}

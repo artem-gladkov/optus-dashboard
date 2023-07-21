@@ -1,6 +1,6 @@
 import { store } from "../../Store/store"
 import { observer } from "mobx-react-lite"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import uniqid from 'uniqid'
 import {ButtonTokens} from "../buttonsGroupe/ButtonGroupeForm"
@@ -97,7 +97,8 @@ const TokensComponent = (props: Props) => {
                         <Pagination totalItem={store.getTokens.length} 
                             itemPerPage={itemPerPage}
                             setCurrentPage={setCurrentPage}
-                            currentPage={currentPage}/>                          
+                            currentPage={currentPage}
+                            dex={dex}/>                          
                         </div>
                         <div className="flex items-center xl:w-1/3 w-full xl:justify-end justify-center">
                                 <ShowPeriodPages setItemPerPage={setItemPerPage}

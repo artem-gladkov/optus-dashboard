@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import { observer } from "mobx-react-lite"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { store } from "../../Store/store";
 import uniqid from 'uniqid'
 import { useEffect, useState } from "react";
@@ -27,7 +27,7 @@ const TransactionsComponent = ({data, address, error}: Props) => {
         activeButtonFilter
      } = store
     const [handleButtonTypeTransaction, setHandleButtonTypeTransaction] = useState(false)
-
+    const {dex} = useParams()
 
     const dataFilter = data?.filter((trans: { type: string; }) => {
         if(activeButtonFilter=== 'All'){return trans}
@@ -110,7 +110,9 @@ const TransactionsComponent = ({data, address, error}: Props) => {
                         <Pagination totalItem={dataFilter?.length} 
                             itemPerPage={itemPerPage}
                             setCurrentPage={setCurrentPage}
-                            currentPage={currentPage}/>                        
+                            currentPage={currentPage}
+                            dex={dex}/>
+                                                    
                         </div>
                         <div className="flex items-center xl:w-1/3 w-full xl:justify-end justify-center">
                                 <ShowPeriodPages setItemPerPage={setItemPerPage}
