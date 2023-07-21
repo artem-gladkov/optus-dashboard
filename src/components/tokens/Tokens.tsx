@@ -98,7 +98,8 @@ const TokensComponent = (props: Props) => {
                             itemPerPage={itemPerPage}
                             setCurrentPage={setCurrentPage}
                             currentPage={currentPage}
-                            dex={dex}/>                          
+                            dex={dex}
+                            type={'tokens'}/>                          
                         </div>
                         <div className="flex items-center xl:w-1/3 w-full xl:justify-end justify-center">
                                 <ShowPeriodPages setItemPerPage={setItemPerPage}

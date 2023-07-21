@@ -111,7 +111,8 @@ const TransactionsComponent = ({data, address, error}: Props) => {
                             itemPerPage={itemPerPage}
                             setCurrentPage={setCurrentPage}
                             currentPage={currentPage}
-                            dex={dex}/>
+                            dex={dex}
+                            type={'transactions'}/>
                                                     
                         </div>
                         <div className="flex items-center xl:w-1/3 w-full xl:justify-end justify-center">

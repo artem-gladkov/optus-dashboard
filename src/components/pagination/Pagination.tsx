@@ -8,6 +8,7 @@ interface Props {
   setCurrentPage: (page: number) => void;
   currentPage: number;
   dex: string;
+  type:string;
 }
 
 const PaginationComponent = ({
@@ -15,7 +16,8 @@ const PaginationComponent = ({
   itemPerPage,
   setCurrentPage,
   currentPage,
-  dex
+  dex,
+  type
 }: Props) => {
   const [activePages, setActivePages] = useState(currentPage);
   let pages = [];
@@ -46,17 +48,20 @@ const PaginationComponent = ({
     } else {
       setActivePages(pages[pages.length - 1]);
     }
-    console.log(activePages);
   };
+
+
+
+  useEffect(()=>{
+    if(type !== 'transactions'){
+      setActivePages(1);
+      setCurrentPage(1);
+    }
+  }, [itemPerPage, dex])
 
   useEffect(() => {
     setCurrentPage(activePages);
   }, [activePages]);
-
-  useEffect(()=>{
-    setActivePages(1);
-    setCurrentPage(1)
-  }, [itemPerPage, dex])
 
 
   const styleButton =
