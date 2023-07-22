@@ -27,22 +27,17 @@ const PaginationComponent = ({
 
   const backPages = () => {
     if (activePages > 1) {
-      setActivePages((activePages) => {
-        return (activePages = activePages - 1);
-      });
+      setActivePages(activePages - 1);
     }
   };
 
   const plusPages = () => {
     if (activePages < pages.length - 1) {
-      setActivePages((activePages) => {
-        return (activePages = activePages + 1);
-      });
+      setActivePages(activePages + 1);
     }
   };
 
   const updateActive = (page) => {
-    setCurrentPage(page);
     if (page < pages.length - 1) {
       setActivePages(page);
     } else {
@@ -55,7 +50,6 @@ const PaginationComponent = ({
   useEffect(()=>{
     if(type !== 'transactions'){
       setActivePages(1);
-      setCurrentPage(1);
     }
   }, [itemPerPage, dex])
 
