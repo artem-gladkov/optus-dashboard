@@ -13,7 +13,9 @@ module.exports = {
       'text': '#D8D3E3',
       'numberRed': '#e51919',
       'numberGreen': '#0a9608',
-      'headerActiveBTN': '#2C2445'
+      'headerActiveBTN': '#2C2445',
+      'transparent': 'transparent',
+      'blue': '#622ffa',
     }
   },
   plugins: [],

@@ -40,7 +40,7 @@ const PairsComponent = ( {data}: Props) => {
                         <span className="mr-3 text-inActive"> {idx++}</span>
                         <img className="-mr-2 z-10 rounded-full" src={pair.token_one.icon} alt="imgToken1" style={{width: 20, height: 20}}/>
                         <img className="mr-3 rounded-full" src={pair.token_two.icon} alt="imgToken2" style={{width: 20, height: 20}}/>
-                        <Link to={`/${dex || 'OPTUS'}/pairs/${pair.address}`}>   <span className=" font-medium text-slate-900 text-opacity-80 hover:text-slate-50 "> <span>{pair.name}</span></span>  </Link>
+                        <Link to={`/overview/${dex || 'OPTUS'}/pairs/${pair.address}`}>   <span className=" font-medium text-slate-900 text-opacity-80 hover:text-slate-50 "> <span>{pair.name}</span></span>  </Link>
                     </div>
                 </div>
                 <div className="flex lg:w-2/3 w-3/4">

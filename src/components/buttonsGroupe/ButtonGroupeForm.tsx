@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 interface Props {
     active?: any;
-    type: 'tokens' | 'pairs' | 'transactions' | 'filter_transactions' | 'buttonDex';
+    type: 'tokens' | 'pairs' | 'transactions' | 'filter_transactions' | 'buttonDex' | 'dexoverview';
     flagTransaction?: boolean;
     data?: any;
     flagTokens?: boolean;
@@ -28,7 +28,9 @@ const {
     updateHandlerButtonDexBo
 } = store
 
-    const a = typeof window.location.pathname.split('/')[2] == 'undefined' ? '' : `/${window.location.pathname.split('/')[2]}`
+    const a = typeof window.location.pathname.split('/')[3] == 'undefined' ? '' : `/${window.location.pathname.split('/')[3]}`
+    console.log(window.location.pathname.split('/'))
+    console.log(page, 'page')
     const Arrownone = (button) => {
         if(button === active && arrow === 'high' && button !== 'Account' && button !== 'Liquidity Jettons' && type !== "filter_transactions" ) {return (<span key={uniqid()}>&dArr;</span>)}
         if(button === active && arrow === 'low' && button !== 'Account'  && button !== 'Liquidity Jettons'  && type !== "filter_transactions") {return (<span key={uniqid()}>&uArr;</span>)}
@@ -59,8 +61,11 @@ const {
             updateFilterButton(button)
         }
         if(type === 'buttonDex'){
-            updateActiveButtonDex(button)
-            updateHandlerButtonDexBo(true)
+            if(button !== 'overview'){
+                updateActiveButtonDex(button)
+                updateHandlerButtonDexBo(true)
+            }
+
         }
 
     }
@@ -73,7 +78,7 @@ const {
          if(type === 'buttonDex') {
             return (
                 <div key={uniqid()} onClick={()=>{ButtonHeaderComponent(button)}} >
-                    <Link to={`${button}${page === '' ? '' : '/'}${page === '' ? a : page}`}> {button} </Link>
+                    <Link to={`overview/${button}${page === '' ? '' : '/'}${page === '' ? a : page}`}> {button} </Link>
                 </div>
             )
          } else if(type === 'pairs') {

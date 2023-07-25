@@ -11,7 +11,6 @@ function AppComponent() {
 
   return (
     <div className='z-10'>
-   
         <RoutesPath/>
     </div>
 

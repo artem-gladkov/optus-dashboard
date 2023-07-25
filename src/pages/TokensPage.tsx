@@ -18,7 +18,7 @@ const TokensPageComponent = (props: Props) => {
             
                 <div className="flex w-full  relative flex-col text-text   z-50">
                             <div className="flex justify-between w-full  flex-wrap  items-center my-5 relative">
-                                    <h2 className="flex text-3xl font-medium text-text">Top Tokens {activeButtonDex}</h2>
+                                    <h2 className="flex text-3xl font-medium text-text">Top Jettons {activeButtonDex}</h2>
                                     <div className="w-1/2">
                                         {/* <SearchInput /> */}
                                     </div>

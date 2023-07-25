@@ -40,7 +40,7 @@ const TokensComponent = (props: Props) => {
                                                         <div className="flex items-center ">
                                                             <span className="mr-3 text-inActive"> {idx++}</span>
                                                             <img className="mr-3 rounded-full" src={token.icon} alt="imgToken" style={{width: 20, height: 20}}/>
-                                                            <Link  to={`/${dex || 'OPTUS'}/tokens/${token.address}`}>   
+                                                            <Link  to={`/overview/${dex || 'OPTUS'}/tokens/${token.address}`}>   
                                                                 <span className="font-medium  text-opacity-80  ">{token.name}</span>
                                                                 <span className="text-inActive ml-2">({token.symbol})</span> 
                                                             </Link>
@@ -49,7 +49,7 @@ const TokensComponent = (props: Props) => {
                                                     <div className="flex lg:w-2/3 w-full text-xs sm:text-base font-medium">
                                                             <div className="flex md:w-1/5 w-1/3">
                                                             <img className="mr-3 lg:hidden" src={token.icon} alt="imgToken" style={{width: 20, height: 20}}/>
-                                                                <Link to={`/${dex}/tokens/${token.address}`}>
+                                                                <Link to={`/overview/${dex}/tokens/${token.address}`}>
                                                                     {token.symbol}
                                                                 </Link>
                                                             </div>

@@ -18,6 +18,7 @@ const RoutesNavigationComponent = (props: Props) => {
   const pairs = 'pairs'
   const tokens = 'tokens'
   const over = 'OPTUS'
+  const dexoverview = 'dexoverview'
   const {dex} = useParams()
   const [burger, setBurger] = useState(false)
   const {getActiveButtonDex, handlerButtonDex,activeButtonDex, buttonDex,updateActivePage, activePage, updateHandlerButtonDexBo,updateActiveButtonDex,updateHandlerButtonDex } = store
@@ -25,7 +26,8 @@ const RoutesNavigationComponent = (props: Props) => {
   const hiddenNav = (hidden: boolean) =>{
     setHidden(hidden)
   }
-
+  const pathnameWindow = window.location.pathname;
+  const visiblebtnDex = pathnameWindow.includes('dexoverview')
   useEffect(() => {
     dex ? updateActiveButtonDex(window.location.pathname.split('/')[1]) : updateActiveButtonDex('OPTUS')
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,12 +41,17 @@ const RoutesNavigationComponent = (props: Props) => {
                 <Link className="flex items-center" onClick={()=>{ updateHandlerButtonDexBo(true)}} to={`/`}>
                 <Icon/>
                 </Link>
-              <div className="ml-6">
-               <button  onClick={updateHandlerButtonDex} className='flex items-center'><span className="px-2">{activeButtonDex || 'OPTUS'}</span><div className="rotate-90 text-2xl">&#8250;</div></button>
-                <div className="absolute bg-form px-2  rounded">
-                 {!handlerButtonDex &&  <ButtonTokens arrButtons={buttonDex}  key={uniqid()}  active = {activeButtonDex} type='buttonDex' page={activePage}/>}
-                </div>
-              </div>
+                {
+                  !visiblebtnDex ? (
+                    <div className="ml-6">
+                    <button  onClick={updateHandlerButtonDex} className='flex items-center'><span className="px-2">{activeButtonDex || 'OPTUS'}</span><div className="rotate-90 text-2xl">&#8250;</div></button>
+                     <div className="absolute bg-form px-2  rounded">
+                      {!handlerButtonDex &&  <ButtonTokens arrButtons={buttonDex}  key={uniqid()}  active = {activeButtonDex} type='buttonDex' page={activePage}/>}
+                     </div>
+                   </div>
+                  ) : (null)
+                }
+
 
               </div>
 
@@ -72,6 +79,10 @@ const RoutesNavigationComponent = (props: Props) => {
                                   <div className="mb-2">
                                     <Link onClick={()=>{updateActivePage(pairs)}} className='  hover:text-text transition-all duration-400 px-4 py-2 rounded-xl' 
                                                   to={`/${dex ? dex : over}/${pairs}`}>Pairs</Link>
+                                  </div>
+                                  <div className="mb-2">
+                                    <Link onClick={()=>{updateActivePage(dexoverview)}} className='  hover:text-text transition-all duration-400 px-4 py-2 rounded-xl' 
+                                                  to={`/${dex ? dex : over}/${dexoverview}`}>Overview dex</Link>
                                   </div>
                                  </div>
 

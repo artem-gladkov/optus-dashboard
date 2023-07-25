@@ -37,7 +37,7 @@ const OverviewComponent = () => {
         pairsApi(dex)
     }, [activeButtonDex])
     
-
+    // console.log(toJS(getOverview))
 
     return (
    
@@ -46,13 +46,12 @@ const OverviewComponent = () => {
             <div className='py-0 px-4 lg:px-14'>
                 <div className='flex flex-col z-50 relative'>
                             <h1 className='font-bold text-3xl text-text'>Overview {activeButtonDex}</h1>
-                            {/* Графики */}
                             <div className=' flex  lg:flex mt-5 justify-center lg:flex-row flex-col'>
                                 <div className='h-charts  w-full lg:w-1/2 pb-6 lg:mr-5 bg-form rounded-2xl justify-center items-center mb-14'>
                                 
                                         {getOverview.liquidity_graph   ? (
                                                 <>
-                                                { !getErrorOverview? <ChartsOverview titleMarker={true} type={'Liquidity'} data ={toJS(getOverview.liquidity_graph)} /> :  'Произошла ошибка, но мы решаем эту проблему'}  
+                                                { !getErrorOverview ? <ChartsOverview titleMarker={true} type={'Liquidity'} data ={toJS(getOverview.liquidity_graph)} /> :  'Произошла ошибка, но мы решаем эту проблему'}  
                                                 </>
 
                                         ) : (
@@ -95,7 +94,7 @@ const OverviewComponent = () => {
                             {/* Топ монет */}
                             <div className='flex  flex-col mt-10 text-text'>
                                 <div className='flex justify-between'>
-                                <h1 className='font-medium text-2xl '>Top Tokens {activeButtonDex}</h1>
+                                <h1 className='font-medium text-2xl '>Top Jettons {activeButtonDex}</h1>
                                 {/* <SearchInput getTokens={getTokens} getPairs={getPairs} /> */}
                                 </div>
 

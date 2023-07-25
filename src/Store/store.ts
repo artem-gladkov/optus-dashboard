@@ -42,7 +42,10 @@ class StoreApp {
     public buttonDex: string[]= ['OPTUS', 'STON.fi', 'Megaton']
     public activeButtonDex: string = this.buttonDex[0]
 
-    public page: string[]= ['', 'pairs', 'tokens']
+    public buttonDexPage: string[]= ['Volume (24hrs)', 'Liquidity', 'Transactions', 'Pairs']
+    public activeButtonDexPage: string = this.buttonDex[0]
+
+    public page: string[]= ['', 'pairs', 'tokens', 'dexoverview']
     public activePage: string = this.page[0]
 
     public handlerButtonDex: boolean = true
