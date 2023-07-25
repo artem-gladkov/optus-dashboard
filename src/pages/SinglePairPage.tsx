@@ -55,11 +55,11 @@ const SinglePairPageComponent = (props: Props) => {
             {getSinglePair.symbol_one_indicators ? 
                             ( getErrorSinglePair ? "Произошла ошибка, но мы уже решаем эту проблему" :  (
                                 <div className="h-full py-14 bg-bg flex flex-col justify-center relative">
-                                    <div className="h-full flex flex-col justify-center absolut mt-64">
-                                        <Bg type={'single'}/>
+                                    <div className="h-full flex flex-col relative justify-center">
+                                        <Bg/>
                                     </div>
-                                    <div className="flex w-full h-full flex-col text-text xl:px-28 px-4 z-50 -mt-64 absolut">
-                                        <div className="flex justify-between w-full  flex-wrap  items-center my-5">
+                                    <div className="flex w-full h-full flex-col text-text xl:px-28  z-50">
+                                        <div className="flex justify-between w-full  flex-wrap  items-center">
                                                 <div className="flex">
                                                     <button onClick={goBack}>
                                                         <span>&lArr;</span> 
@@ -68,14 +68,12 @@ const SinglePairPageComponent = (props: Props) => {
                                                     <span className="ml-6">{getSinglePair.token_one.symbol}-{getSinglePair.token_two.symbol}</span>
 
                                                 </div>
-                                                <div className="w-1/2">
-                                                    {/* <SearchInput /> */}
-                                                </div>
+
                                         </div>
 
-                                            <div className="flex justify-between flex-col lg:flex-row mt-10">
+                                            <div className="flex justify-between flex-col lg:flex-row mt-6">
                                               
-                                                <div className="flex ld:text-3xl text-xl font-medium mb-4">
+                                                <div className="flex ld:text-3xl text-xl font-medium">
                                                     <div className="flex">
                                                         <div className="z-10"><img src={getSinglePair.token_one.icon} alt="iconToken" width={30} height={30} className="rounded-full"/></div>
                                                         <div className="-ml-4"><img src={getSinglePair.token_two.icon} alt="iconToken" width={30} height={30} className="rounded-full"/></div>

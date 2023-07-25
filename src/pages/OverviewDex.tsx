@@ -47,7 +47,7 @@ const OverviewDexComponent = (props: Props) => {
 //   console.log(toJS(getOverview));
 
   return (
-    <div className="h-full py-14  relative bg-bg flex flex-col justify-center mt-20">
+    <div className="h-full py-14  relative bg-bg flex flex-col justify-center">
       <Bg />
       <div className="py-0 px-4 lg:px-14">
         <div className="flex flex-col z-50 relative">

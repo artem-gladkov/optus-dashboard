@@ -52,11 +52,11 @@ const SingleTokenPageComponent=(props: any) => {
         <>
             {getSingleToken.address ? ( getErrorSingleToken ? "Произошла ошибка, но мы уже решаем эту проблему" : (
                 <div className="h-full py-14 bg-bg flex flex-col justify-center relative">
-                     <div className="h-full flex flex-col justify-center absolut mt-40">
-                                <Bg type={'single'}/>
-                        </div>
-                    <div className="flex w-full h-full flex-col text-text lg:px-28 px-4 z-50 -mt-36">
-                    <div className="flex justify-between w-full  flex-wrap  items-center my-5">
+                     <div className="h-full flex flex-col justify-center relative">
+                     <Bg/>
+                     </div>
+                    <div className="flex w-full h-full flex-col text-text lg:px-28 px-4 z-50">
+                    <div className="flex justify-between w-full  flex-wrap  items-center">
                             <div className="flex">
                                 <button onClick={goBack}>
                                     <span>&lArr;</span> 

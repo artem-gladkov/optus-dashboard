@@ -19,10 +19,10 @@ const PairsPageComponent = (props: Props) => {
     useEffect(()=>{
         pairsApi(dex)
         updateHandlerButtonDexBo(true)
-    }, [])
+    }, [activeButtonDex])
 
     return (
-        <div className="h-full py-14 relative  bg-bg flex flex-col justify-center mt-14">
+        <div className="h-full py-14 relative  bg-bg flex flex-col justify-center">
             <div className="lg:px-14 px-4">
                 <Bg/>
                 <div className="flex w-full relative flex-col text-text z-50">

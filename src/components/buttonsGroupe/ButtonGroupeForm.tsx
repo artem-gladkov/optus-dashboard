@@ -29,8 +29,6 @@ const {
 } = store
 
     const a = typeof window.location.pathname.split('/')[3] == 'undefined' ? '' : `/${window.location.pathname.split('/')[3]}`
-    console.log(window.location.pathname.split('/'))
-    console.log(page, 'page')
     const Arrownone = (button) => {
         if(button === active && arrow === 'high' && button !== 'Account' && button !== 'Liquidity Jettons' && type !== "filter_transactions" ) {return (<span key={uniqid()}>&dArr;</span>)}
         if(button === active && arrow === 'low' && button !== 'Account'  && button !== 'Liquidity Jettons'  && type !== "filter_transactions") {return (<span key={uniqid()}>&uArr;</span>)}
