@@ -19,7 +19,7 @@ const OverviewComponent = () => {
     
 
     const [errorTransaction, setErrorTransaction] = useState(false)
-    const {overviewApi, getOverview, getPairs , getErrorOverview, activeButtonDex, updateOverview,updateHandlerButtonDexBo, dexListApi } = store
+    const {pairsApi,overviewApi, getOverview, getPairs , getErrorOverview, activeButtonDex, updateOverview,updateHandlerButtonDexBo, dexListApi, getTransactions, getTrans } = store
 
     const {dex} = useParams()
 
@@ -33,7 +33,8 @@ const OverviewComponent = () => {
         if(!getErrorOverview) {setErrorTransaction(false)}
         overviewApi('1Y', dex || 'OPTUS')  
         updateHandlerButtonDexBo(true)
-    
+        getTransactions(dex || 'OPTUS')
+        pairsApi(dex)
     }, [activeButtonDex])
     
 
@@ -112,7 +113,7 @@ const OverviewComponent = () => {
 
                             <div key={uniqid()} className='flex  flex-col mt-10 text-text'>
                                 <h1 className='font-medium text-2xl '>Transactions {activeButtonDex}</h1>
-                                <Transactions data = {getOverview.transactions} error = {errorTransaction}/>
+                                <Transactions data = {getTrans} error = {errorTransaction}/>
                             </div>
 
 

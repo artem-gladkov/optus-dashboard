@@ -28,10 +28,7 @@ const FavouritesButton = observer (({symbol, address}: Props) => {
 
     } 
 
-    useEffect(()=>{
-        console.log('1111')
-    },[getFooterState])
-    console.log('2222')
+
     return (
         <button onClick={addLocalStorage}>
             {  localStorage.getItem(symbol) ? 'Добавлено в избранное!' : 'Добавить???' }

@@ -1,6 +1,8 @@
 /* eslint-disable array-callback-return */
-
 import { makeAutoObservable, runInAction, toJS } from "mobx"
+import { isProd, getEnvVariable } from "../config/env"
+import { log } from "console"
+
 
 class StoreApp {
     private tokens = []
@@ -16,6 +18,8 @@ class StoreApp {
     private errorOverview: boolean = false
     private errorSingleToken: boolean = false
     private errorSinglePair: boolean = false
+
+    private _currentNetwork = isProd() ? getEnvVariable('REACT_APP_API_URL') : getEnvVariable('REACT_APP_API_URL_DEV')
 
 
     private buttonPagination: number[] = []
@@ -46,14 +50,17 @@ class StoreApp {
    public sortFlag: boolean = false
    public arrow: string = 'high' 
 
+
+
     constructor(){
         makeAutoObservable(this)
         this.dexListApi()
     }
 
    dexListApi = async  () => {
+
     try {
-        const req = await fetch('https://api.optus.fi/api/v1/dashboard/dex_list')
+        const req = await fetch(`${this._currentNetwork}/dex_list`)
         if(!req.ok){
             throw new Error(req.statusText);
         }
@@ -63,14 +70,13 @@ class StoreApp {
             // this.activeButtonDex = res[0]
         })
     } catch (error) {
-
         console.log('dexListApi>>>>>', error)
     }
    } 
 
    tokensApi = async (activedex) => {
         try  {
-            const getTokens = await fetch(`https://api.optus.fi/api/v1/dashboard/top_tokens?limit=50&dex=${activedex || 'OPTUS'}`)
+            const getTokens = await fetch(`${this._currentNetwork}/top_tokens?limit=50&dex=${activedex || 'OPTUS'}`)
             if(!getTokens.ok){
                 this.updateErrorTokens(true)
                 throw new Error(getTokens.statusText);
@@ -88,7 +94,26 @@ class StoreApp {
 
     pairsApi = async (activedex)  => {
         try {
-            const reqPairs = await fetch(`https://api.optus.fi/api/v1/dashboard/top_pairs?limit=50&dex=${activedex || 'OPTUS'}`)
+            const reqPairs = await fetch(`${this._currentNetwork}/top_pairs?limit=50&dex=${activedex || 'OPTUS'}`)
+            if(!reqPairs.ok){
+                this.updateErrorPairs(true)
+                throw new Error(reqPairs.statusText);
+            }
+            const respPairs = await reqPairs.json()
+            runInAction(()=>{
+                this.pairs =  respPairs
+                this.updateErrorPairs(false)
+            })
+        } catch (error) {
+            this.updateErrorPairs(true)
+            console.log('pairsApi>>>>>', error)
+        }
+    }
+
+    pairsForTokensApi = async (activedex, addressToken) =>{
+
+        try {
+            const reqPairs = await fetch(`${this._currentNetwork}/top_pairs?token_address=${addressToken}&dex=${activedex || 'OPTUS'}`)
             if(!reqPairs.ok){
                 this.updateErrorPairs(true)
                 throw new Error(reqPairs.statusText);
@@ -106,7 +131,7 @@ class StoreApp {
 
     overviewApi = async(period: string, activedex: string) => {
         try {
-            const reqOverview = await fetch(`https://api.optus.fi/api/v1/dashboard/overview?period=${period}&dex=${activedex || 'OPTUS'}`)
+            const reqOverview = await fetch(`${this._currentNetwork}/overview?period=${period}&dex=${activedex || 'OPTUS'}`)
             if(!reqOverview.ok){
                 this.updateErrorOwerview(true)
                 throw new Error(reqOverview.statusText);
@@ -115,14 +140,11 @@ class StoreApp {
             runInAction(()=>{
                 this.updateOverview(respOverview)
                 this.updateErrorOwerview(false)
-            })
-
-       
+            })  
         } catch (error) {
             this.updateErrorOwerview(true)
             console.log('overviewApi>>>>',error)    
-        }
-        
+        }      
     }
 
     updateHandlerButtonDex =() => {
@@ -137,14 +159,12 @@ class StoreApp {
     getTokenSingleApi = async (address:any, period:any, activedex) => {
 
         try {
-            const reqToken = await fetch(`https://api.optus.fi/api/v1/dashboard/token?address=${address}&period=${period}&dex=${activedex}`)
-            if(!reqToken.ok){
-                
+            const reqToken = await fetch(`${this._currentNetwork}/token?address=${address}&period=${period}&dex=${activedex || 'OPTUS'}`)
+            if(!reqToken.ok){               
                 this.updateSingleTokenError(true)
                 throw new Error(reqToken.statusText);
             }
             const resToken = await reqToken.json()
-            
              runInAction(()=>{
                 this.singleToken =  resToken
                 this.updateSingleTokenError(false)
@@ -158,14 +178,13 @@ class StoreApp {
 
     getPairSingleApi = async (address:any, period:any, activedex) => {
         try {
-            const reqPair = await fetch(`https://api.optus.fi/api/v1/dashboard/pair?address=${address}&period=${period}&dex=${activedex}`)
+            const reqPair = await fetch(`${this._currentNetwork}/pair?address=${address}&dex=${activedex || 'OPTUS'}`)
             if(!reqPair.ok){
                 
                 this.updateSinglePairError(true)
                 throw new Error(reqPair.statusText);
             }
             const resPair = await reqPair.json()
-            console.log(resPair)
              runInAction(()=>{
                 this.singlePair =  resPair
                 this.updateSinglePairError(false)
@@ -175,6 +194,60 @@ class StoreApp {
             console.log('getPairSingleApi>>>>>',error)   
         }
 
+    }
+
+    getTransactions = async (activedex) =>{
+        try {
+            const reqTransactions = await fetch(`${this._currentNetwork}/transactions?dex=${activedex || 'OPTUS'}`)
+            if(!reqTransactions.ok){
+                this.updateErrorTransactions(true)
+                throw new Error(reqTransactions.statusText);
+            }
+            const resTransactions = await reqTransactions.json()
+             runInAction(()=>{
+                this.transactions =  resTransactions
+                this.updateErrorTransactions(false)
+            })
+        } catch (error) {
+            this.updateErrorTransactions(true)
+            console.log('getTransactionsApi>>>>>',error)  
+        }
+    }
+
+    getSinglePairTransctions = async (activedex, pairAddress) => {
+        try {
+            const reqTransactions = await fetch(`${this._currentNetwork}/transactions?pair_address=${pairAddress}&dex=${activedex || 'OPTUS'}`)
+            if(!reqTransactions.ok){
+                this.updateErrorTransactions(true)
+                throw new Error(reqTransactions.statusText);
+            }
+            const resTransactions = await reqTransactions.json()
+             runInAction(()=>{
+                this.transactions =  resTransactions
+                this.updateErrorTransactions(false)
+            })
+        } catch (error) {
+            this.updateErrorTransactions(true)
+            console.log('getTransactionsApi>>>>>',error)  
+        }
+    }
+
+    getSingleTokenTransctions = async (activedex, tokenAddress) => {
+        try {
+            const reqTransactions = await fetch(`${this._currentNetwork}/transactions?token_address=${tokenAddress}&dex=${activedex || 'OPTUS'}`)
+            if(!reqTransactions.ok){
+                this.updateErrorTransactions(true)
+                throw new Error(reqTransactions.statusText);
+            }
+            const resTransactions = await reqTransactions.json()
+             runInAction(()=>{
+                this.transactions =  resTransactions
+                this.updateErrorTransactions(false)
+            })
+        } catch (error) {
+            this.updateErrorTransactions(true)
+            console.log('getTransactionsApi>>>>>',error)  
+        }
     }
 
     updateFilterButton = (type: string) => {
@@ -324,9 +397,7 @@ class StoreApp {
     }
 
     sortPairs =(type:string, data: any[])=>{
-        console.log(toJS(data))
         if(type ==='Liquidity'){
-            console.log('c')
             data.sort((a,b)=>{
                 if(this.sortFlag === false){  return b.liquidity.value - a.liquidity.value}
                 if(this.sortFlag === true){ return a.liquidity.value - b.liquidity.value}

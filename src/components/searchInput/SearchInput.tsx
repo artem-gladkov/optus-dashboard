@@ -17,6 +17,7 @@ interface Props {
 const SearchInputComponent = ({getTokens = store.getTokens, getPairs = store.getPairs, hiddenNav}: Props) => {
     const {dex} = useParams()
     const [valueInput, setValueInput] = useState('')
+
     const searchInput = getTokens ? getTokens
         .filter((token)=>{return token.name.toLocaleLowerCase().includes(valueInput.toLocaleLowerCase()) || token.symbol.toLocaleLowerCase().includes(valueInput.toLocaleLowerCase())  })
         .map( (token)=>{
@@ -50,7 +51,7 @@ const SearchInputComponent = ({getTokens = store.getTokens, getPairs = store.get
         <div className='mx-3'>
             <SearchSvg/>
         </div>
-        <input type="text"  value={valueInput} onChange={(e)=>{setValueInput(e.target.value); hiddenNav(e.target.value ? true : false)}} 
+        <input type="text"  value={valueInput} onChange={(e)=>{setValueInput(e.target.value); }} 
                 className="h-8 ml-2 w-48 bg-form rounded outline-none" placeholder='Search pairs and tokens ...'/>
                 <span onClick={(e)=>{setValueInput(''); hiddenNav(false)}} className={`${valueInput ? 'font-medium text-xl cursor-pointer p-1' : 'hidden'} `}><CloseInput/></span>
         { valueInput ? (

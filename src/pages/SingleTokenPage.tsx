@@ -19,7 +19,7 @@ const SingleTokenPageComponent=(props: any) => {
 
     const [typeButtonCharts, setTypeButtonCharts] = useState('Liquidity')
     const [errorTransaction, setErrorTransaction] = useState(false)
-    const {getSingleToken, getTokenSingleApi, getErrorSingleToken, updateHandlerButtonDexBo}  = store
+    const {getSingleToken, getTokenSingleApi, getErrorSingleToken, updateHandlerButtonDexBo, pairsForTokensApi, getPairs, getSingleTokenTransctions , getTrans}  = store
     const {dex,address} = useParams()    
     const navigate = useNavigate()
     const goBack = ()=> navigate(-1)
@@ -41,7 +41,9 @@ const SingleTokenPageComponent=(props: any) => {
         if(getErrorSingleToken) {setErrorTransaction(true)}
         if(!getErrorSingleToken) { setErrorTransaction(false)}
         getTokenSingleApi(address, '1Y', dex)
+        pairsForTokensApi(dex, address)
         updateHandlerButtonDexBo(true)
+        getSingleTokenTransctions(dex, address)
     }, [address])
     
 
@@ -111,7 +113,7 @@ const SingleTokenPageComponent=(props: any) => {
 
                     <div className="flex flex-col mt-5">
                         <h2 className="text-2xl font-normal">Top Pairs</h2>
-                        <Pairs data={getSingleToken.pairs}/>    
+                        <Pairs data={getPairs}/>    
                     </div>  
 
                         {/* Транзакции */}
@@ -119,7 +121,7 @@ const SingleTokenPageComponent=(props: any) => {
                         
                     <div className="flex flex-col mt-5">
                         <h2 className="text-2xl font-normal">Transactions</h2>
-                        <Transactions data = {getSingleToken.transactions} address={address} error ={errorTransaction}/>    
+                        <Transactions data = {getTrans} address={address} error ={errorTransaction}/>    
                     </div>  
 
                         {/* Token Information */}
