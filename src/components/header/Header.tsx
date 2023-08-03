@@ -19,7 +19,6 @@ const RoutesNavigationComponent = (props: Props) => {
   const over = "OPTUS";
   const dexoverview = "dexoverview";
   const { dex } = useParams();
-  console.log(dex)
   const [burger, setBurger] = useState(false);
   const {
     getActiveButtonDex,
@@ -45,7 +44,6 @@ const RoutesNavigationComponent = (props: Props) => {
       : updateActiveButtonDex("OPTUS");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(pathnameWindow.split("/"))
 
   return (
     <header className="w-full z-50 relative">
