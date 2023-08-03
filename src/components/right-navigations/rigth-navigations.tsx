@@ -28,8 +28,8 @@ const RigthNavigationsComponent = ({toCoins, toPairs }: Props) => {
           to={toCoins}
         >
        
-            <span className="lg:block hidden">Tokens</span>
-            <span className="lg:hidden block"><CoinsSvg/></span>
+            <span className="lg:block hidden pl-1">Tokens</span>
+            <span className="lg:hidden block pl-1"><CoinsSvg/></span>
         
 
         </CustomLink>
@@ -40,8 +40,8 @@ const RigthNavigationsComponent = ({toCoins, toPairs }: Props) => {
           className=" hover:text-text transition-all duration-400  py-1 rounded"
           to={toPairs}
         >
-            <span className="lg:block hidden">Pairs</span>
-            <span className="lg:hidden block"><PairsSvg/></span>
+            <span className="lg:block hidden pl-1">Pairs</span>
+            <span className="lg:hidden block pl-1"><PairsSvg/></span>
 
         </CustomLink>
       </div>
