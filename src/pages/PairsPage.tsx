@@ -8,11 +8,13 @@ import "../index.css"
 import { useParams } from "react-router-dom"
 
 
+import { TPage } from "../types/types-pages"
+
 interface Props {
-    
+    typePage: TPage
 }
 
-const PairsPageComponent = (props: Props) => {
+const PairsPageComponent = ({typePage} : Props) => {
 
     const {getPairs, updateHandlerButtonDexBo, activeButtonDex, pairsApi} = store
     const {dex} = useParams()
@@ -32,7 +34,7 @@ const PairsPageComponent = (props: Props) => {
                                 {/* <SearchInput /> */}
                             </div>
                     </div>
-                    <Pairs data= {getPairs}/>
+                    <Pairs typePage={typePage} data= {getPairs}/>
                 </div>
             </div>
         </div>

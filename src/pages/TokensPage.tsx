@@ -4,12 +4,13 @@ import { Tokens } from "../components/tokens/Tokens"
 import Bg from "../components/background/bg"
 import "../index.css"
 import { store } from "../Store/store"
+import { TPage } from "../types/types-pages"
 
 interface Props {
-    
+    typePage: TPage
 }
 
-const TokensPageComponent = (props: Props) => {
+const TokensPageComponent = ({typePage}: Props) => {
     const {activeButtonDex} = store
     return (
         <div className="h-full py-14 relative  bg-bg flex flex-col justify-center">
@@ -22,7 +23,7 @@ const TokensPageComponent = (props: Props) => {
                                         {/* <SearchInput /> */}
                                     </div>
                             </div>
-                                    <Tokens/>
+                                    <Tokens typePage={'overview'}/>
                 </div>
           
             </div>

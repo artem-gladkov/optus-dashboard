@@ -12,12 +12,13 @@ import { ChartsOverview } from "../components/charts/ChartsOverview"
 import {ButtonsCharts} from "../components/buttonsGroupe/ButtonsCharts"
 import Spinner from "../components/spinner/Spinner"
 import Bg from '../components/background/bg'
+import { TPage } from "../types/types-pages"
 
 interface Props {
-    
+    typePage: TPage
 }
 
-const SinglePairPageComponent = (props: Props) => {
+const SinglePairPageComponent = ({typePage}: Props) => {
     const [typeButtonCharts, setTypeButtonCharts] = useState('Liquidity')
     const [errorTransaction, setErrorTransaction] = useState(false)
     const {getSinglePair, getPairSingleApi, getErrorSinglePair, updateHandlerButtonDexBo, getSinglePairTransctions, getTrans}  = store
@@ -42,12 +43,18 @@ const SinglePairPageComponent = (props: Props) => {
     }
 
     useEffect(()=>{
-        if(getErrorSinglePair) {setErrorTransaction(true)}
-        if(!getErrorSinglePair) { setErrorTransaction(false)}
-        getPairSingleApi(address, '1Y',dex)
-        updateHandlerButtonDexBo(true)
-        getSinglePairTransctions(dex,address)
-    }, [address])
+        if(typePage === 'overview'){
+            if(getErrorSinglePair) {setErrorTransaction(true)}
+            if(!getErrorSinglePair) { setErrorTransaction(false)}
+            getPairSingleApi(address, '1Y',dex)
+            updateHandlerButtonDexBo(true)
+            getSinglePairTransctions(dex,address)
+        }
+        if(typePage === 'dexoverview'){
+
+        }
+
+    }, [address, typePage])
 
     
     return ( 
@@ -55,10 +62,10 @@ const SinglePairPageComponent = (props: Props) => {
             {getSinglePair.symbol_one_indicators ? 
                             ( getErrorSinglePair ? "Произошла ошибка, но мы уже решаем эту проблему" :  (
                                 <div className="h-full py-14 bg-bg flex flex-col justify-center relative">
-                                    <div className="h-full flex flex-col relative justify-center">
+                                    <div className="h-full flex flex-col relative justify-center mt-32">
                                         <Bg/>
                                     </div>
-                                    <div className="flex w-full h-full flex-col text-text xl:px-28  z-50">
+                                    <div className="flex w-full h-full flex-col text-text xl:px-28  z-50 -mt-32">
                                         <div className="flex justify-between w-full  flex-wrap  items-center">
                                                 <div className="flex">
                                                     <button onClick={goBack}>

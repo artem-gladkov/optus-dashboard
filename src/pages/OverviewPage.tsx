@@ -98,14 +98,14 @@ const OverviewComponent = () => {
                                 {/* <SearchInput getTokens={getTokens} getPairs={getPairs} /> */}
                                 </div>
 
-                                <Tokens/>
+                                <Tokens typePage='overview'/>
                             </div>
 
                             {/* Топ пар */}
 
                             <div className='flex  flex-col mt-10 text-text'>
                                 <h1 className='font-medium text-2xl '>Top Pairs {activeButtonDex}</h1>
-                                <Pairs data={getPairs}/>
+                                <Pairs typePage='overview' data={getPairs}/>
                             </div>
 
                             {/* Транзакции */}

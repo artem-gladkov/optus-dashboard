@@ -147,7 +147,7 @@ const OverviewDexComponent = (props: Props) => {
             <h1 className="font-medium text-2xl ">
                 Coins dex informations
             </h1>
-            <Tokens />
+            <Tokens typePage='dexoverview'/>
           </div>
 
           {/* Pairs */}
@@ -156,7 +156,7 @@ const OverviewDexComponent = (props: Props) => {
             <h1 className="font-medium text-2xl ">
                 Pairs dex informations
             </h1>
-            <Pairs data ={getPairs}/>
+            <Pairs typePage='dexoverview' data ={getPairs}/>
           </div>
 
           {/* Accaunts */}

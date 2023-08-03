@@ -12,12 +12,14 @@ import { numberColor } from "../../function/colorChanges"
 import Spinner from "../spinner/Spinner"
 import useMedia from "../../hooks/useMedia"
 import { ShowPeriodPages } from "../showPeriodPages/showPeriodPages"
+import { TPage } from "../../types/types-pages"
 
 interface Props {
-    data: any
+    data: any,
+    typePage: TPage
 }
 
-const PairsComponent = ( {data}: Props) => {
+const PairsComponent = ( {data, typePage}: Props) => {
     const matches = useMedia("(min-width: 1280px)")
     const [currentPage, setCurrentPage] = useState(1)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -29,7 +31,10 @@ const PairsComponent = ( {data}: Props) => {
     const lastItemIndex = currentPage * itemPerPage;
     let firstItemIndex = lastItemIndex - itemPerPage;
     let idx = firstItemIndex+1
-
+    const pathPage =
+    typePage === "dexoverview"
+      ? `/dexoverview/pairs/`
+      : `/overview/${dex || "OPTUS"}/pairs/`;
 
    const pairs =data?.slice(firstItemIndex, lastItemIndex).map((pair: any, index:number)=>{
     
@@ -38,9 +43,9 @@ const PairsComponent = ( {data}: Props) => {
                 <div className="lg:w-1/3 w-1/4">
                     <div className="flex items-center">
                         <span className="mr-3 text-inActive"> {idx++}</span>
-                        <img className="-mr-2 z-10 rounded-full" src={pair.token_one.icon} alt="imgToken1" style={{width: 20, height: 20}}/>
-                        <img className="mr-3 rounded-full" src={pair.token_two.icon} alt="imgToken2" style={{width: 20, height: 20}}/>
-                        <Link to={`/overview/${dex || 'OPTUS'}/pairs/${pair.address}`}>   <span className=" font-medium text-slate-900 text-opacity-80 hover:text-slate-50 "> <span>{pair.name}</span></span>  </Link>
+                        <img className="-mr-2 z-10 rounded-full hidden sm:block" src={pair.token_one.icon} alt="imgToken1" style={{width: 20, height: 20}}/>
+                        <img className="mr-3 rounded-ful hidden sm:block" src={pair.token_two.icon} alt="imgToken2" style={{width: 20, height: 20}}/>
+                        <Link to={`${pathPage}${pair.address}`}>   <span className=" font-medium text-slate-900 text-opacity-80 hover:text-slate-50 "> <span>{pair.name}</span></span>  </Link>
                     </div>
                 </div>
                 <div className="flex lg:w-2/3 w-3/4">
