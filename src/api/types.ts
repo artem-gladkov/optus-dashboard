@@ -96,3 +96,52 @@ export interface IOperation {
     };
   is_processed: boolean;
 }
+
+export interface ITokenList {
+  address: string;
+  symbol: string;
+  name: string;
+  icon: string;
+  decimals: 0;
+  native_liquidity: TValueChange;
+  liquidity: TValueChange;
+  volume_24h: TValueChange;
+  current_usd_price: TValueChange;
+  transactions_24h: TValueChange;
+}
+
+export interface IDexList {
+  id: number;
+  name: string;
+  description: string;
+  router_contract: IRouterContract;
+  liquidity: {
+    ton: TValueChange;
+    usd: TValueChange;
+  };
+  volume_24h: {
+    ton: TValueChange;
+    usd: TValueChange;
+  };
+  transactions_24h: TValueChange;
+  pairs_number: TValueChange;
+}
+
+export interface IRouterContract {
+  id: number;
+  address: string;
+  workchain_id: number;
+  account_id: string;
+  name: string;
+  description: string;
+  contract_metadata: ContractMetadata;
+}
+
+export interface ContractMetadata {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+  symbol: string;
+  decimals: number;
+}
