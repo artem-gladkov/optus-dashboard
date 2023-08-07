@@ -6,6 +6,8 @@ import {
   type IToken,
   type IPair,
   type ITransaction,
+  ITokenList,
+  IDexList,
 } from "./types";
 
 class Api {
@@ -67,6 +69,33 @@ class Api {
       `${this._currentNetwork}/transaction?transaction_id=${transaction_id}`
     );
     const request: ITransaction = await response.json();
+    return request;
+  };
+
+  getDexList = async (): Promise<IDexList> => {
+    const response = await fetch(`${this._currentNetwork}/dex_list?limit=20`);
+    const request: IDexList = await response.json();
+    return request;
+  };
+
+  getTokenList = async (
+    accaunt_address?: string,
+    dex?: string
+  ): Promise<ITokenList> => {
+    let URL: string = `${this._currentNetwork}/token_list?limit=10`;
+
+    if (dex && !accaunt_address) {
+      URL = `${this._currentNetwork}/token_list?dex=OPTUS&limit=100`;
+    }
+    if (accaunt_address && !dex) {
+      URL = `${this._currentNetwork}/token_list?account_address=123&limit=10`;
+    }
+    if (dex && accaunt_address) {
+      URL = `${this._currentNetwork}/token_list?dex=OPTUS&account_address=123&limit=10`;
+    }
+
+    const response = await fetch(URL);
+    const request: ITokenList = await response.json();
     return request;
   };
 }
