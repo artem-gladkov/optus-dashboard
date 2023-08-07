@@ -63,14 +63,13 @@ class StoreApp {
    dexListApi = async  () => {
 
     try {
-        const req = await fetch(`${this._currentNetwork}/dex_list`)
+        const req = await fetch(`${this._currentNetwork}/dex_list?limit=10`)
         if(!req.ok){
             throw new Error(req.statusText);
         }
         const res = await req.json()
         runInAction(()=> {
             this.buttonDex = res
-            // this.activeButtonDex = res[0]
         })
     } catch (error) {
         console.log('dexListApi>>>>>', error)
