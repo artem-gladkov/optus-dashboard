@@ -6,8 +6,9 @@ import {
   type IToken,
   type IPair,
   type ITransaction,
-  ITokenList,
-  IDexList,
+  type ITokenList,
+  type IDexList,
+  type IPairList,
 } from "./types";
 
 class Api {
@@ -82,20 +83,85 @@ class Api {
     accaunt_address?: string,
     dex?: string
   ): Promise<ITokenList> => {
-    let URL: string = `${this._currentNetwork}/token_list?limit=10`;
+    let URL: string = `${this._currentNetwork}/token_list?limit=100`;
 
     if (dex && !accaunt_address) {
-      URL = `${this._currentNetwork}/token_list?dex=OPTUS&limit=100`;
+      URL = `${this._currentNetwork}/token_list?dex=${dex}&limit=100`;
     }
     if (accaunt_address && !dex) {
-      URL = `${this._currentNetwork}/token_list?account_address=123&limit=10`;
+      URL = `${this._currentNetwork}/token_list?account_address=${accaunt_address}&limit=100`;
     }
     if (dex && accaunt_address) {
-      URL = `${this._currentNetwork}/token_list?dex=OPTUS&account_address=123&limit=10`;
+      URL = `${this._currentNetwork}/token_list?dex=${dex}&account_address=${accaunt_address}&limit=100`;
     }
 
     const response = await fetch(URL);
     const request: ITokenList = await response.json();
     return request;
   };
+
+  getPairList = async (
+    token_address?: string,
+    accaunt_address?: string,
+    dex?: string
+  ): Promise<IPairList> => {
+    let URL: string = `${this._currentNetwork}/pair_list?limit=100`;
+
+    if (dex && !accaunt_address && !token_address) {
+      URL = `${this._currentNetwork}/pair_list?dex=${dex}&limit=100`;
+    }
+    if (!dex && accaunt_address && !token_address) {
+      URL = `${this._currentNetwork}/pair_list?account_address=${accaunt_address}&limit=100`;
+    }
+    if (!dex && !accaunt_address && token_address) {
+      URL = `${this._currentNetwork}/pair_list?token_address=${token_address}&limit=100`;
+    }
+    if (dex && accaunt_address && !token_address) {
+      URL = `${this._currentNetwork}/pair_list?dex=${dex}&account_address=${accaunt_address}&limit=100`;
+    }
+    if (dex && !accaunt_address && token_address) {
+      URL = `${this._currentNetwork}/pair_list?dex=${dex}&token_address=${token_address}&limit=100`;
+    }
+    if (!dex && accaunt_address && token_address) {
+      URL = `${this._currentNetwork}/pair_list?token_address=${token_address}&account_address=${accaunt_address}&limit=100`;
+    }
+    if (dex && accaunt_address && token_address) {
+      URL = `${this._currentNetwork}/pair_list?dex=${dex}&token_address=${token_address}&account_address=${accaunt_address}&limit=100`;
+    }
+    const response = await fetch(URL);
+    const request: IPairList = await response.json();
+    return request;
+  };
+
+  getAccauntList = async (
+    token_address?: string,
+    pair_id?: string,
+    dex?: string
+  ) => {
+    let URL: string = `${this._currentNetwork}/account_list?limit=100`;
+    if (dex && !token_address && !pair_id) {
+      URL = `${this._currentNetwork}/account_list?limit=100`;
+    }
+    if (!dex && token_address && !pair_id) {
+      URL = `${this._currentNetwork}/account_list?limit=100`;
+    }
+    if (!dex && !token_address && pair_id) {
+      URL = `${this._currentNetwork}/account_list?limit=100`;
+    }
+    if (dex && token_address && !pair_id) {
+      URL = `${this._currentNetwork}/account_list?limit=100`;
+    }
+    if (dex && !token_address && pair_id) {
+      URL = `${this._currentNetwork}/account_list?limit=100`;
+    }
+    if (!dex && token_address && pair_id) {
+      URL = `${this._currentNetwork}/account_list?limit=100`;
+    }
+
+    const response = await fetch(URL);
+    const request: IPairList = await response.json();
+    return request;
+  };
+
+  
 }

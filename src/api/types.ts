@@ -145,3 +145,23 @@ export interface ContractMetadata {
   symbol: string;
   decimals: number;
 }
+
+export interface IPairList {
+  address: string;
+  name: string;
+  token_one: Omit<
+    IToken,
+    "liquidity_graph" | "volume_graph" | "usd_price_graph"
+  >;
+  token_two: Omit<
+    IToken,
+    "liquidity_graph" | "volume_graph" | "usd_price_graph"
+  >;
+  liquidity: TValueChange;
+  volume_24h: TValueChange;
+  volume_7d: TValueChange;
+  fees_24h: TValueChange;
+  fees_liquidity_ratio: TValueChange;
+  symbol_one_indicators: ISymbolIndicators;
+  symbol_two_indicators: ISymbolIndicators;
+}
