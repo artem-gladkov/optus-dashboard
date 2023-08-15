@@ -18,10 +18,11 @@ class Api {
 
   constructor() {}
 
-  getSearchData = async (account: string): Promise<ISearch> => {
-    const response = await fetch(
-      `${this._currentNetwork}/search?value=${account}`
-    );
+  getSearchData = async (searchParams: {
+    searchParams: string;
+  }): Promise<ISearch> => {
+    const params = new URLSearchParams(searchParams).toString();
+    const response = await fetch(`${this._currentNetwork}/search?${params}`);
     const request: ISearch = await response.json();
     return request;
   };
@@ -32,31 +33,30 @@ class Api {
     return request;
   };
 
-  getDexData = async (dex: string): Promise<IDex> => {
-    const response = await fetch(`${this._currentNetwork}/dex?dex=${dex}`);
+  getDexData = async (dex_id: string): Promise<IDex> => {
+    const response = await fetch(
+      `${this._currentNetwork}/dex?dex_id=${dex_id}`
+    );
     const request: IDex = await response.json();
     return request;
   };
 
-  getTokenData = async (
-    token_address: string,
-    dex?: string
-  ): Promise<IToken> => {
-    const URL = dex
-      ? `${this._currentNetwork}/token?token_address=${token_address}&dex=${dex}`
-      : `${this._currentNetwork}/token?token_address=${token_address}`;
-
-    const response = await fetch(URL);
+  getTokenData = async (searchParams: {
+    token_id: string;
+    dex_id?: string;
+  }): Promise<IToken> => {
+    const params = new URLSearchParams(searchParams).toString();
+    const response = await fetch(`${this._currentNetwork}/token?${params}`);
     const request: IToken = await response.json();
     return request;
   };
 
-  getPairData = async (pair_address: string, dex?: string): Promise<IPair> => {
-    const URL = dex
-      ? `${this._currentNetwork}/pair?pair_id=${pair_address}&dex=${dex}`
-      : `${this._currentNetwork}/pair?pair_id=${pair_address}`;
-
-    const response = await fetch(URL);
+  getPairData = async (searchParams: {
+    pair_id: string;
+    dex_id?: string;
+  }): Promise<IPair> => {
+    const params = new URLSearchParams(searchParams).toString();
+    const response = await fetch(`${this._currentNetwork}/pair?${params}`);
     const request: IPair = await response.json();
     return request;
   };
@@ -73,95 +73,68 @@ class Api {
     return request;
   };
 
-  getDexList = async (): Promise<IDexList> => {
-    const response = await fetch(`${this._currentNetwork}/dex_list?limit=20`);
-    const request: IDexList = await response.json();
+  getDexList = async (limit = 10): Promise<IDexList[]> => {
+    const response = await fetch(
+      `${this._currentNetwork}/dex_list?limit=${limit}`
+    );
+    const request: IDexList[] = await response.json();
     return request;
   };
 
-  getTokenList = async (
-    accaunt_address?: string,
-    dex?: string
-  ): Promise<ITokenList> => {
-    let URL: string = `${this._currentNetwork}/token_list?limit=100`;
-
-    if (dex && !accaunt_address) {
-      URL = `${this._currentNetwork}/token_list?dex=${dex}&limit=100`;
-    }
-    if (accaunt_address && !dex) {
-      URL = `${this._currentNetwork}/token_list?account_address=${accaunt_address}&limit=100`;
-    }
-    if (dex && accaunt_address) {
-      URL = `${this._currentNetwork}/token_list?dex=${dex}&account_address=${accaunt_address}&limit=100`;
-    }
-
-    const response = await fetch(URL);
+  getTokenList = async (searchParams: {
+    dex_id?: string;
+    accaunt_id?: string;
+    limit: string;
+  }): Promise<ITokenList> => {
+    const params = new URLSearchParams(searchParams).toString();
+    const response = await fetch(
+      `${this._currentNetwork}/token_list?${params}`
+    );
     const request: ITokenList = await response.json();
     return request;
   };
 
-  getPairList = async (
-    token_address?: string,
-    accaunt_address?: string,
-    dex?: string
-  ): Promise<IPairList> => {
-    let URL: string = `${this._currentNetwork}/pair_list?limit=100`;
-
-    if (dex && !accaunt_address && !token_address) {
-      URL = `${this._currentNetwork}/pair_list?dex=${dex}&limit=100`;
-    }
-    if (!dex && accaunt_address && !token_address) {
-      URL = `${this._currentNetwork}/pair_list?account_address=${accaunt_address}&limit=100`;
-    }
-    if (!dex && !accaunt_address && token_address) {
-      URL = `${this._currentNetwork}/pair_list?token_address=${token_address}&limit=100`;
-    }
-    if (dex && accaunt_address && !token_address) {
-      URL = `${this._currentNetwork}/pair_list?dex=${dex}&account_address=${accaunt_address}&limit=100`;
-    }
-    if (dex && !accaunt_address && token_address) {
-      URL = `${this._currentNetwork}/pair_list?dex=${dex}&token_address=${token_address}&limit=100`;
-    }
-    if (!dex && accaunt_address && token_address) {
-      URL = `${this._currentNetwork}/pair_list?token_address=${token_address}&account_address=${accaunt_address}&limit=100`;
-    }
-    if (dex && accaunt_address && token_address) {
-      URL = `${this._currentNetwork}/pair_list?dex=${dex}&token_address=${token_address}&account_address=${accaunt_address}&limit=100`;
-    }
-    const response = await fetch(URL);
+  getPairList = async (searchParams: {
+    dex_id?: string;
+    pair_id?: string;
+    accaunt_id?: string;
+    limit: string;
+  }): Promise<IPairList> => {
+    const params = new URLSearchParams(searchParams).toString();
+    const response = await fetch(`${this._currentNetwork}/pair_list?${params}`);
     const request: IPairList = await response.json();
     return request;
   };
 
-  getAccauntList = async (
-    token_address?: string,
-    pair_id?: string,
-    dex?: string
-  ) => {
-    let URL: string = `${this._currentNetwork}/account_list?limit=100`;
-    if (dex && !token_address && !pair_id) {
-      URL = `${this._currentNetwork}/account_list?limit=100`;
-    }
-    if (!dex && token_address && !pair_id) {
-      URL = `${this._currentNetwork}/account_list?limit=100`;
-    }
-    if (!dex && !token_address && pair_id) {
-      URL = `${this._currentNetwork}/account_list?limit=100`;
-    }
-    if (dex && token_address && !pair_id) {
-      URL = `${this._currentNetwork}/account_list?limit=100`;
-    }
-    if (dex && !token_address && pair_id) {
-      URL = `${this._currentNetwork}/account_list?limit=100`;
-    }
-    if (!dex && token_address && pair_id) {
-      URL = `${this._currentNetwork}/account_list?limit=100`;
-    }
-
-    const response = await fetch(URL);
-    const request: IPairList = await response.json();
+  getAccauntList = async (searchParams: {
+    dex_id?: string;
+    token_address?: string;
+    pair_id?: string;
+    limit: string;
+  }) => {
+    const params = new URLSearchParams(searchParams).toString();
+    const response = await fetch(
+      `${this._currentNetwork}/account_list?${params}`
+    );
+    const request = await response.json();
     return request;
   };
 
-  
+  getTransactionsList = async (searchParams: {
+    dex_id?: string;
+    token_id?: string;
+    pair_id?: string;
+    accaunt_id?: string;
+    limit: string;
+  }) => {
+    const params = new URLSearchParams(searchParams).toString();
+
+    const response = await fetch(
+      `${this._currentNetwork}/transaction_list?${params}`
+    );
+    const request: IPairList = await response.json();
+    return request;
+  };
 }
+
+export const api = new Api();
