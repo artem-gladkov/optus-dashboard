@@ -23,7 +23,39 @@ export interface IDexOverview {
   volume_chart: string[];
 }
 
-export interface IDex extends IModelTypes {}
+export interface IDex {
+  id: number;
+  name: string;
+  description: string;
+  router_contract: RouterContract;
+  liquidity: { usd: TValueChange; ton: TValueChange };
+  volume_24h: { usd: TValueChange; ton: TValueChange };
+  transactions_24h: TValueChange;
+  pairs_number: TValueChange;
+  ton_price: TValueChange;
+  fees_24h: TValueChange;
+  liquidity_chart: { usd: string[]; ton: string[] };
+  volume_chart: { usd: string[]; ton: string[] };
+}
+
+export interface RouterContract {
+  id: number;
+  address: string;
+  workchain_id: number;
+  account_id: string;
+  name: string;
+  description: string;
+  contract_metadata: ContractMetadata;
+}
+
+export interface ContractMetadata {
+  id: number;
+  name: string;
+  description: string;
+  image: string;
+  symbol: string;
+  decimals: number;
+}
 
 export interface IToken {
   address: string;

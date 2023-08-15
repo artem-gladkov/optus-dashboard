@@ -39,7 +39,7 @@ const OverviewDexComponent = (props: Props) => {
     if (!getErrorOverview) {
       setErrorTransaction(false);
     }
-    overviewApi("1Y", "OPTUS");
+    overviewApi("1");
     updateHandlerButtonDexBo(true);
     getTransactions("OPTUS");
     pairsApi("OPTUS")
@@ -53,13 +53,13 @@ const OverviewDexComponent = (props: Props) => {
         <div className="flex flex-col z-50 relative">
           <div className=" flex  lg:flex mt-5 justify-center lg:flex-row flex-col">
             <div className="h-charts  w-full lg:w-1/2 pb-6 lg:mr-5 bg-form rounded-2xl justify-center items-center mb-14">
-              {getOverview.liquidity_graph ? (
+              {getOverview ? (
                 <>
                   {!getErrorOverview ? (
                     <ChartsOverview
                       titleMarker={true}
                       type={"Liquidity"}
-                      data={toJS(getOverview.liquidity_graph)}
+                      data={toJS(getOverview.liquidity_chart.usd)}
                     />
                   ) : (
                     "Произошла ошибка, но мы решаем эту проблему"
@@ -75,7 +75,7 @@ const OverviewDexComponent = (props: Props) => {
             </div>
 
             <div className="h-charts  w-full lg:w-1/2 pb-6 lg:mr-5  bg-form  rounded-2xl justify-center items-center ">
-              {getOverview.liquidity_graph ? (
+              {getOverview ? (
                 <>
                   {!getErrorOverview ? (
                     <ChartsOverview
@@ -86,7 +86,7 @@ const OverviewDexComponent = (props: Props) => {
                       }}
                       titleMarker={true}
                       type={"Volume (24hrs)"}
-                      data={toJS(getOverview.volume_graph)}
+                      data={toJS(getOverview.volume_chart.usd)}
                     />
                   ) : (
                     <Spinner />
@@ -121,7 +121,7 @@ const OverviewDexComponent = (props: Props) => {
               {" "}
               Pairs:{" "}
               <span className="text-text">
-                {getOverview.pairs?.length}
+                {getOverview.pairs_number.value}
               </span>{" "}
             </div>
             <div className="mr-4">
@@ -135,35 +135,27 @@ const OverviewDexComponent = (props: Props) => {
 
           {/* Dexs */}
           <div className="flex  flex-col mt-10 text-text">
-              <h1 className="font-medium text-2xl ">
-                Dex informations
-              </h1>
+            <h1 className="font-medium text-2xl ">Dex informations</h1>
             <Dex />
           </div>
 
           {/* Coins */}
 
           <div className="flex  flex-col mt-10 text-text">
-            <h1 className="font-medium text-2xl ">
-                Coins dex informations
-            </h1>
-            <Tokens typePage='dexoverview'/>
+            <h1 className="font-medium text-2xl ">Coins dex informations</h1>
+            <Tokens typePage="dexoverview" />
           </div>
 
           {/* Pairs */}
 
           <div key={uniqid()} className="flex  flex-col mt-10 text-text">
-            <h1 className="font-medium text-2xl ">
-                Pairs dex informations
-            </h1>
-            <Pairs typePage='dexoverview' data ={getPairs}/>
+            <h1 className="font-medium text-2xl ">Pairs dex informations</h1>
+            <Pairs typePage="dexoverview" data={getPairs} />
           </div>
 
           {/* Accaunts */}
           <div key={uniqid()} className="flex  flex-col mt-10 text-text">
-            <h1 className="font-medium text-2xl ">
-
-            </h1>
+            <h1 className="font-medium text-2xl "></h1>
           </div>
         </div>
 

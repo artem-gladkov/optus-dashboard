@@ -8,7 +8,7 @@ interface Props {
     flagTransaction?: boolean;
     data?: any;
     flagTokens?: boolean;
-    arrButtons: string[];
+    arrButtons: string[] | {id:string, name: string}[];
     page?: string;
    
 
@@ -75,8 +75,8 @@ const {
         {arrButtons.map((button)=>{ 
          if(type === 'buttonDex') {
             return (
-                <div key={uniqid()} onClick={()=>{ButtonHeaderComponent(button)}} >
-                    <Link to={`overview/${button}${page === '' ? '' : '/'}${page === '' ? a : page}`}> {button} </Link>
+                <div key={uniqid()} onClick={()=>{ButtonHeaderComponent(button.name)}} >
+                    <Link to={`overview/${button.name}${page === '' ? '' : '/'}${page === '' ? a : page}`}> {button.name} </Link>
                 </div>
             )
          } else if(type === 'pairs') {

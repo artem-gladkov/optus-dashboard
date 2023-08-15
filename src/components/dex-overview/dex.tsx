@@ -21,7 +21,7 @@ const DexComponent = (props: Props) => {
             <div className="flex items-center ">
               <span className="mr-3 text-inActive"> {index+1}</span>
                 <span className="font-medium  text-opacity-80  ">
-                  {dex}
+                  {dex.name}
                 </span>
             </div>
           </div>

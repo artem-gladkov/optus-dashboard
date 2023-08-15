@@ -38,12 +38,7 @@ const RoutesNavigationComponent = (props: Props) => {
   const pathnameWindow = window.location.pathname;
   const visiblebtnDex =
     pathnameWindow.includes("dexoverview") || pathnameWindow === "/";
-  useEffect(() => {
-    dex
-      ? updateActiveButtonDex(pathnameWindow.split("/")[2])
-      : updateActiveButtonDex("OPTUS");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  
 
   return (
     <header className="w-full z-50 relative">
@@ -118,10 +113,10 @@ const RoutesNavigationComponent = (props: Props) => {
                         <Link
                           onClick={() => {
                             updateHandlerButtonDexBo(true);
-                            updateActivePage("");
+                              updateActivePage("");
                           }}
                           className=" hover:text-text transition-all duration-400 px-4 py-2 rounded-xl"
-                          to={`overview/${dex ? dex : over}`}
+                          to={`overview/${dex ? dex : getActiveButtonDex ? getActiveButtonDex : 'OPTUS'}`}
                         >
                           Overview
                         </Link>
