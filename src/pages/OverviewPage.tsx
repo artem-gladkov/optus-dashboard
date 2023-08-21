@@ -45,11 +45,10 @@ const OverviewComponent = () => {
         }
         overviewApi(dex);
         updateHandlerButtonDexBo(true);
-        getTransactions(dex || "OPTUS");
-        // pairsApi({
-        //   dex_id: buttonDex[dex],
-        //   limit: '100'
-        // });
+        getTransactions({
+          dex_id: '1',
+          limit: '70'
+        });
         clearTimeout(timeout);
       }, 200);
     }

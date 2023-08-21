@@ -41,7 +41,6 @@ const OverviewDexComponent = (props: Props) => {
     }
     overviewApi("1");
     updateHandlerButtonDexBo(true);
-    getTransactions("OPTUS");
   }, [activeButtonDex]);
 
   return (
