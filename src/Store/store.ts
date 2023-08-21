@@ -3,7 +3,7 @@ import { makeAutoObservable, runInAction, toJS } from "mobx";
 import { isProd, getEnvVariable } from "../config/env";
 import { log } from "console";
 import { api } from "../api/api";
-import { IDex, IPairList, ITokenList } from "../api/types";
+import { IDex, IOperation, IPairList, ITokenList } from "../api/types";
 
 class StoreApp {
   private tokens: ITokenList = [];
@@ -11,7 +11,7 @@ class StoreApp {
   private overview: IDex;
   private singleToken: any = {};
   private singlePair: any = {};
-  private transactions: any = [];
+  private transactions: IOperation[] = [];
 
   private errorTokens: boolean = false;
   private errorTransactions: boolean = false;
@@ -140,7 +140,6 @@ class StoreApp {
   }) => {
     try {
       const response = await api.getPairList(params);
-      console.log(response)
       runInAction(() => {
         this.pairs = response;
         this.updateErrorPairs(false);
@@ -239,18 +238,18 @@ class StoreApp {
     }
   };
 
-  getTransactions = async (activedex) => {
+  getTransactions = async (params: {
+    dex_id?: string;
+    token_id?: string;
+    pair_id?: string;
+    accaunt_id?: string;
+    limit: string;
+  }) => {
     try {
-      const reqTransactions = await fetch(
-        `${this._currentNetwork}/transactions?dex=${activedex || "OPTUS"}`
-      );
-      if (!reqTransactions.ok) {
-        this.updateErrorTransactions(true);
-        throw new Error(reqTransactions.statusText);
-      }
-      const resTransactions = await reqTransactions.json();
+      const response = await api.getOperationsList(params);
       runInAction(() => {
-        this.transactions = resTransactions;
+        this.transactions = response;
+        console.log(toJS(response))
         this.updateErrorTransactions(false);
       });
     } catch (error) {
