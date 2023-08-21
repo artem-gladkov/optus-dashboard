@@ -9,9 +9,10 @@ import {ButtonTokens} from "../buttonsGroupe/ButtonGroupeForm"
 import Spinner from "../spinner/Spinner";
 import useMedia from "../../hooks/useMedia";
 import { ShowPeriodPages } from "../showPeriodPages/showPeriodPages";
+import { IOperation } from "../../api/types";
 
 interface Props {
-    data: any;
+    data: IOperation[];
     address?: string;
     error: boolean
 }
@@ -29,7 +30,7 @@ const TransactionsComponent = ({data, address, error}: Props) => {
     const [handleButtonTypeTransaction, setHandleButtonTypeTransaction] = useState(false)
     const {dex} = useParams()
 
-    const dataFilter = data?.filter((trans: { type: string; }) => {
+    const dataFilter = data.filter((trans: { type: string; }) => {
         if(activeButtonFilter=== 'All'){return trans}
         if(activeButtonFilter === 'Swaps'){return trans?.type === 'swap'}
         if(activeButtonFilter === 'Adds'){return trans?.type === 'add'}
@@ -38,34 +39,59 @@ const TransactionsComponent = ({data, address, error}: Props) => {
 
     const lastItemIndex = currentPage * itemPerPage;
     const firstItemIndex = lastItemIndex - itemPerPage;    
-    const transaction = dataFilter?.slice(firstItemIndex, lastItemIndex)
+    const transaction = dataFilter.slice(firstItemIndex, lastItemIndex)
         .map((trans)=>{
         return (
-            <div key={uniqid()} className="flex w-full justify-between p-4 border-b border-inActive border-opacity-20 text-xs sm:text-base">
-                    <div  className="w-1/3">
-                        <div  className="flex items-center">
-                            <Link  to={`https://tonapi.io/transaction/${trans.hash}`} target="_blank">
-                                <span className="font-medium text-slate-900 text-opacity-80 hover:text-slate-50 ">
-                                    {trans.type} {trans?.symbol_one?.symbol} for {trans?.symbol_two?.symbol}
-                                </span>
-                            </Link>
-                        </div>
-                    </div>
-                    <div  className="flex w-2/3 ">
-                        <div  className="flex lg:w-1/5 w-1/2 justify-center lg:justify-start"><span>{trans.usd_amount.value} $</span></div>
-                        <div  className="lg:flex lg:w-1/5 hidden"><span>{trans.symbol_one_amount.value} {trans.symbol_one.symbol}</span></div>
-                        <div  className="lg:flex lg:w-1/5 hidden"><span>{trans?.symbol_two_amount?.value} {trans?.symbol_two?.symbol}</span></div>
-                        <div  className="lg:flex lg:w-1/5 hidden">
-                            <Link to={`https://tonapi.io/account/${trans.account}`} target="_blank">
-                                <span className="font-medium text-slate-900 text-opacity-80 hover:text-slate-50 ">
-                                    {`${trans.account.slice(0,4)}...${trans.account.slice(-4)}`}
-                                </span>
-                            </Link> 
-                        </div>
-                        <div  className="flex  whitespace-nowrap lg:w-1/5 w-1/2 justify-center lg:justify-start"><span>{trans.time_ago}</span></div>
-                    </div>
+          <div
+            key={uniqid()}
+            className="flex w-full justify-between p-4 border-b border-inActive border-opacity-20 text-xs sm:text-base"
+          >
+            <div className="w-1/3">
+              <div className="flex items-center">
+                <Link
+                  to={`https://tonapi.io/transaction/${trans.user_account.address}`}
+                  target="_blank"
+                >
+                  <span className="font-medium text-slate-900 text-opacity-80 hover:text-slate-50 ">
+                    {trans.type} {trans.token_0.symbol} for{" "}
+                    {trans.token_1.symbol}
+                  </span>
+                </Link>
+              </div>
             </div>
-        )
+            <div className="flex w-2/3 ">
+              <div className="flex lg:w-1/5 w-1/2 justify-center lg:justify-start">
+                <span>{trans.amount.usd.value} $</span>
+              </div>
+              <div className="lg:flex lg:w-1/5 hidden">
+                <span>
+                  {trans.token_0.amount.value} {trans.token_0.symbol}
+                </span>
+              </div>
+              <div className="lg:flex lg:w-1/5 hidden">
+                <span>
+                  {trans.token_1.amount.value} {trans.token_1.symbol}
+                </span>
+              </div>
+              <div className="lg:flex lg:w-1/5 hidden">
+                <Link
+                  to={`https://tonapi.io/account/${trans.user_account.address}`}
+                  target="_blank"
+                >
+                  <span className="font-medium text-slate-900 text-opacity-80 hover:text-slate-50 ">
+                    {`${trans.user_account.address.slice(
+                      0,
+                      4
+                    )}...${trans.user_account.address.slice(-4)}`}
+                  </span>
+                </Link>
+              </div>
+              <div className="flex  whitespace-nowrap lg:w-1/5 w-1/2 justify-center lg:justify-start">
+                <span>{trans.time_ago}</span>
+              </div>
+            </div>
+          </div>
+        );
     })
 
 
