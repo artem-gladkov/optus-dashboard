@@ -5,7 +5,7 @@ import {
   type IDex,
   type IToken,
   type IPair,
-  type ITransaction,
+  type IOperation,
   type ITokenList,
   type IDexList,
   type IPairList,
@@ -63,13 +63,11 @@ class Api {
 
   getAccauntData = async () => {}; //дописать когда появится какая то структура
 
-  getTransactionData = async (
-    transaction_id: string
-  ): Promise<ITransaction> => {
+  getTransactionData = async (operation_id: string): Promise<IOperation> => {
     const response = await fetch(
-      `${this._currentNetwork}/transaction?transaction_id=${transaction_id}`
+      `${this._currentNetwork}/operation?operation_id=${operation_id}`
     );
-    const request: ITransaction = await response.json();
+    const request: IOperation = await response.json();
     return request;
   };
 
@@ -120,19 +118,19 @@ class Api {
     return request;
   };
 
-  getTransactionsList = async (searchParams: {
+  getOperationsList = async (searchParams: {
     dex_id?: string;
     token_id?: string;
     pair_id?: string;
     accaunt_id?: string;
     limit: string;
-  }) => {
+  }): Promise<IOperation[]> => {
     const params = new URLSearchParams(searchParams).toString();
 
     const response = await fetch(
-      `${this._currentNetwork}/transaction_list?${params}`
+      `${this._currentNetwork}/operation_list?${params}`
     );
-    const request: IPairList = await response.json();
+    const request: IOperation[] = await response.json();
     return request;
   };
 }
