@@ -10,7 +10,7 @@ interface Props {}
 const DexComponent = (props: Props) => {
   const { activeButtonDexPage, buttonDexPage, buttonDex } = store;
 
-  const dexList = buttonDex.map((dex, index) => {
+  const dexList = Object.entries(buttonDex).map((dex, index) => {
     return (
       <div className="" key={uniqid()}>
         <div
@@ -21,7 +21,7 @@ const DexComponent = (props: Props) => {
             <div className="flex items-center ">
               <span className="mr-3 text-inActive"> {index+1}</span>
                 <span className="font-medium  text-opacity-80  ">
-                  {dex.name}
+                  {dex[0]}
                 </span>
             </div>
           </div>

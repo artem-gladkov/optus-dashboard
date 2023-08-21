@@ -3,15 +3,19 @@ import uniqid from 'uniqid'
 import { Link } from 'react-router-dom';
 
 interface Props {
-    active?: any;
-    type: 'tokens' | 'pairs' | 'transactions' | 'filter_transactions' | 'buttonDex' | 'dexoverview';
-    flagTransaction?: boolean;
-    data?: any;
-    flagTokens?: boolean;
-    arrButtons: string[] | {id:string, name: string}[];
-    page?: string;
-   
-
+  active?: any;
+  type:
+    | "tokens"
+    | "pairs"
+    | "transactions"
+    | "filter_transactions"
+    | "buttonDex"
+    | "dexoverview";
+  flagTransaction?: boolean;
+  data?: any;
+  flagTokens?: boolean;
+  arrButtons: string[] | [string, unknown][];
+  page?: string;
 }
 
 export const ButtonTokens = ( {active, type, data, arrButtons, page}: Props, ) => {
@@ -73,10 +77,11 @@ const {
 
         <>
         {arrButtons.map((button)=>{ 
-         if(type === 'buttonDex') {
+            if (type === 'buttonDex') {
+             
             return (
-                <div key={uniqid()} onClick={()=>{ButtonHeaderComponent(button.name)}} >
-                    <Link to={`overview/${button.name}${page === '' ? '' : '/'}${page === '' ? a : page}`}> {button.name} </Link>
+                <div key={uniqid()} onClick={()=>{ButtonHeaderComponent(button[0])}} >
+                    <Link to={`overview/${button[0]}${page === '' ? '' : '/'}${page === '' ? a : page}`}> {button[0]} </Link>
                 </div>
             )
          } else if(type === 'pairs') {

@@ -27,30 +27,33 @@ const OverviewComponent = () => {
     getTransactions,
     getTrans,
     buttonDex,
+    tokensApi,
   } = store;
 
   const { dex } = useParams();
 
   useEffect(() => {
-    
-
-      setTimeout(() => {
-         updateHandlerButtonDexBo(true);
-         updateOverview({});
-         if (getErrorOverview) {
-           setErrorTransaction(true);
-         }
-         if (!getErrorOverview) {
-           setErrorTransaction(false);
-         }
-         overviewApi(dex);
-         updateHandlerButtonDexBo(true);
-         getTransactions(dex || "OPTUS");
-         pairsApi(dex);
-    },100)
-     
-   
-  }, [activeButtonDex]);
+    if (buttonDex) {
+      const timeout = setTimeout(() => {
+        updateHandlerButtonDexBo(true);
+        updateOverview({});
+        if (getErrorOverview) {
+          setErrorTransaction(true);
+        }
+        if (!getErrorOverview) {
+          setErrorTransaction(false);
+        }
+        overviewApi(dex);
+        updateHandlerButtonDexBo(true);
+        getTransactions(dex || "OPTUS");
+        // pairsApi({
+        //   dex_id: buttonDex[dex],
+        //   limit: '100'
+        // });
+        clearTimeout(timeout);
+      }, 200);
+    }
+  }, [activeButtonDex, buttonDex]);
 
   return (
     <div className="h-full py-14  relative bg-bg flex flex-col justify-center">
@@ -160,7 +163,7 @@ const OverviewComponent = () => {
             <h1 className="font-medium text-2xl ">
               Top Pairs {activeButtonDex}
             </h1>
-            <Pairs typePage="overview" data={getPairs} />
+            <Pairs typePage="overview" />
           </div>
 
           {/* Транзакции */}

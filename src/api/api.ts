@@ -99,10 +99,10 @@ class Api {
     pair_id?: string;
     accaunt_id?: string;
     limit: string;
-  }): Promise<IPairList> => {
+  }): Promise<IPairList[]> => {
     const params = new URLSearchParams(searchParams).toString();
     const response = await fetch(`${this._currentNetwork}/pair_list?${params}`);
-    const request: IPairList = await response.json();
+    const request: IPairList[] = await response.json();
     return request;
   };
 

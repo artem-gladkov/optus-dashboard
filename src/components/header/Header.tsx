@@ -14,10 +14,6 @@ interface Props {}
 
 const RoutesNavigationComponent = (props: Props) => {
   const matches = useMedia("(min-width: 1164px)");
-  const pairs = "pairs";
-  const tokens = "tokens";
-  const over = "OPTUS";
-  const dexoverview = "dexoverview";
   const { dex } = useParams();
   const [burger, setBurger] = useState(false);
   const {
@@ -30,6 +26,7 @@ const RoutesNavigationComponent = (props: Props) => {
     updateHandlerButtonDexBo,
     updateActiveButtonDex,
     updateHandlerButtonDex,
+    updateDexId,
   } = store;
   const [hidden, setHidden] = useState(false);
   const hiddenNav = (hidden: boolean) => {
@@ -38,7 +35,10 @@ const RoutesNavigationComponent = (props: Props) => {
   const pathnameWindow = window.location.pathname;
   const visiblebtnDex =
     pathnameWindow.includes("dexoverview") || pathnameWindow === "/";
-  
+
+  useEffect(() => {
+    updateDexId(buttonDex[dex]);
+  }, [activeButtonDex]);
 
   return (
     <header className="w-full z-50 relative">
@@ -65,7 +65,7 @@ const RoutesNavigationComponent = (props: Props) => {
               <div className="absolute bg-form px-2  rounded">
                 {!handlerButtonDex && (
                   <ButtonTokens
-                    arrButtons={buttonDex}
+                    arrButtons={Object.entries(buttonDex)}
                     key={uniqid()}
                     active={activeButtonDex}
                     type="buttonDex"
@@ -113,10 +113,16 @@ const RoutesNavigationComponent = (props: Props) => {
                         <Link
                           onClick={() => {
                             updateHandlerButtonDexBo(true);
-                              updateActivePage("");
+                            updateActivePage("");
                           }}
                           className=" hover:text-text transition-all duration-400 px-4 py-2 rounded-xl"
-                          to={`overview/${dex ? dex : getActiveButtonDex ? getActiveButtonDex : 'OPTUS'}`}
+                          to={`overview/${
+                            dex
+                              ? dex
+                              : getActiveButtonDex
+                              ? getActiveButtonDex
+                              : "OPTUS"
+                          }`}
                         >
                           Overview
                         </Link>

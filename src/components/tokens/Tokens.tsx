@@ -1,6 +1,6 @@
 import { store } from "../../Store/store";
 import { observer } from "mobx-react-lite";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import uniqid from "uniqid";
 import { ButtonTokens } from "../buttonsGroupe/ButtonGroupeForm";
@@ -12,6 +12,7 @@ import useMedia from "../../hooks/useMedia";
 import { ShowPeriodPages } from "../showPeriodPages/showPeriodPages";
 
 import { TPage } from "../../types/types-pages";
+import { toJS } from "mobx";
 
 interface Props {
   typePage: TPage;
@@ -30,13 +31,15 @@ const TokensComponent = ({ typePage }: Props) => {
     activeButtonDex,
     updateHandlerButtonDexBo,
     getActiveButtonDex,
+    buttonDex,
+    dexId,
   } = store;
   const matches = useMedia("(min-width: 768px)");
   const { dex } = useParams();
 
   useEffect(() => {
     if (typePage === "overview") {
-      tokensApi(dex);
+      tokensApi({ limit: "100", dex_id: buttonDex[dex] });
       updateHandlerButtonDexBo(true);
       return;
     }
@@ -52,9 +55,10 @@ const TokensComponent = ({ typePage }: Props) => {
   const lastItemIndex = currentPage * itemPerPage;
   let firstItemIndex = lastItemIndex - itemPerPage;
   let idx = firstItemIndex + 1;
+
   const tokens = getTokens
-    ?.slice(firstItemIndex, lastItemIndex)
-    .map((token: any, index: number) => {
+    .slice(firstItemIndex, lastItemIndex)
+    .map((token: any) => {
       return (
         <div
           key={uniqid()}
@@ -65,7 +69,7 @@ const TokensComponent = ({ typePage }: Props) => {
               <span className="mr-3 text-inActive"> {idx++}</span>
               <img
                 className="mr-3 rounded-full hidden sm:block"
-                src={token.icon}
+                src={token.image}
                 alt="imgToken"
                 style={{ width: 20, height: 20 }}
               />
@@ -81,13 +85,11 @@ const TokensComponent = ({ typePage }: Props) => {
             <div className="flex md:w-1/5 w-1/3">
               <img
                 className="mr-3 lg:hidden"
-                src={token.icon}
+                src={token.image}
                 alt="imgToken"
                 style={{ width: 20, height: 20 }}
               />
-              <Link to={`${pathPage}${token.address}`}>
-                {token.symbol}
-              </Link>
+              <Link to={`${pathPage}${token.address}`}>{token.symbol}</Link>
             </div>
             <div className="flex md:w-1/5 w-1/3  justify-center md:justify-start">
               <span>{numberWithSpaces(token.liquidity.value)} $</span>

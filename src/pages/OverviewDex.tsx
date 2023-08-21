@@ -42,9 +42,7 @@ const OverviewDexComponent = (props: Props) => {
     overviewApi("1");
     updateHandlerButtonDexBo(true);
     getTransactions("OPTUS");
-    pairsApi("OPTUS")
   }, [activeButtonDex]);
-//   console.log(toJS(getOverview));
 
   return (
     <div className="h-full py-14  relative bg-bg flex flex-col justify-center">
@@ -150,7 +148,7 @@ const OverviewDexComponent = (props: Props) => {
 
           <div key={uniqid()} className="flex  flex-col mt-10 text-text">
             <h1 className="font-medium text-2xl ">Pairs dex informations</h1>
-            <Pairs typePage="dexoverview" data={getPairs} />
+            <Pairs typePage="dexoverview" />
           </div>
 
           {/* Accaunts */}

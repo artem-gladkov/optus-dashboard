@@ -61,7 +61,7 @@ export interface IToken {
   address: string;
   symbol: string;
   name: string;
-  icon: string;
+  image: string;
   decimals: number;
   native_liquidity: TValueChange;
   liquidity: TValueChange;
@@ -95,7 +95,7 @@ export interface ISymbolIndicators {
   current_pair_price: TValueChange;
   pool_quantity: TValueChange;
   current_usd_price: TValueChange;
-} 
+}
 
 export interface ITransaction {
   hash: string;
@@ -115,32 +115,24 @@ export interface ITransaction {
 export interface IOperation {
   timestamp: number;
   type: string;
-  pair: {address: string};
+  pair: { address: string };
   token_one: {
-      address: string,
-      amount: 0,
-      type: string
-    };
+    address: string;
+    amount: 0;
+    type: string;
+  };
   token_two: {
-      address: string,
-      amount: 0,
-      type: string
-    };
+    address: string;
+    amount: 0;
+    type: string;
+  };
   is_processed: boolean;
 }
 
-export interface ITokenList {
-  address: string;
-  symbol: string;
-  name: string;
-  icon: string;
-  decimals: 0;
-  native_liquidity: TValueChange;
-  liquidity: TValueChange;
-  volume_24h: TValueChange;
-  current_usd_price: TValueChange;
-  transactions_24h: TValueChange;
-}
+export type ITokenList = Omit<
+  IToken,
+  "liquidity_graph" | " volume_graph" | "usd_price_graph"
+>[];
 
 export interface IDexList {
   id: number;

@@ -129,7 +129,7 @@ const SingleTokenPageComponent = ({ typePage }: Props) => {
                 <div className="flex items-end ">
                   <div>
                     <img
-                      src={getSingleToken.icon}
+                      src={getSingleToken.image}
                       alt=""
                       width={30}
                       className="rounded-full"
@@ -201,7 +201,7 @@ const SingleTokenPageComponent = ({ typePage }: Props) => {
 
               <div className="flex flex-col mt-5">
                 <h2 className="text-2xl font-normal">Top Pairs</h2>
-                <Pairs typePage={typePage} data={getPairs} />
+                <Pairs typePage={typePage} />
               </div>
 
               {/* Транзакции */}

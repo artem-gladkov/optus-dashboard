@@ -15,18 +15,39 @@ import { ShowPeriodPages } from "../showPeriodPages/showPeriodPages"
 import { TPage } from "../../types/types-pages"
 
 interface Props {
-    data: any,
     typePage: TPage
 }
 
-const PairsComponent = ( {data, typePage}: Props) => {
+const PairsComponent = ( { typePage}: Props) => {
     const matches = useMedia("(min-width: 1280px)")
     const [currentPage, setCurrentPage] = useState(1)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
     const [itemPerPage, setItemPerPage] = useState(10) 
-    const {buttonPairs, activeButtonPairs, getErrorPairs, activeButtonDex} = store
-    const {dex} = useParams()
+    const {
+      buttonPairs,
+      activeButtonPairs,
+      getErrorPairs,
+      activeButtonDex,
+      pairsApi,
+      buttonDex,
+        updateHandlerButtonDexBo,
+      getPairs
+    } = store;
+    const { dex } = useParams()
+
+    useEffect(() => {
+      if (typePage === "overview") {
+        pairsApi({
+          dex_id: buttonDex[dex],
+          limit: "100",
+        });
+        updateHandlerButtonDexBo(true);
+        return;
+      }
+      if (typePage === "dexoverview") {
+      }
+    }, [activeButtonDex]);
 
     const lastItemIndex = currentPage * itemPerPage;
     let firstItemIndex = lastItemIndex - itemPerPage;
@@ -34,17 +55,18 @@ const PairsComponent = ( {data, typePage}: Props) => {
     const pathPage =
     typePage === "dexoverview"
       ? `/dexoverview/pairs/`
-      : `/overview/${dex || "OPTUS"}/pairs/`;
-
-   const pairs =data?.slice(firstItemIndex, lastItemIndex).map((pair: any, index:number)=>{
+            : `/overview/${dex || "OPTUS"}/pairs/`;
     
+  
+   const pairs = getPairs.length > 0 && getPairs.slice(firstItemIndex, lastItemIndex).map((pair: any, index:number)=>{
+
     return (
         <div key={uniqid()} className="flex w-full p-4 border-b border-inActive border-opacity-20 ">
                 <div className="lg:w-1/3 w-1/4">
                     <div className="flex items-center">
                         <span className="mr-3 text-inActive"> {idx++}</span>
-                        <img className="-mr-2 z-10 rounded-full hidden sm:block" src={pair.token_one.icon} alt="imgToken1" style={{width: 20, height: 20}}/>
-                        <img className="mr-3 rounded-ful hidden sm:block" src={pair.token_two.icon} alt="imgToken2" style={{width: 20, height: 20}}/>
+                        <img className="-mr-2 z-10 rounded-full hidden sm:block" src={pair.token_one.image} alt="imgToken1" style={{width: 20, height: 20}}/>
+                        <img className="mr-3 rounded-ful hidden sm:block" src={pair.token_two.image} alt="imgToken2" style={{width: 20, height: 20}}/>
                         <Link to={`${pathPage}${pair.address}`}>   <span className=" font-medium text-slate-900 text-opacity-80 hover:text-slate-50 "> <span>{pair.name}</span></span>  </Link>
                     </div>
                 </div>
@@ -71,54 +93,61 @@ const PairsComponent = ( {data, typePage}: Props) => {
    })
 
     return (
-       
-                <div className="w-full border rounded-2xl mt-4 bg-form border-inActive text-xs sm:text-base ">
-                    <div className="flex  w-full  p-4 border-b border-inActive border-opacity-60">
-                        <div  className="lg:w-1/3 w-1/4 font-medium text-inActive"> 
-                           # Name
-                        </div>
+      <div className="w-full border rounded-2xl mt-4 bg-form border-inActive text-xs sm:text-base ">
+        <div className="flex  w-full  p-4 border-b border-inActive border-opacity-60">
+          <div className="lg:w-1/3 w-1/4 font-medium text-inActive"># Name</div>
 
-                        <div className='flex lg:w-2/3 w-3/4'>
-                        <ButtonTokens 
-                                arrButtons={!matches ? ['Liquidity','Liquidity Jettons', 'Volume (24hrs)'] : buttonPairs} 
-                                data={data} 
-                                key={uniqid()}  
-                                active = {activeButtonPairs} 
-                                type='pairs'/>
-                        </div>
-                    </div>
+          <div className="flex lg:w-2/3 w-3/4">
+            <ButtonTokens
+              arrButtons={
+                !matches
+                  ? ["Liquidity", "Liquidity Jettons", "Volume (24hrs)"]
+                  : buttonPairs
+              }
+              data={getPairs}
+              key={uniqid()}
+              active={activeButtonPairs}
+              type="pairs"
+            />
+          </div>
+        </div>
 
-                    {data.length ? (
-                                <>
-                                    {!getErrorPairs ? pairs : 'Произошла ошибка, но мы решаем эту проблему'}
-                                </>
-                                ) : ( getErrorPairs ? 'Произошла ошибка, но мы решаем эту проблему' : ( 
-                                                <div className='w-full h-full flex justify-center  items-center'>
-                                                    <Spinner/>
-                                                </div>) ) }
-                   <div className="flex flex-col items-center xl:flex-row w-full">
-                    <div className="flex  items-center w-1/3 justify-end">
-
-                    </div>
-                        <div className="flex  items-center w-full xl:w-1/3 justify-center">
-                                <Pagination totalItem={data?.length} 
-                                            itemPerPage={itemPerPage}
-                                            setCurrentPage={setCurrentPage}
-                                            currentPage={currentPage}
-                                            dex={dex}
-                                            type={'pairs'}/>                        
-                        </div>
-                        <div className="flex items-center xl:w-1/3 w-full xl:justify-end justify-center">
-                                <ShowPeriodPages setItemPerPage={setItemPerPage}
-                                                itemPerPage ={itemPerPage}
-                                                setCurrentPage={setCurrentPage}
-                                                label='pairs in pages'
-                                                />
-                        </div>
-                   </div>
-
-                </div>
-            )
+        {getPairs.length ? (
+          <>
+            {!getErrorPairs
+              ? pairs
+              : "Произошла ошибка, но мы решаем эту проблему"}
+          </>
+        ) : getErrorPairs ? (
+          "Произошла ошибка, но мы решаем эту проблему"
+        ) : (
+          <div className="w-full h-full flex justify-center  items-center">
+            <Spinner />
+          </div>
+        )}
+        <div className="flex flex-col items-center xl:flex-row w-full">
+          <div className="flex  items-center w-1/3 justify-end"></div>
+          <div className="flex  items-center w-full xl:w-1/3 justify-center">
+            <Pagination
+              totalItem={getPairs?.length}
+              itemPerPage={itemPerPage}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              dex={dex}
+              type={"pairs"}
+            />
+          </div>
+          <div className="flex items-center xl:w-1/3 w-full xl:justify-end justify-center">
+            <ShowPeriodPages
+              setItemPerPage={setItemPerPage}
+              itemPerPage={itemPerPage}
+              setCurrentPage={setCurrentPage}
+              label="pairs in pages"
+            />
+          </div>
+        </div>
+      </div>
+    );
         }
 
 

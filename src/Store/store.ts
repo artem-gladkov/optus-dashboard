@@ -3,11 +3,11 @@ import { makeAutoObservable, runInAction, toJS } from "mobx";
 import { isProd, getEnvVariable } from "../config/env";
 import { log } from "console";
 import { api } from "../api/api";
-import { IDex } from "../api/types";
+import { IDex, IPairList, ITokenList } from "../api/types";
 
 class StoreApp {
-  private tokens = [];
-  private pairs = [];
+  private tokens: ITokenList = [];
+  private pairs: IPairList[] = [];
   private overview: IDex;
   private singleToken: any = {};
   private singlePair: any = {};
@@ -65,9 +65,16 @@ class StoreApp {
     "1y Feels/Liquidity",
   ];
   public activeButtonPairs: string = this.buttonPairs[0];
-
-  public buttonDex: { id: string; name: string }[];
+  public buttonDex: {} = {
+    OPTUS: "0",
+    "STON.fi": "1",
+    Megaton: "2",
+    DeDust: "3",
+    Tegro: "4",
+    Flex: "5",
+  };
   public activeButtonDex: string;
+  public dexId: string;
 
   public buttonDexPage: string[] = [
     "Volume (24hrs)",
@@ -87,39 +94,36 @@ class StoreApp {
 
   constructor() {
     makeAutoObservable(this);
-    this.dexListApi();
+    // this.dexListApi();
   }
 
   dexListApi = async () => {
     try {
-      const response = await api.getDexList();
-      runInAction(() => {
-        this.buttonDex = response.map((dexData) => {
-          return {
-            id: String(dexData.id),
-            name: dexData.name,
-          };
-        });
-      });
+      //   const response = await api.getDexList();
+      //   runInAction(() => {
+      //     this.buttonDex[response] = response.map((dexData) => {
+      //       return {
+      //         id: String(dexData.id),
+      //         name: dexData.name,
+      //       };
+      //     });
+      //   });
     } catch (error) {
       console.log("dexListApi>>>>>", error);
     }
   };
 
-  tokensApi = async (activedex) => {
+  tokensApi = async (params: {
+    dex_id?: string;
+    accaunt_id?: string;
+    limit: string;
+  }) => {
     try {
-      const getTokens = await fetch(
-        `${this._currentNetwork}/top_tokens?limit=50&dex=${
-          activedex || "OPTUS"
-        }`
-      );
-      if (!getTokens.ok) {
-        this.updateErrorTokens(true);
-        throw new Error(getTokens.statusText);
-      }
-      const respTokens = await getTokens.json();
+      const { dex_id, accaunt_id, limit } = params;
+
+      const response = await api.getTokenList(params);
       runInAction(() => {
-        this.tokens = respTokens;
+        this.tokens = response;
         this.updateErrorTokens(false);
       });
     } catch (error) {
@@ -128,18 +132,17 @@ class StoreApp {
     }
   };
 
-  pairsApi = async (activedex) => {
+  pairsApi = async (params: {
+    dex_id?: string;
+    pair_id?: string;
+    accaunt_id?: string;
+    limit: string;
+  }) => {
     try {
-      const reqPairs = await fetch(
-        `${this._currentNetwork}/top_pairs?limit=50&dex=${activedex || "OPTUS"}`
-      );
-      if (!reqPairs.ok) {
-        this.updateErrorPairs(true);
-        throw new Error(reqPairs.statusText);
-      }
-      const respPairs = await reqPairs.json();
+      const response = await api.getPairList(params);
+      console.log(response)
       runInAction(() => {
-        this.pairs = respPairs;
+        this.pairs = response;
         this.updateErrorPairs(false);
       });
     } catch (error) {
@@ -170,24 +173,20 @@ class StoreApp {
     }
   };
 
-    overviewApi = async (dex: string) => {
-
-        const dexId = String(this.buttonDex.find((el) => {
-          return el.name === dex;
-        }).id)
-      console.log( toJS(dexId), 'dexexexexexex');
-      try {
-        const response = await api.getDexData(dexId);
-        console.log(response);
-        runInAction(() => {
-          this.updateOverview(response);
-          this.updateErrorOwerview(false);
-        });
-      } catch (error) {
-        this.updateErrorOwerview(true);
-        console.log("overviewApi>>>>", error);
-      }
-    };
+  overviewApi = async (dex: string) => {
+    this.updateDexId(this.buttonDex[dex]);
+    try {
+      const response = await api.getDexData(this.dexId);
+      console.log(response, "overview");
+      runInAction(() => {
+        this.updateOverview(response);
+        this.updateErrorOwerview(false);
+      });
+    } catch (error) {
+      this.updateErrorOwerview(true);
+      console.log("overviewApi>>>>", error);
+    }
+  };
 
   updateHandlerButtonDex = () => {
     this.handlerButtonDex = !this.handlerButtonDex;
@@ -370,6 +369,9 @@ class StoreApp {
     this.activePage = page;
   };
 
+  updateDexId = (dex_id) => {
+    this.dexId = dex_id;
+  };
   sortTransactions = (type: string, data: any[]) => {
     if (type === "Total Value") {
       data.sort(
@@ -605,7 +607,7 @@ class StoreApp {
     return this.footerState;
   }
 
-  get getTokens(): any {
+  get getTokens(): ITokenList {
     return this.tokens;
   }
 

@@ -16,10 +16,13 @@ interface Props {
 
 const PairsPageDexComponent = ({typePage}: Props) => {
 
-    const {getPairs, activeButtonDex, pairsApi} = store
+    const { getPairs, activeButtonDex, pairsApi, buttonDex } = store;
     const {dex} = useParams()
     useEffect(()=>{
-        pairsApi(dex)
+        pairsApi({
+          dex_id: buttonDex[dex],
+          limit: "100",
+        });
     }, [])
 
     return (
@@ -30,7 +33,7 @@ const PairsPageDexComponent = ({typePage}: Props) => {
                     <div className="flex justify-between w-full  flex-wrap  items-center my-5 z-50">
                             <h2 className="flex text-3xl font-medium">Top Pairs</h2>
                     </div>
-                    <Pairs typePage={typePage} data= {getPairs}/>
+                    <Pairs typePage={typePage} />
                 </div>
             </div>
         </div>

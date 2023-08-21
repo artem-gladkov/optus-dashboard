@@ -30,7 +30,6 @@ const LayoutComponent = (props: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(window.location.pathname);
   return (
     <div className="flex flex-col w-full h-full justify-start text-text">
       <div className="h-22 w-full z-50">
