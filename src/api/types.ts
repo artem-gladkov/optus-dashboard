@@ -97,36 +97,41 @@ export interface ISymbolIndicators {
   current_usd_price: TValueChange;
 }
 
-export interface ITransaction {
-  hash: string;
-  timestamp: number;
-  account: string;
-  name: string;
-  type: string;
-  usd_amount: TValueChange;
-  symbol_one: Symbol;
-  symbol_one_amount: TValueChange;
-  symbol_two: Symbol;
-  symbol_two_amount: TValueChange;
-  time_ago: string;
-  operation: IOperation;
-}
+// export interface ITransaction {
+//   hash: string;
+//   timestamp: number;
+//   account: string;
+//   name: string;
+//   type: string;
+//   usd_amount: TValueChange;
+//   symbol_one: Symbol;
+//   symbol_one_amount: TValueChange;
+//   symbol_two: Symbol;
+//   symbol_two_amount: TValueChange;
+//   time_ago: string;
+//   operation: IOperation;
+// }
 
 export interface IOperation {
+  id: number;
   timestamp: number;
+  name: string;
+  user_account: IUserAccount;
   type: string;
-  pair: { address: string };
-  token_one: {
-    address: string;
-    amount: 0;
-    type: string;
+  amount: { usd: TValueChange; ton: TValueChange };
+  token_0: {
+    symbol: string;
+    amount: TValueChange;
   };
-  token_two: {
-    address: string;
-    amount: 0;
-    type: string;
+  token_1: {
+    symbol: string;
+    amount: TValueChange;
   };
-  is_processed: boolean;
+  time_ago: string;
+}
+export interface IUserAccount {
+  id: number;
+  address: string;
 }
 
 export type ITokenList = Omit<
